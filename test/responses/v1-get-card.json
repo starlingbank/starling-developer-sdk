@@ -1,0 +1,11 @@
+{
+  "_links": {
+    "transactions": {
+      "href": "api/v1/transactions?from={fromDate}&to={toDate}",
+      "templated": false
+    }
+  },
+  "nameOnCard": "Ms XXX YYY",
+  "lastFourDigits": "4321",
+  "expiryDate": "2020-01-01"
+}

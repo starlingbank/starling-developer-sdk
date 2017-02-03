@@ -1,0 +1,29 @@
+{
+  "_links": {
+    "accounts": {
+      "href": "api/v1/accounts",
+      "templated": false
+    },
+    "addresses": {
+      "href": "api/v1/addresses",
+      "templated": false
+    },
+    "contacts": {
+      "href": "api/v1/contacts",
+      "templated": false
+    },
+    "self": {
+      "href": "api/v1/customers",
+      "templated": false
+    },
+    "transactions": {
+      "href": "api/v1/transactions?from={fromDate}&to={toDate}",
+      "templated": false
+    }
+  },
+  "customerUid": "2022a9c9-01fa-4c8d-ab19-daec80d7a111",
+  "firstName": "Sam",
+  "lastName": "Jones",
+  "dateOfBirth": "1982-11-24",
+  "email": "samjonese121666@gmail.com"
+}
