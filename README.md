@@ -2,19 +2,19 @@
 
 ## Documentation
 
-The documentation for our SDK can be found <a href="https://starlingbank.github.io/developer-sdk-js/">here</a>.
+The documentation for our SDK can be found <a href="https://starlingbank.github.io/starling-developer-sdk/">here</a>.
 
 
 ## Installation
 
 ```bash
-$ yarn add starlingbank-developer-sdk-js
+$ yarn add starling-developer-sdk
 ```
 
 ## Usage
 
 ```javascript
-const Starling = require('starlingbank-developer-sdk-js');
+const Starling = require('starling-developer-sdk');
 
 const client = new Starling({
     accessToken: '<oauth access token>'
