@@ -1,6 +1,0 @@
-docs/
-coverage/
-node_modules/
-
-.DS_Store
-sauce.json

@@ -1,0 +1,91 @@
+---
+# Main scss file
+---
+@charset "utf-8";
+
+@import "syntax";
+@import "variables";
+@import "octicons";
+
+
+$icon-width: 10rem;
+.header {
+  background-color: $purple;
+
+  h1 {
+    padding: 2rem;
+  }
+
+  &.landing {
+    padding-top: 80px;
+    padding-bottom: 80px;
+
+    div.icons {
+      & span.mega-octicon {
+        width: $icon-width;
+        font-size: $icon-width * 0.7;
+        color: $white;
+      }
+    }
+  }
+
+  a,
+  a:visited {
+    color: $white;
+  }
+}
+
+.footer {
+  color: lighten($textcolor, 60%);
+  a,
+  a:visited {
+    color: lighten($textcolor, 45%);
+  }
+}
+
+.container {
+  padding-top: 2rem;
+  max-width: 70rem;
+
+  &.landing {
+    ul > li > p {
+      display: inline;
+    }
+  }
+}
+
+.centered {
+  text-align: center;
+}
+
+html {
+  color: $textcolor;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: darken($orange, 10%);
+  font-weight: normal;
+}
+
+a {
+  color: $salmon;
+}
+
+a:visited {
+  color: darken($salmon, 10%);
+}
+
+ul {
+  li {
+    margin-bottom: 0;
+    p {
+      margin: 0;
+    }
+  }
+}
