@@ -28,8 +28,8 @@ mkdir out
 
 # make the docs
 yarn make-docs
-VERSION=`ls docs/starlingbank-developer-sdk`
-mv docs/starlingbank-developer-sdk/* out/
+VERSION=`ls docs/starling-developer-sdk`
+mv docs/starling-developer-sdk/* out/
 rm -rf docs/
 
 git checkout gh-pages
