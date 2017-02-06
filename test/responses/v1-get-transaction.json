@@ -1,0 +1,14 @@
+{
+  "scheme": "FASTER_PAYMENTS_OUT",
+  "currency": "GBP",
+  "amount": -10,
+  "reference": "Coffee Merchant Inc.",
+  "direction": "OUTBOUND",
+  "counterparty": {
+    "accountName": "Martin",
+    "accountNumber": "00851145",
+    "sortCode": "608371"
+  },
+  "tags": ["food", "drink"],
+  "created": "2016-11-21T12:38:32.79Z"
+}

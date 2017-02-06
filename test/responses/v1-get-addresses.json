@@ -1,0 +1,22 @@
+{
+  "current": {
+    "streetAddress": "Flat 213",
+    "city": "KINGSTON UPON THAMES",
+    "country": "GBR",
+    "postcode": "KT2 5AH"
+  },
+  "previous": [
+    {
+      "streetAddress": "Grange Farm House",
+      "city": "COVENTRY",
+      "country": "GBR",
+      "postcode": "CV3 2DH"
+    },
+    {
+      "streetAddress": "32 Boswell Lance",
+      "city": "LEMINGTON SPA",
+      "country": "GBR",
+      "postcode": "CV32 4BQ"
+    }
+  ]
+}
