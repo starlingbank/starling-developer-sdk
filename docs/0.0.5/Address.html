@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Address - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Account.html">Account</a><ul class='methods'><li data-type='method'><a href="Account.html#getAccount">getAccount</a></li><li data-type='method'><a href="Account.html#getBalance">getBalance</a></li></ul></li><li><a href="Address.html">Address</a><ul class='methods'><li data-type='method'><a href="Address.html#getAddresses">getAddresses</a></li></ul></li><li><a href="Card.html">Card</a><ul class='methods'><li data-type='method'><a href="Card.html#getCard">getCard</a></li></ul></li><li><a href="Contact.html">Contact</a><ul class='methods'><li data-type='method'><a href="Contact.html#getContacts">getContacts</a></li></ul></li><li><a href="Customer.html">Customer</a><ul class='methods'><li data-type='method'><a href="Customer.html#getCustomer">getCustomer</a></li></ul></li><li><a href="OAuth.html">OAuth</a><ul class='methods'><li data-type='method'><a href="OAuth.html#getAccessToken">getAccessToken</a></li><li data-type='method'><a href="OAuth.html#getOAuthToken">getOAuthToken</a></li><li data-type='method'><a href="OAuth.html#refreshAccessToken">refreshAccessToken</a></li></ul></li><li><a href="Starling.html">Starling</a><ul class='methods'><li data-type='method'><a href="Starling.html#getAccessToken">getAccessToken</a></li><li data-type='method'><a href="Starling.html#getAccount">getAccount</a></li><li data-type='method'><a href="Starling.html#getAddresses">getAddresses</a></li><li data-type='method'><a href="Starling.html#getBalance">getBalance</a></li><li data-type='method'><a href="Starling.html#getCard">getCard</a></li><li data-type='method'><a href="Starling.html#getContacts">getContacts</a></li><li data-type='method'><a href="Starling.html#getCustomer">getCustomer</a></li><li data-type='method'><a href="Starling.html#getTransaction">getTransaction</a></li><li data-type='method'><a href="Starling.html#getTransactions">getTransactions</a></li><li data-type='method'><a href="Starling.html#refreshAccessToken">refreshAccessToken</a></li></ul></li><li><a href="Transaction.html">Transaction</a><ul class='methods'><li data-type='method'><a href="Transaction.html#getTransaction">getTransaction</a></li><li data-type='method'><a href="Transaction.html#getTransactions">getTransactions</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Address</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        Address
+        </h2>
+        
+            <div class="class-description"><p>Service to interact with a customer address</p></div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="Address"><span class="type-signature"></span>new Address<span class="signature">(options)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Creates an instance of the address client</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>configuration parameters</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="address.js.html">address.js</a>, <a href="address.js.html#line10">line 10</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="getAddresses"><span class="type-signature"></span>getAddresses<span class="signature">(accessToken)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Retrieves a customer's address</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>accessToken</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the oauth bearer token.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="address.js.html">address.js</a>, <a href="address.js.html#line25">line 25</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>the http request promise</li>
+</ul>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Feb 06 2017 18:16:58 GMT+0000 (GMT) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
