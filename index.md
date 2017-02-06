@@ -3,7 +3,7 @@ layout: landing
 ---
 
 {:.centered}
-starlingbank/developer-sdk-js is a thin javascript library around Starling Bank's public REST Api.
+starlingbank/starling-developer-sdk is a thin javascript library around Starling Bank's public REST Api.
 
 #### API Documentation
 

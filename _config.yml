@@ -1,7 +1,7 @@
-title: developer-sdk-js
-description: > # developer-sdk-js is a thin wrapper around the Starling Bank developer API
+title: starling-developer-sdk
+description: > # starling-developer-sdk is a thin wrapper around the Starling Bank developer API
 url: https://starlingbank.github.io
-baseurl: /developer-sdk-js
-git_repo: https://github.com/starlingbank/developer-sdk-js
+baseurl: /starling-developer-sdk
+git_repo: https://github.com/starlingbank/starling-developer-sdk
 exclude:
   - lib/gh-board
