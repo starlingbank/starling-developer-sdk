@@ -1,6 +1,6 @@
 {
-  "name": "starlingbank-developer-sdk",
-  "version": "0.0.4",
+  "name": "starling-developer-sdk",
+  "version": "0.0.5",
   "description": "Starling Bank Developer SDK",
   "main": "dist/components/starling.js",
   "scripts": {
@@ -79,7 +79,7 @@
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/starlingbank/developer-sdk-js/issues"
+    "url": "https://github.com/starlingbank/starling-developer-sdk/issues"
   },
-  "homepage": "https://github.com/starlingbank/developer-sdk-js#readme"
+  "homepage": "https://github.com/starlingbank/starling-developer-sdk#readme"
 }
