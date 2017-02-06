@@ -1,0 +1,7 @@
+title: starling-developer-sdk
+description: > # starling-developer-sdk is a thin wrapper around the Starling Bank developer API
+url: https://starlingbank.github.io
+baseurl: /starling-developer-sdk
+git_repo: https://github.com/starlingbank/starling-developer-sdk
+exclude:
+  - lib/gh-board
