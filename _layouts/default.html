@@ -6,7 +6,7 @@
   <meta name="description" content="{{ site.description }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-  <title>{{ site.title }}</title>
+  <title>Starling Developer SDK</title>
 
   <!-- CDN asssets -->
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic,700,700italic">
@@ -19,7 +19,7 @@
   <div class="header">
     <div class="container centered">
       <h3>
-        <a href="{{site.baseurl}}">starlingbank/starling-developer-sdk</a>
+        <a href="{{site.baseurl}}">Starling Developer SDK</a>
       </h3>
     </div>
   </div>
@@ -27,8 +27,7 @@
     {{ content }}
   </div>
   <div class="footer centered">
-    &copy; 2017 - {{site.time | date: "%Y"}},
-    Starling Bank <a href="https://developer.starlingbank.com">Starling Developers</a>.
+    &copy; 2017 Starling Bank – <a href="https://developer.starlingbank.com">Starling Developers</a>.
   </div>
   {% include scripts.html %}
 </body>
