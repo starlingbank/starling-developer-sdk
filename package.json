@@ -16,7 +16,7 @@
     "url": "git+https://github.com/starlingbank/starling-developer-sdk.git"
   },
   "keywords": [
-    "starlingbank"
+    "starlingbank, starling, bank, open, API, SDK"
   ],
   "babel": {
     "presets": [
