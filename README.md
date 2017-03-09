@@ -30,7 +30,7 @@ client.getBalance()
 Install dependencies as follows
 
 ```bash
-$ yarn install
+$ yarn install --save
 ```
 
 The following scripts are at your disposal:

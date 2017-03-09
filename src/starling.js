@@ -80,23 +80,27 @@ class Starling {
    *   defaults to one month in past if not provided)
    * @param {string} toDate - filter transactions before this date. Format: YYYY-MM-DD (optional,
    *   defaults to current date if not provided)
+   * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
+   * If not specified, results are not filtered by source.
    * @param {string=} accessToken - the oauth bearer token.  If not
    * specified, the accessToken on the options object is used.
    * @return {Promise} - the http request promise
    */
-  getTransactions (fromDate, toDate, accessToken = this.config.accessToken) {
-    return this.transaction.getTransactions(fromDate, toDate, accessToken);
+  getTransactions (fromDate, toDate, source = '', accessToken = this.config.accessToken) {
+    return this.transaction.getTransactions(fromDate, toDate, source, accessToken);
   }
 
   /**
    * Gets the full details of a single transaction
    * @param {string} transactionID - the unique transaction ID
+   * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
+   * If not specified, only generic transaction information will be returned.
    * @param {string=} accessToken - the oauth bearer token.  If not
    * specified, the accessToken on the options object is used.
    * @return {Promise} - the http request promise
    */
-  getTransaction (transactionID, accessToken = this.config.accessToken) {
-    return this.transaction.getTransaction(transactionID, accessToken);
+  getTransaction (transactionID, source = '', accessToken = this.config.accessToken) {
+    return this.transaction.getTransaction(transactionID, source, accessToken);
   }
 
   /**

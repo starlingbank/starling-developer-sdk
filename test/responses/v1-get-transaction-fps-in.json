@@ -1,0 +1,9 @@
+{
+  "id": "3d532dfb-9b2f-4e6b-b004-e94fc86c30fe",
+  "currency": "GBP",
+  "amount": 954.23,
+  "direction": "INBOUND",
+  "created": "2017-03-06T12:39:52.68Z",
+  "reference": "Rent",
+  "source": "FASTER_PAYMENTS_IN"
+}

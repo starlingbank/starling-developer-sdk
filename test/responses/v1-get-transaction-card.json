@@ -1,0 +1,13 @@
+{
+  "id": "77b7d507-6546-4301-a841-fbf570de65c6",
+  "currency": "GBP",
+  "amount": -15.15,
+  "direction": "OUTBOUND",
+  "created": "2017-01-06T12:39:54.246Z",
+  "reference": "PRET",
+  "source": "MASTER_CARD",
+  "mastercardTransactionMethod": "CHIP_AND_PIN",
+  "status": "SETTLED",
+  "sourceAmount": -17.11,
+  "sourceCurrency": "EUR"
+}

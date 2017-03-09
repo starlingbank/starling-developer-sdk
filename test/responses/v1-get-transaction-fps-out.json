@@ -1,0 +1,15 @@
+{
+  "id": "b5c65fd2-1795-4262-93f0-f0490759bf1f",
+  "currency": "GBP",
+  "amount": -36.01,
+  "direction": "OUTBOUND",
+  "created": "2017-03-02T12:39:54.936Z",
+  "reference": "Dinner",
+  "source": "FASTER_PAYMENTS_OUT",
+  "receivingContactId": "3bba29d4-35e5-4eb3-8aef-060ef526dcda",
+  "receivingContactAccountId": "3bba29d4-35e5-4eb3-8aef-060ef526dcda",
+  "receivingContactAccount": {
+    "href": "api/v1/contacts/3bba29d4-35e5-4eb3-8aef-060ef526dcda/accounts/3bba29d4-35e5-4eb3-8aef-060ef526dcda",
+    "templated": false
+  }
+}
