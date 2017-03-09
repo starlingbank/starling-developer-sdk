@@ -1,6 +1,6 @@
 {
   "name": "starling-developer-sdk",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Starling Bank Developer SDK",
   "main": "dist/components/starling.js",
   "scripts": {
