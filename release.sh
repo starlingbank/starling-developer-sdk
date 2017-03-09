@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Performs a relase of a new version of the library. This script will fail
+# Performs a release of a new version of the library. This script will fail
 # if the working directory is not clean (in git terms).
 
 # Ensure version is specified in script
@@ -8,6 +8,9 @@ if [ -z "$1" ]; then
    echo "You must specify a new version level: [patch, minor, major]";
    exit 1;
 fi
+
+#initial cleanup
+rm -rf docs/ out/ dist/
 
 # install dependencies and run build
 yarn install
