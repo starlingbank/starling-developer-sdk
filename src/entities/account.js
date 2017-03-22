@@ -1,6 +1,6 @@
 import axios from 'axios';
 import debug from 'debug';
-import {defaultHeaders} from './http';
+import {defaultHeaders} from '../utils/http';
 
 const log = debug('starling:account-service');
 

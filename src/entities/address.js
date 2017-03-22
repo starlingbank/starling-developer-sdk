@@ -1,16 +1,16 @@
 import axios from 'axios';
 import debug from 'debug';
-import {defaultHeaders} from './http';
+import {defaultHeaders} from '../utils/http';
 
-const log = debug('starling:contact-service');
+const log = debug('starling:address-service');
 
 /**
- * Service to interact with a customer's contacts (payees)
+ * Service to interact with a customer address
  */
-class Contact {
+class Address {
 
   /**
-   * Create a new contact service
+   * Creates an instance of the address client
    * @param {Object} options - configuration parameters
    */
   constructor (options) {
@@ -18,12 +18,12 @@ class Contact {
   }
 
   /**
-   * Gets the customer's contacts (payees)
+   * Retrieves a customer's address
    * @param {string} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
-  getContacts (accessToken) {
-    const url = `${this.options.apiUrl}/api/v1/contacts`;
+  getAddresses (accessToken) {
+    const url = `${this.options.apiUrl}/api/v1/addresses`;
     log(`GET ${url}`);
 
     return axios({
@@ -34,4 +34,4 @@ class Contact {
   }
 }
 
-module.exports = Contact;
+module.exports = Address;

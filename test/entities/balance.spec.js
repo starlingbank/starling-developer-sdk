@@ -1,12 +1,12 @@
 import nock from 'nock';
 import expect from 'must';
 import debug from 'debug';
-import {expectAuthorizationHeader} from './testSupport';
+import {expectAuthorizationHeader} from '../testSupport';
 
 const log = debug('starling:balance-test');
 
-import Starling from '../src/starling';
-import balance from './responses/v1-get-balance.json';
+import Starling from '../../src/starling';
+import balance from '../responses/v1-get-balance.json';
 
 describe('Balance', function() {
   this.timeout(30 * 1000);
