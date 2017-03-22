@@ -1,6 +1,6 @@
 import axios from 'axios';
 import debug from 'debug';
-import {defaultHeaders} from './http';
+import {defaultHeaders} from '../utils/http';
 
 const log = debug('starling:transaction-service');
 
@@ -56,14 +56,14 @@ class Transaction {
 
   /**
    * Gets the full details of a single transaction
-   * @param {string} transactionID - the unique transaction ID
+   * @param {string} transactionId - the unique transaction ID
    * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
    * If not specified, only generic transaction information will be returned.
    * @param {string} accessToken - the oauth bearer token
    * @return {Promise} - the http request promise
    */
-  getTransaction (transactionID, source, accessToken) {
-    const url = `${this.options.apiUrl}/api/v1/transactions${transactionSource(source)}/${transactionID}`;
+  getTransaction (transactionId, source, accessToken) {
+    const url = `${this.options.apiUrl}/api/v1/transactions${transactionSource(source)}/${transactionId}`;
     log(`GET ${url}`);
     return axios({
       method: 'GET',

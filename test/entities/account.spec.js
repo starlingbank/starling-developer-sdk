@@ -1,12 +1,12 @@
 import nock from 'nock';
 import expect from 'must';
 import debug from 'debug';
-import {expectAuthorizationHeader} from './testSupport';
+import {expectAuthorizationHeader} from '../testSupport';
 
 const log = debug('starling:account-test');
 
-import Starling from '../src/starling';
-import account from './responses/v1-get-accounts.json';
+import Starling from '../../src/starling';
+import account from '../responses/v1-get-accounts.json';
 
 describe('Account', function() {
   this.timeout(30 * 1000);

@@ -1,12 +1,12 @@
 import nock from 'nock';
 import expect from 'must';
 import debug from 'debug';
-import {expectAuthorizationHeader} from './testSupport';
+import {expectAuthorizationHeader} from '../testSupport';
 
 const log = debug('starling:card-test');
 
-import Starling from '../src/starling';
-import card from './responses/v1-get-card.json';
+import Starling from '../../src/starling';
+import card from '../responses/v1-get-card.json';
 
 describe('Card', function() {
   this.timeout(30 * 1000);

@@ -1,12 +1,12 @@
 import nock from 'nock';
 import expect from 'must';
 import debug from 'debug';
-import {expectAuthorizationHeader} from './testSupport';
+import {expectAuthorizationHeader} from '../testSupport';
 
 const log = debug('starling:contact-test');
 
-import Starling from '../src/starling';
-import getContactResponse from './responses/v1-get-contact.json';
+import Starling from '../../src/starling';
+import getContactResponse from '../responses/v1-get-contact.json';
 
 describe('Contact', function() {
   this.timeout(30 * 1000);

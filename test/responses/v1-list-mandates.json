@@ -1,0 +1,39 @@
+{
+  "_links": {
+    "self": {
+      "href": "api/v1/direct-debit/mandates",
+      "templated": false
+    }
+  },
+  "_embedded": {
+    "mandates": [
+      {
+        "uid": "0931e8a3-7b4a-4c2d-9729-df2296dde98",
+        "reference": "747338448",
+        "status": "LIVE",
+        "source": "ELECTRONIC",
+        "created": "2017-02-21T08:53:26.144Z",
+        "originatorName": "AFFINITY WATER LTD",
+        "originatorUid": "c44adbfe-779b-4afe-b03f-a861db75ab78"
+      },
+      {
+        "uid": "d645e090-d704-415e-84d6-e249f02aa642",
+        "reference": "18187876L02",
+        "status": "LIVE",
+        "source": "ELECTRONIC",
+        "created": "2017-02-02T09:05:15.771Z",
+        "originatorName": "ASSURANT DIRECT LTD",
+        "originatorUid": "3fd24317-2b24-4b6a-b8f9-3ab7f5ed00e0"
+      },
+      {
+        "uid": "0bc8e2a2-2d6a-451f-88c1-c3f298995c5d",
+        "reference": "854506825832",
+        "status": "LIVE",
+        "source": "ELECTRONIC",
+        "created": "2017-02-02T09:05:15.771Z",
+        "originatorName": "BRITISH GAS TRADING LTD",
+        "originatorUid": "34e06b0c-2be2-499e-8b01-89c801799b52"
+      }
+    ]
+  }
+}

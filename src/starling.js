@@ -1,10 +1,11 @@
-import Customer from './customer';
-import Account from './account';
-import Address from './address';
-import Transaction from './transaction';
-import Card from './card';
-import OAuth from './oauth';
-import Contact from './contact';
+import Customer from './entities/customer';
+import Account from './entities/account';
+import Address from './entities/address';
+import Transaction from './entities/transaction';
+import Card from './entities/card';
+import OAuth from './entities/oauth';
+import Contact from './entities/contact';
+import Mandate from './entities/mandate';
 
 /**
  * Facade to dispatch operations to services
@@ -29,6 +30,7 @@ class Starling {
     this.account = new Account(this.config);
     this.address = new Address(this.config);
     this.transaction = new Transaction(this.config);
+    this.mandate = new Mandate(this.config);
     this.contact = new Contact(this.config);
     this.card = new Card(this.config);
     this.oAuth = new OAuth(this.config);
@@ -86,21 +88,41 @@ class Starling {
    * specified, the accessToken on the options object is used.
    * @return {Promise} - the http request promise
    */
-  getTransactions (fromDate, toDate, source = '', accessToken = this.config.accessToken) {
+  getTransactions (fromDate, toDate, source, accessToken = this.config.accessToken) {
     return this.transaction.getTransactions(fromDate, toDate, source, accessToken);
   }
 
   /**
    * Gets the full details of a single transaction
-   * @param {string} transactionID - the unique transaction ID
+   * @param {string} transactionId - the unique transaction ID
    * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
    * If not specified, only generic transaction information will be returned.
    * @param {string=} accessToken - the oauth bearer token.  If not
    * specified, the accessToken on the options object is used.
    * @return {Promise} - the http request promise
    */
-  getTransaction (transactionID, source = '', accessToken = this.config.accessToken) {
-    return this.transaction.getTransaction(transactionID, source, accessToken);
+  getTransaction (transactionId, source = '', accessToken = this.config.accessToken) {
+    return this.transaction.getTransaction(transactionId, source, accessToken);
+  }
+
+  /**
+   * Gets the customer's current direct-debit mandates
+   * @param {string=} accessToken - the oauth bearer token.  If not
+   * specified, the accessToken on the options object is used.
+   * @return {Promise} - the http request promise
+   */
+  listMandates (accessToken = this.config.accessToken) {
+    return this.mandate.listMandates(accessToken);
+  }
+
+  /**
+   * Deletes specific direct debit mandate
+   * @param {string} mandateId - the unique mandate ID
+   * @param {string} accessToken - the oauth bearer token.
+   * @return {Promise} - the http request promise
+   */
+  deleteMandate (mandateId, accessToken = this.config.accessToken) {
+    return this.mandate.deleteMandate(mandateId, accessToken);
   }
 
   /**

@@ -1,16 +1,16 @@
 import nock from 'nock';
 import expect from 'must';
 import debug from 'debug';
-import {expectAuthorizationHeader} from './testSupport';
+import {expectAuthorizationHeader} from '../testSupport';
 
 const log = debug('starling:transaction-test');
 
-import Starling from '../src/starling';
-import getTransactionsResponse from './responses/v1-get-transactions.json';
-import getTransactionResponse from './responses/v1-get-transaction.json';
-import getTransactionFpsInResponse from './responses/v1-get-transaction-fps-in.json';
-import getTransactionFpsOutResponse from './responses/v1-get-transaction-fps-out.json';
-import getTransactionCardResponse from './responses/v1-get-transaction-card.json';
+import Starling from '../../src/starling';
+import getTransactionsResponse from '../responses/v1-get-transactions.json';
+import getTransactionResponse from '../responses/v1-get-transaction.json';
+import getTransactionFpsInResponse from '../responses/v1-get-transaction-fps-in.json';
+import getTransactionFpsOutResponse from '../responses/v1-get-transaction-fps-out.json';
+import getTransactionCardResponse from '../responses/v1-get-transaction-card.json';
 
 describe('GET Transaction(s)', function () {
   this.timeout(30 * 1000);

@@ -4,9 +4,9 @@ import debug from 'debug';
 
 const log = debug('starling:customer-test');
 
-import Starling from '../src/starling';
-import getCustomerResponse from './responses/v1-get-customers.json';
-import {expectAuthorizationHeader} from './testSupport';
+import Starling from '../../src/starling';
+import getCustomerResponse from '../responses/v1-get-customers.json';
+import {expectAuthorizationHeader} from '../testSupport';
 
 describe('Customer', function() {
   this.timeout(30 * 1000);
