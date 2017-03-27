@@ -1,6 +1,7 @@
 import axios from 'axios';
 import debug from 'debug';
 import {defaultHeaders} from '../utils/http';
+import {typeValidation} from '../utils/validator';
 
 const log = debug('starling:account-service');
 
@@ -23,6 +24,7 @@ class Account {
    * @return {Promise} - the http request promise
    */
   getAccount (accessToken) {
+    typeValidation(arguments, getAccountParameterDefinition);
     const url = `${this.options.apiUrl}/api/v1/accounts`;
     log(`GET ${url}`);
 
@@ -39,6 +41,7 @@ class Account {
    * @return {Promise} - the http request promise
    */
   getBalance (accessToken) {
+    typeValidation(arguments, getBalanceParameterDefinition);
     const url = `${this.options.apiUrl}/api/v1/accounts/balance`;
     log(`GET ${url}`);
 
@@ -49,5 +52,11 @@ class Account {
     });
   }
 }
+
+const getAccountParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']}];
+
+const getBalanceParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']}];
 
 module.exports = Account;

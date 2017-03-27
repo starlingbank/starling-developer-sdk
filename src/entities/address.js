@@ -1,6 +1,7 @@
 import axios from 'axios';
 import debug from 'debug';
 import {defaultHeaders} from '../utils/http';
+import {typeValidation} from '../utils/validator';
 
 const log = debug('starling:address-service');
 
@@ -23,6 +24,7 @@ class Address {
    * @return {Promise} - the http request promise
    */
   getAddresses (accessToken) {
+    typeValidation(arguments, getAddressParameterDefinition);
     const url = `${this.options.apiUrl}/api/v1/addresses`;
     log(`GET ${url}`);
 
@@ -33,5 +35,8 @@ class Address {
     });
   }
 }
+
+const getAddressParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']}];
 
 module.exports = Address;

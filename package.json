@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "gulp clean",
     "build": "gulp build",
-    "test": "mocha --opts test/mocha.opts test/*.spec.js test/entities/*spec.js",
+    "test": "mocha --opts test/mocha.opts test/*.spec.js test/entities/*spec.js test/utils/*spec.js",
     "test-verbose": "DEBUG=starling* npm test",
     "lint": "gulp lint",
     "make-docs": "node_modules/.bin/jsdoc -c .jsdoc.json --verbose"

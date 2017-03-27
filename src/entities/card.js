@@ -1,6 +1,7 @@
 import axios from 'axios';
 import debug from 'debug';
 import {defaultHeaders} from '../utils/http';
+import {typeValidation} from '../utils/validator';
 
 const log = debug('starling:card-service');
 
@@ -23,6 +24,7 @@ class Card {
    * @return {Promise} - the http request promise
    */
   getCard (accessToken) {
+    typeValidation(arguments, getCardParameterDefinition);
     const url = `${this.options.apiUrl}/api/v1/cards`;
     log(`GET ${url}`);
 
@@ -33,5 +35,8 @@ class Card {
     });
   }
 }
+
+const getCardParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']}];
 
 module.exports = Card;

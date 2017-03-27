@@ -1,6 +1,7 @@
 import axios from 'axios';
 import debug from 'debug';
 import {defaultHeaders} from '../utils/http';
+import {typeValidation} from '../utils/validator';
 
 const log = debug('starling:contact-service');
 
@@ -23,6 +24,7 @@ class Contact {
    * @return {Promise} - the http request promise
    */
   getContacts (accessToken) {
+    typeValidation(arguments, getContactsParameterDefinition);
     const url = `${this.options.apiUrl}/api/v1/contacts`;
     log(`GET ${url}`);
 
@@ -40,6 +42,7 @@ class Contact {
    * @return {Promise} - the http request promise
    */
   getContactAccount (accessToken, contactId) {
+    typeValidation(arguments, getContactAccountParameterDefinition);
     const url = `${this.options.apiUrl}/api/v1/contacts/${contactId}/accounts`;
     log(`GET ${url}`);
     return axios({
@@ -60,6 +63,7 @@ class Contact {
    * @return {Promise} - the http request promise
    */
   createContact (accessToken, name, accountType, accountNumber, sortCode, customerId) {
+    typeValidation(arguments, createContactParameterDefinition);
     const url = `${this.options.apiUrl}/api/v1/contacts`;
     log(`POST ${url}`);
     return axios({
@@ -76,5 +80,20 @@ class Contact {
     });
   }
 }
+
+const getContactsParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']}];
+
+const getContactAccountParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']},
+  {name: 'customerId', validations: ['required', 'string']}];
+
+const createContactParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']},
+  {name: 'name', validations: ['required', 'string']},
+  {name: 'accountType', validations: ['required', 'string']},
+  {name: 'accountNumber', validations: ['required', 'string']},
+  {name: 'sortCode', validations: ['required', 'string']},
+  {name: 'customerId', validations: ['optional', 'string']}];
 
 module.exports = Contact;

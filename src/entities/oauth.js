@@ -1,5 +1,6 @@
 import axios from 'axios';
 import debug from 'debug';
+import {typeValidation} from '../utils/validator';
 
 const ACCESS_TOKEN_GRANT_TYPE = 'authorization_code';
 const REFRESH_TOKEN_GRANT_TYPE = 'refresh_token';
@@ -26,6 +27,7 @@ class OAuth {
    * @return {Promise} - the http request promise
    */
   getAccessToken (authorizationCode) {
+    typeValidation(arguments, authorizationCodeParameterDefinition);
     return this.getOAuthToken({
       'code': authorizationCode,
       'grant_type': ACCESS_TOKEN_GRANT_TYPE,
@@ -42,6 +44,7 @@ class OAuth {
    * @return {Promise} - the http request promise
    */
   refreshAccessToken (refreshToken) {
+    typeValidation(arguments, refreshTokenParameterDefinition);
     return this.getOAuthToken({
       'refresh_token': refreshToken,
       'grant_type': REFRESH_TOKEN_GRANT_TYPE,
@@ -78,5 +81,13 @@ class OAuth {
     });
   }
 }
+
+const refreshTokenParameterDefinition = [
+  {name: 'refreshToken', validations: ['required', 'string']}
+];
+
+const authorizationCodeParameterDefinition = [
+  {name: 'authorizationCode', validations: ['required', 'string']}
+];
 
 module.exports = OAuth;

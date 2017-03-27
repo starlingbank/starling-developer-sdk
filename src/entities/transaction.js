@@ -1,6 +1,7 @@
 import axios from 'axios';
 import debug from 'debug';
 import {defaultHeaders} from '../utils/http';
+import {typeValidation} from '../utils/validator';
 
 const log = debug('starling:transaction-service');
 
@@ -40,6 +41,7 @@ class Transaction {
    * @return {Promise} - the http request promise
    */
   getTransactions (accessToken, fromDate, toDate, source) {
+    typeValidation(arguments, getTransactionsParameterDefinition);
     const url = `${this.options.apiUrl}/api/v1/transactions${transactionSource(source)}`;
     log(`GET ${url} from=${fromDate} to=${toDate}`);
 
@@ -63,6 +65,7 @@ class Transaction {
    * @return {Promise} - the http request promise
    */
   getTransaction (accessToken, transactionId, source) {
+    typeValidation(arguments, getTransactionParameterDefinition);
     const url = `${this.options.apiUrl}/api/v1/transactions${transactionSource(source)}/${transactionId}`;
     log(`GET ${url}`);
     return axios({
@@ -72,5 +75,18 @@ class Transaction {
     });
   }
 }
+
+const getTransactionsParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']},
+  {name: 'fromDate', validations: ['optional', 'string']},
+  {name: 'toDate', validations: ['optional', 'string']},
+  {name: 'source', validations: ['optional', 'string']}
+];
+
+const getTransactionParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']},
+  {name: 'transactionId', validations: ['required', 'string']},
+  {name: 'source', validations: ['optional', 'string']}
+];
 
 module.exports = Transaction;
