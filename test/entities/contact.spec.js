@@ -54,7 +54,7 @@ describe('Contact', function() {
 
   it('should retrieve a specific contact\'s account details', function(done) {
     starlingCli
-      .getContactAccount(contactId, accessToken)
+      .getContactAccount(accessToken, contactId)
       .then(function({data}) {
 
         const johnny = data.contactAccounts[0];
@@ -82,7 +82,7 @@ describe('Contact', function() {
 
   it('should create a new contact for the customer', function(done) {
     starlingCli
-      .createContact(name, accountType, accountNumber, sortCode, customerId, accessToken)
+      .createContact(accessToken, name, accountType, accountNumber, sortCode, customerId)
       .then(function({status}) {
         expect(status).to.be(202);
         done();

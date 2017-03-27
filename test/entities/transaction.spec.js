@@ -30,7 +30,7 @@ describe('GET Transaction(s)', function () {
       .reply(200, getTransactionsResponse);
 
     starlingCli
-      .getTransactions('2017-03-01', '2017-03-06', '', accessToken)
+      .getTransactions(accessToken,  '2017-03-01', '2017-03-06', '')
       .then(function ({data}) {
         const tx = data._embedded.transactions[1];
         expect(tx._links.detail.href).to.be('api/v1/transactions/mastercard/e336f58d-65ee-4248-84eb-ec4c88668f9e');
@@ -50,14 +50,14 @@ describe('GET Transaction(s)', function () {
 
   it('should retrieve a specific customer transaction w/o specifying source in path', function (done) {
 
-    let transactionID = '32b4d093-f3b3-45da-9f89-d6a1395ab397';
+    let transactionId = '32b4d093-f3b3-45da-9f89-d6a1395ab397';
     let noSource = '';
 
     nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
-      .get(`/api/v1/transactions/${transactionID}`)
+      .get(`/api/v1/transactions/${transactionId}`)
       .reply(200, getTransactionResponse);
 
-    starlingCli.getTransaction(transactionID, noSource, accessToken)
+    starlingCli.getTransaction(accessToken, transactionId, noSource)
       .then(function ({data}) {
         expect(data.id).to.be('32b4d093-f3b3-45da-9f89-d6a1395ab397');
         expect(data.currency).to.be('GBP');
@@ -74,14 +74,14 @@ describe('GET Transaction(s)', function () {
 
   it('should retrieve a specific customer incoming fps transaction', function (done) {
 
-    let transactionID = '3d532dfb-9b2f-4e6b-b004-e94fc86c30fe';
+    let transactionId = '3d532dfb-9b2f-4e6b-b004-e94fc86c30fe';
     let source = 'FASTER_PAYMENTS_IN';
 
     nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
-      .get(`/api/v1/transactions/fps/in/${transactionID}`)
+      .get(`/api/v1/transactions/fps/in/${transactionId}`)
       .reply(200, getTransactionFpsInResponse);
 
-    starlingCli.getTransaction(transactionID, source, accessToken)
+    starlingCli.getTransaction(accessToken, transactionId, source)
       .then(function ({data}) {
         expect(data.id).to.be('3d532dfb-9b2f-4e6b-b004-e94fc86c30fe');
         expect(data.currency).to.be('GBP');
@@ -98,14 +98,14 @@ describe('GET Transaction(s)', function () {
 
   it('should retrieve a specific customer outbound fps transaction', function (done) {
 
-    let transactionID = 'b5c65fd2-1795-4262-93f0-f0490759bf1f';
+    let transactionId = 'b5c65fd2-1795-4262-93f0-f0490759bf1f';
     let source = 'FASTER_PAYMENTS_OUT';
 
     nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
-      .get(`/api/v1/transactions/fps/out/${transactionID}`)
+      .get(`/api/v1/transactions/fps/out/${transactionId}`)
       .reply(200, getTransactionFpsOutResponse);
 
-    starlingCli.getTransaction(transactionID, source, accessToken)
+    starlingCli.getTransaction(accessToken, transactionId, source)
       .then(function ({data}) {
         expect(data.id).to.be('b5c65fd2-1795-4262-93f0-f0490759bf1f');
         expect(data.currency).to.be('GBP');
@@ -126,14 +126,14 @@ describe('GET Transaction(s)', function () {
 
   it('should retrieve a specific customer card transaction', function (done) {
 
-    let transactionID = '77b7d507-6546-4301-a841-fbf570de65c6';
+    let transactionId = '77b7d507-6546-4301-a841-fbf570de65c6';
     let source = 'MASTER_CARD';
 
     nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
-      .get(`/api/v1/transactions/mastercard/${transactionID}`)
+      .get(`/api/v1/transactions/mastercard/${transactionId}`)
       .reply(200, getTransactionCardResponse);
 
-    starlingCli.getTransaction(transactionID, source, accessToken)
+    starlingCli.getTransaction(accessToken, transactionId, source)
       .then(function ({data}) {
         expect(data.id).to.be('77b7d507-6546-4301-a841-fbf570de65c6');
         expect(data.currency).to.be('GBP');

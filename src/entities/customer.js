@@ -1,6 +1,7 @@
 import axios from 'axios';
 import debug from 'debug';
 import {defaultHeaders} from '../utils/http';
+import {typeValidation} from '../utils/validator';
 
 const log = debug('starling:customer-service');
 
@@ -23,6 +24,7 @@ class Customer {
    * @return {Promise} - the http request promise
    */
   getCustomer (accessToken) {
+    typeValidation(arguments, getCustomerParameterDefinition);
     const url = `${this.options.apiUrl}/api/v1/customers`;
     log(`GET ${url}`);
 
@@ -33,5 +35,9 @@ class Customer {
     });
   }
 }
+
+const getCustomerParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']}
+  ];
 
 module.exports = Customer;
