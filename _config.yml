@@ -5,3 +5,5 @@ baseurl: /starling-developer-sdk
 git_repo: https://github.com/starlingbank/starling-developer-sdk
 exclude:
   - lib/gh-board
+
+theme: jekyll-theme-midnight
