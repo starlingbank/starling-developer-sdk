@@ -6,7 +6,8 @@ import {expectAuthorizationHeader} from '../testSupport';
 const log = debug('starling:contact-test');
 
 import Starling from '../../src/starling';
-import getContactResponse from '../responses/v1-get-contact.json';
+import getContactsResponse from '../responses/v1-get-contacts.json';
+import getContactAccountResponse from '../responses/v1-get-contact-account.json';
 
 describe('Contact', function() {
   this.timeout(30 * 1000);
@@ -19,7 +20,7 @@ describe('Contact', function() {
 
   nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
       .get('/api/v1/contacts')
-      .reply(200, getContactResponse);
+      .reply(200, getContactsResponse);
 
   it('should retrieve the customer\'s contacts', function(done) {
     starlingCli
@@ -42,6 +43,51 @@ describe('Contact', function() {
           done();
         })
         .catch(done);
+  });
+
+
+  const contactId = 'fc17e7d5-ff2c-4a3c-8f64-9ac93d80de62';
+
+  nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+    .get(`/api/v1/contacts/${contactId}/accounts`)
+    .reply(200, getContactAccountResponse);
+
+  it('should retrieve a specific contact\'s account details', function(done) {
+    starlingCli
+      .getContactAccount(contactId, accessToken)
+      .then(function({data}) {
+
+        const johnny = data.contactAccounts[0];
+        expect(johnny.id).to.be('a47ace5b-41d5-4e51-b9cb-c3b493cb1696');
+        expect(johnny.name).to.be('Johnny Boy');
+        expect(johnny.self.href).to.be('api/v1/contacts/a47ace5b-41d5-4e51-b9cb-c3b493cb1696/accounts/a47ace5b-41d5-4e51-b9cb-c3b493cb1696');
+
+        log(JSON.stringify(data));
+
+        done();
+      })
+      .catch(done);
+  });
+
+
+  const name = 'Mickey Mouse';
+  const accountType = '3';
+  const accountNumber = '87654321';
+  const sortCode = '60-83-71';
+  const customerId = '2022a9c9-01fa-4c8d-ab19-daec80d7a111';
+
+  nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+    .post('/api/v1/contacts')
+    .reply(202);
+
+  it('should create a new contact for the customer', function(done) {
+    starlingCli
+      .createContact(name, accountType, accountNumber, sortCode, customerId, accessToken)
+      .then(function({status}) {
+        expect(status).to.be(202);
+        done();
+      })
+      .catch(done);
   });
 
 });

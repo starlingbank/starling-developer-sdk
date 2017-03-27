@@ -41,3 +41,4 @@ echo $VERSION >> _data/versions.csv
 git add .
 git commit -m "Adding docs for version v$VERSION"
 git push
+git checkout master
