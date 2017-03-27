@@ -78,31 +78,31 @@ class Starling {
 
   /**
    * Gets the customer's transaction history
+   * @param {string=} accessToken - the oauth bearer token.  If not
+   * specified, the accessToken on the options object is used.
    * @param {string} fromDate - filter transactions after this date. Format: YYYY-MM-DD (optional,
-   *   defaults to one month in past if not provided)
+   *   defaults to most recent 100 transactions)
    * @param {string} toDate - filter transactions before this date. Format: YYYY-MM-DD (optional,
    *   defaults to current date if not provided)
    * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
    * If not specified, results are not filtered by source.
-   * @param {string=} accessToken - the oauth bearer token.  If not
-   * specified, the accessToken on the options object is used.
    * @return {Promise} - the http request promise
    */
-  getTransactions (fromDate, toDate, source, accessToken = this.config.accessToken) {
-    return this.transaction.getTransactions(fromDate, toDate, source, accessToken);
+  getTransactions (accessToken = this.config.accessToken, fromDate, toDate, source) {
+    return this.transaction.getTransactions(accessToken, fromDate, toDate, source);
   }
 
   /**
    * Gets the full details of a single transaction
+   * @param {string=} accessToken - the oauth bearer token.  If not
+   * specified, the accessToken on the options object is used.
    * @param {string} transactionId - the unique transaction ID
    * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
    * If not specified, only generic transaction information will be returned.
-   * @param {string=} accessToken - the oauth bearer token.  If not
-   * specified, the accessToken on the options object is used.
    * @return {Promise} - the http request promise
    */
-  getTransaction (transactionId, source = '', accessToken = this.config.accessToken) {
-    return this.transaction.getTransaction(transactionId, source, accessToken);
+  getTransaction (accessToken = this.config.accessToken, transactionId, source) {
+    return this.transaction.getTransaction(accessToken, transactionId, source);
   }
 
   /**
@@ -117,22 +117,45 @@ class Starling {
 
   /**
    * Deletes specific direct debit mandate
-   * @param {string} mandateId - the unique mandate ID
    * @param {string} accessToken - the oauth bearer token.
+   * @param {string} mandateId - the unique mandate ID
    * @return {Promise} - the http request promise
    */
-  deleteMandate (mandateId, accessToken = this.config.accessToken) {
-    return this.mandate.deleteMandate(mandateId, accessToken);
+  deleteMandate (accessToken = this.config.accessToken, mandateId) {
+    return this.mandate.deleteMandate(accessToken, mandateId);
   }
 
   /**
-   * Gets the customer's balance
-   * @param {string=} accessToken - the oauth bearer token.  If not
-   * specified, the accessToken on the options object is used.
+   * Gets the customer's contacts (payees)
+   * @param {string} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
   getContacts (accessToken = this.config.accessToken) {
     return this.contact.getContacts(accessToken);
+  }
+
+  /**
+   * Gets a specific contact (payee)
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} contactId - the contact's ID.
+   * @return {Promise} - the http request promise
+   */
+  getContactAccount (accessToken = this.config.accessToken, contactId) {
+    return this.contact.getContactAccount(accessToken, contactId);
+  }
+
+  /**
+   * Creates a contact (payee) for the customer
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} name - the name of the new contact.
+   * @param {string=} accountType - the account type (domestic or international), optional and defaults to UK_ACCOUNT_AND_SORT_CODE.
+   * @param {string} accountNumber - the contact's bank account number.
+   * @param {string} sortCode - the contact's sort code.
+   * @param {string} customerId - the customer's ID.
+   * @return {Promise} - the http request promise
+   */
+  createContact (accessToken = this.config.accessToken, name, accountType = 'UK_ACCOUNT_AND_SORT_CODE', accountNumber, sortCode, customerId) {
+    return this.contact.createContact(accessToken, name, accountType, accountNumber, sortCode, customerId);
   }
 
   /**

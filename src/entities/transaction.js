@@ -32,14 +32,14 @@ class Transaction {
 
   /**
    * Gets the customer's transactions over the given period
+   * @param {string} accessToken - the oauth bearer token.
    * @param {string} fromDate - filter transactions after this date. Format: YYYY-MM-DD
    * @param {string} toDate - filter transactions before this date. Format: YYYY-MM-DD
    * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
    * If not specified, results are not filtered by source.
-   * @param {string} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
-  getTransactions (fromDate, toDate, source, accessToken) {
+  getTransactions (accessToken, fromDate, toDate, source) {
     const url = `${this.options.apiUrl}/api/v1/transactions${transactionSource(source)}`;
     log(`GET ${url} from=${fromDate} to=${toDate}`);
 
@@ -56,13 +56,13 @@ class Transaction {
 
   /**
    * Gets the full details of a single transaction
+   * @param {string} accessToken - the oauth bearer token
    * @param {string} transactionId - the unique transaction ID
    * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
    * If not specified, only generic transaction information will be returned.
-   * @param {string} accessToken - the oauth bearer token
    * @return {Promise} - the http request promise
    */
-  getTransaction (transactionId, source, accessToken) {
+  getTransaction (accessToken, transactionId, source) {
     const url = `${this.options.apiUrl}/api/v1/transactions${transactionSource(source)}/${transactionId}`;
     log(`GET ${url}`);
     return axios({

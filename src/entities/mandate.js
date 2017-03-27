@@ -34,11 +34,11 @@ class Mandate {
 
   /**
    * Deletes specific direct debit mandate
-   * @param {string} mandateId - the unique mandate ID
    * @param {string} accessToken - the oauth bearer token.
+   * @param {string} mandateId - the unique mandate ID
    * @return {Promise} - the http request promise
    */
-  deleteMandate (mandateId, accessToken) {
+  deleteMandate (accessToken, mandateId) {
     const url = `${this.options.apiUrl}/api/v1/direct-debit/mandates/${mandateId}`;
     log(`GET ${url}`);
     return axios({
