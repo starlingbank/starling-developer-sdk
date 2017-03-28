@@ -12,8 +12,8 @@ import uglify from 'gulp-uglify';
 
 const ALL_SOURCES = [
   '*.js',
-  'src/*.js',
-  'test/*.js'
+  'src/**/*.js',
+  'test/**/*.js',
 ];
 
 gulp.task('lint', function() {
@@ -67,7 +67,7 @@ gulp.task('build:external:debug', function() {
   return buildBundle(externalConfig, '.js', false);
 });
 gulp.task('build:components', function() {
-  return gulp.src('src/*.js')
+  return gulp.src('src/**')
       .pipe(sourcemaps.init())
       .pipe(babel())
       .pipe(sourcemaps.write('.'))
