@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>starling.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Account.html">Account</a><ul class='methods'><li data-type='method'><a href="Account.html#getAccount">getAccount</a></li><li data-type='method'><a href="Account.html#getBalance">getBalance</a></li></ul></li><li><a href="Address.html">Address</a><ul class='methods'><li data-type='method'><a href="Address.html#getAddresses">getAddresses</a></li></ul></li><li><a href="Card.html">Card</a><ul class='methods'><li data-type='method'><a href="Card.html#getCard">getCard</a></li></ul></li><li><a href="Contact.html">Contact</a><ul class='methods'><li data-type='method'><a href="Contact.html#createContact">createContact</a></li><li data-type='method'><a href="Contact.html#getContactAccount">getContactAccount</a></li><li data-type='method'><a href="Contact.html#getContacts">getContacts</a></li></ul></li><li><a href="Customer.html">Customer</a><ul class='methods'><li data-type='method'><a href="Customer.html#getCustomer">getCustomer</a></li></ul></li><li><a href="Mandate.html">Mandate</a><ul class='methods'><li data-type='method'><a href="Mandate.html#deleteMandate">deleteMandate</a></li><li data-type='method'><a href="Mandate.html#listMandates">listMandates</a></li></ul></li><li><a href="OAuth.html">OAuth</a><ul class='methods'><li data-type='method'><a href="OAuth.html#getAccessToken">getAccessToken</a></li><li data-type='method'><a href="OAuth.html#getOAuthToken">getOAuthToken</a></li><li data-type='method'><a href="OAuth.html#refreshAccessToken">refreshAccessToken</a></li></ul></li><li><a href="Starling.html">Starling</a><ul class='methods'><li data-type='method'><a href="Starling.html#createContact">createContact</a></li><li data-type='method'><a href="Starling.html#deleteMandate">deleteMandate</a></li><li data-type='method'><a href="Starling.html#getAccessToken">getAccessToken</a></li><li data-type='method'><a href="Starling.html#getAccount">getAccount</a></li><li data-type='method'><a href="Starling.html#getAddresses">getAddresses</a></li><li data-type='method'><a href="Starling.html#getBalance">getBalance</a></li><li data-type='method'><a href="Starling.html#getCard">getCard</a></li><li data-type='method'><a href="Starling.html#getContactAccount">getContactAccount</a></li><li data-type='method'><a href="Starling.html#getContacts">getContacts</a></li><li data-type='method'><a href="Starling.html#getCustomer">getCustomer</a></li><li data-type='method'><a href="Starling.html#getTransaction">getTransaction</a></li><li data-type='method'><a href="Starling.html#getTransactions">getTransactions</a></li><li data-type='method'><a href="Starling.html#listMandates">listMandates</a></li><li data-type='method'><a href="Starling.html#refreshAccessToken">refreshAccessToken</a></li></ul></li><li><a href="Transaction.html">Transaction</a><ul class='methods'><li data-type='method'><a href="Transaction.html#getTransaction">getTransaction</a></li><li data-type='method'><a href="Transaction.html#getTransactions">getTransactions</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">starling.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Customer from './entities/customer';
+import Account from './entities/account';
+import Address from './entities/address';
+import Transaction from './entities/transaction';
+import Card from './entities/card';
+import OAuth from './entities/oauth';
+import Contact from './entities/contact';
+import Mandate from './entities/mandate';
+
+/**
+ * Facade to dispatch operations to services
+ */
+class Starling {
+
+  /**
+   * Create an instance of the starling client
+   * @param {Object=} options - configuration parameters
+   */
+  constructor (options) {
+    const defaults = {
+      apiUrl: 'https://api.starlingbank.com',
+      oauthUrl: 'https://oauth.starlingbank.com',
+      clientId: '',
+      clientSecret: ''
+    };
+
+    this.config = Object.assign({}, defaults, options);
+
+    this.customer = new Customer(this.config);
+    this.account = new Account(this.config);
+    this.address = new Address(this.config);
+    this.transaction = new Transaction(this.config);
+    this.mandate = new Mandate(this.config);
+    this.contact = new Contact(this.config);
+    this.card = new Card(this.config);
+    this.oAuth = new OAuth(this.config);
+  }
+
+  /**
+   * Gets the customer's details
+   * @param {string=} accessToken - the oauth bearer token. If not
+   * specified, the accessToken on the options object is used.
+   * @return {Promise} - the http request promise
+   */
+  getCustomer (accessToken = this.config.accessToken) {
+    return this.customer.getCustomer(accessToken);
+  }
+
+  /**
+   * Gets the customer's account details
+   * @param {string=} accessToken - the oauth bearer token.  If not
+   * specified, the accessToken on the options object is used.
+   * @return {Promise} - the http request promise
+   */
+  getAccount (accessToken = this.config.accessToken) {
+    return this.account.getAccount(accessToken);
+  }
+
+  /**
+   * Gets the customer's balance
+   * @param {string=} accessToken - the oauth bearer token.  If not
+   * specified, the accessToken on the options object is used.
+   * @return {Promise} - the http request promise
+   */
+  getBalance (accessToken = this.config.accessToken) {
+    return this.account.getBalance(accessToken);
+  }
+
+  /**
+   * Gets the customer's addresses (current and previous)
+   * @param {string=} accessToken - the oauth bearer token.  If not
+   * specified, the accessToken on the options object is used.
+   * @return {Promise} - the http request promise
+   */
+  getAddresses (accessToken = this.config.accessToken) {
+    return this.address.getAddresses(accessToken);
+  }
+
+  /**
+   * Gets the customer's transaction history
+   * @param {string=} accessToken - the oauth bearer token.  If not
+   * specified, the accessToken on the options object is used.
+   * @param {string} fromDate - filter transactions after this date. Format: YYYY-MM-DD (optional,
+   *   defaults to most recent 100 transactions)
+   * @param {string} toDate - filter transactions before this date. Format: YYYY-MM-DD (optional,
+   *   defaults to current date if not provided)
+   * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
+   * If not specified, results are not filtered by source.
+   * @return {Promise} - the http request promise
+   */
+  getTransactions (accessToken = this.config.accessToken, fromDate, toDate, source) {
+    return this.transaction.getTransactions(accessToken, fromDate, toDate, source);
+  }
+
+  /**
+   * Gets the full details of a single transaction
+   * @param {string=} accessToken - the oauth bearer token.  If not
+   * specified, the accessToken on the options object is used.
+   * @param {string} transactionId - the unique transaction ID
+   * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
+   * If not specified, only generic transaction information will be returned.
+   * @return {Promise} - the http request promise
+   */
+  getTransaction (accessToken = this.config.accessToken, transactionId, source) {
+    return this.transaction.getTransaction(accessToken, transactionId, source);
+  }
+
+  /**
+   * Gets the customer's current direct-debit mandates
+   * @param {string=} accessToken - the oauth bearer token.  If not
+   * specified, the accessToken on the options object is used.
+   * @return {Promise} - the http request promise
+   */
+  listMandates (accessToken = this.config.accessToken) {
+    return this.mandate.listMandates(accessToken);
+  }
+
+  /**
+   * Deletes specific direct debit mandate
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} mandateId - the unique mandate ID
+   * @return {Promise} - the http request promise
+   */
+  deleteMandate (accessToken = this.config.accessToken, mandateId) {
+    return this.mandate.deleteMandate(accessToken, mandateId);
+  }
+
+  /**
+   * Gets the customer's contacts (payees)
+   * @param {string} accessToken - the oauth bearer token.
+   * @return {Promise} - the http request promise
+   */
+  getContacts (accessToken = this.config.accessToken) {
+    return this.contact.getContacts(accessToken);
+  }
+
+  /**
+   * Gets a specific contact (payee)
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} contactId - the contact's ID.
+   * @return {Promise} - the http request promise
+   */
+  getContactAccount (accessToken = this.config.accessToken, contactId) {
+    return this.contact.getContactAccount(accessToken, contactId);
+  }
+
+  /**
+   * Creates a contact (payee) for the customer
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} name - the name of the new contact.
+   * @param {string=} accountType - the account type (domestic or international), optional and defaults to UK_ACCOUNT_AND_SORT_CODE.
+   * @param {string} accountNumber - the contact's bank account number.
+   * @param {string} sortCode - the contact's sort code.
+   * @param {string} customerId - the customer's ID.
+   * @return {Promise} - the http request promise
+   */
+  createContact (accessToken = this.config.accessToken, name, accountType = 'UK_ACCOUNT_AND_SORT_CODE', accountNumber, sortCode, customerId) {
+    return this.contact.createContact(accessToken, name, accountType, accountNumber, sortCode, customerId);
+  }
+
+  /**
+   * Gets the customer's card
+   * @param {string=} accessToken - the oauth bearer token.  If not
+   * specified, the accessToken on the options object is used.
+   * @return {Promise} - the http request promise
+   */
+  getCard (accessToken = this.config.accessToken) {
+    return this.card.getCard(accessToken);
+  }
+
+  /**
+   * Exchanges the authorization code for an access token
+   * @param {string} authorizationCode - the authorization code, acquired from the user agent after the
+   * user authenticates with starling
+   * @return {Promise} - the http request promise
+   */
+  getAccessToken (authorizationCode) {
+    return this.oAuth.getAccessToken(authorizationCode);
+  }
+
+  /**
+   * Exchanges the authorization code for an access token
+   * @param {string} refreshToken - the oauth refresh token, used to claim a new access token when the access token
+   * expires. A new refresh token is also returned.
+   * @return {Promise} - the http request promise
+   */
+  refreshAccessToken (refreshToken) {
+    return this.oAuth.refreshAccessToken(refreshToken);
+  }
+}
+
+module.exports = Starling;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Mar 28 2017 10:17:17 GMT+0100 (BST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
