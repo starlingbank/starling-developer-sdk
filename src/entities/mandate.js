@@ -43,9 +43,9 @@ class Mandate {
   deleteMandate (accessToken, mandateId) {
     typeValidation(arguments, deleteMandateParameterDefinition);
     const url = `${this.options.apiUrl}/api/v1/direct-debit/mandates/${mandateId}`;
-    log(`GET ${url}`);
+    log(`DELETE ${url}`);
     return axios({
-      method: 'GET',
+      method: 'DELETE',
       url,
       headers: defaultHeaders(accessToken)
     });

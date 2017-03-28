@@ -2,7 +2,7 @@
 
 :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
 
-The following is a set of guidelines for contributing to the SDK, which are hosted in the [Starling Bank Organization](https://github.com/starlingbank) on GitHub.
+The following is a set of guidelines for contributing to the SDK, which are hosted in the [Starling Bank](https://github.com/starlingbank) organisation on GitHub.
 These are guidelines not rules, so feel free to propose changes to this document in a pull request.
 
 ### Git Commit Messages

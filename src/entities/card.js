@@ -37,6 +37,7 @@ class Card {
 }
 
 const getCardParameterDefinition = [
-  {name: 'accessToken', validations: ['required', 'string']}];
+  {name: 'accessToken', validations: ['required', 'string']}
+  ];
 
 module.exports = Card;
