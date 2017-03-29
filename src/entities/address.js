@@ -37,6 +37,7 @@ class Address {
 }
 
 const getAddressParameterDefinition = [
-  {name: 'accessToken', validations: ['required', 'string']}];
+  {name: 'accessToken', validations: ['required', 'string']}
+  ];
 
 module.exports = Address;

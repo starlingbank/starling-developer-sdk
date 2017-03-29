@@ -54,9 +54,11 @@ class Account {
 }
 
 const getAccountParameterDefinition = [
-  {name: 'accessToken', validations: ['required', 'string']}];
+  {name: 'accessToken', validations: ['required', 'string']}
+  ];
 
 const getBalanceParameterDefinition = [
-  {name: 'accessToken', validations: ['required', 'string']}];
+  {name: 'accessToken', validations: ['required', 'string']}
+  ];
 
 module.exports = Account;

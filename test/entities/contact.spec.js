@@ -90,4 +90,19 @@ describe('Contact', function() {
       .catch(done);
   });
 
+
+  nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+    .delete(`/api/v1/contacts/${contactId}`)
+    .reply(204);
+
+  it('should delete the specified contact', function (done) {
+    starlingCli
+      .deleteContact(accessToken, contactId)
+      .then(function ({status}) {
+        expect(status).to.be(204);
+        done();
+      })
+      .catch(done);
+  });
+
 });

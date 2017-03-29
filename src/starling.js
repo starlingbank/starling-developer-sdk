@@ -5,6 +5,7 @@ import Transaction from './entities/transaction';
 import Card from './entities/card';
 import OAuth from './entities/oauth';
 import Contact from './entities/contact';
+import Payment from './entities/payment';
 import Mandate from './entities/mandate';
 
 /**
@@ -30,6 +31,7 @@ class Starling {
     this.account = new Account(this.config);
     this.address = new Address(this.config);
     this.transaction = new Transaction(this.config);
+    this.payment = new Payment(this.config);
     this.mandate = new Mandate(this.config);
     this.contact = new Contact(this.config);
     this.card = new Card(this.config);
@@ -126,6 +128,28 @@ class Starling {
   }
 
   /**
+   * Lists the customer's scheduled payments
+   * @param {string} accessToken - the oauth bearer token.
+   * @return {Promise} - the http request promise
+   */
+  listScheduledPayments (accessToken = this.config.accessToken) {
+    return this.payment.listScheduledPayments(accessToken);
+  }
+
+  /**
+   * Makes a payment on behalf of the customer to another UK bank account using the Faster Payments network
+   * @param {string} accessToken - the oauth bearer token.
+   *  @param {string} destinationAccountId - the account identifier of the recipient
+   * @param {string} reference - The payment reference, max. 18 characters.
+   * @param {string} amount - the amount to be send.
+   * @param {string=} currency - the currency, optional, defaults to "GBP".
+   * @return {Promise} - the http request promise
+   */
+  makeLocalPayment (accessToken = this.config.accessToken, destinationAccountId, reference, amount, currency = 'GBP') {
+    return this.payment.makeLocalPayment(accessToken, destinationAccountId, reference, amount, currency);
+  }
+
+  /**
    * Gets the customer's contacts (payees)
    * @param {string} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
@@ -156,6 +180,10 @@ class Starling {
    */
   createContact (accessToken = this.config.accessToken, name, accountType = 'UK_ACCOUNT_AND_SORT_CODE', accountNumber, sortCode, customerId) {
     return this.contact.createContact(accessToken, name, accountType, accountNumber, sortCode, customerId);
+  }
+
+  deleteContact (accessToken, contactId) {
+    return this.contact.deleteContact(accessToken, contactId);
   }
 
   /**

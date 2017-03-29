@@ -79,14 +79,34 @@ class Contact {
       }),
     });
   }
+
+
+  /**
+   * Deletes a specific contact (payee) from the customer's account
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} contactId - the Identifier of the contact to be deleted.
+   * @return {Promise} - the http request promise
+   */
+  deleteContact (accessToken, contactId) {
+    typeValidation(arguments, deleteContactParameterDefinition);
+    const url = `${this.options.apiUrl}/api/v1/contacts/${contactId}`;
+    log(`DELETE ${url}`);
+    return axios({
+      method: 'DELETE',
+      url,
+      headers: defaultHeaders(accessToken),
+    });
+  }
 }
 
 const getContactsParameterDefinition = [
-  {name: 'accessToken', validations: ['required', 'string']}];
+  {name: 'accessToken', validations: ['required', 'string']}
+  ];
 
 const getContactAccountParameterDefinition = [
   {name: 'accessToken', validations: ['required', 'string']},
-  {name: 'customerId', validations: ['required', 'string']}];
+  {name: 'contactId', validations: ['required', 'string']}
+  ];
 
 const createContactParameterDefinition = [
   {name: 'accessToken', validations: ['required', 'string']},
@@ -94,6 +114,12 @@ const createContactParameterDefinition = [
   {name: 'accountType', validations: ['required', 'string']},
   {name: 'accountNumber', validations: ['required', 'string']},
   {name: 'sortCode', validations: ['required', 'string']},
-  {name: 'customerId', validations: ['optional', 'string']}];
+  {name: 'customerId', validations: ['optional', 'string']}
+  ];
+
+const deleteContactParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']},
+  {name: 'contactId', validations: ['required', 'string']}
+];
 
 module.exports = Contact;
