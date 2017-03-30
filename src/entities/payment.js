@@ -29,14 +29,6 @@ class Payment {
    */
   makeLocalPayment (accessToken, destinationAccountId, reference, amount, currency) {
     typeValidation(arguments, makeLocalPaymentParameterDefinition);
-    console.log(JSON.stringify({
-      destinationAccountId,
-      payment: {
-        amount,
-        currency
-      },
-      reference
-    }));
     const url = `${this.options.apiUrl}/api/v1/payments/local`;
     log(`POST ${url}`);
     return axios({
