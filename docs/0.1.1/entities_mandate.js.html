@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>entities/mandate.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Account.html">Account</a><ul class='methods'><li data-type='method'><a href="Account.html#getAccount">getAccount</a></li><li data-type='method'><a href="Account.html#getBalance">getBalance</a></li></ul></li><li><a href="Address.html">Address</a><ul class='methods'><li data-type='method'><a href="Address.html#getAddresses">getAddresses</a></li></ul></li><li><a href="Card.html">Card</a><ul class='methods'><li data-type='method'><a href="Card.html#getCard">getCard</a></li></ul></li><li><a href="Contact.html">Contact</a><ul class='methods'><li data-type='method'><a href="Contact.html#createContact">createContact</a></li><li data-type='method'><a href="Contact.html#deleteContact">deleteContact</a></li><li data-type='method'><a href="Contact.html#getContactAccount">getContactAccount</a></li><li data-type='method'><a href="Contact.html#getContacts">getContacts</a></li></ul></li><li><a href="Customer.html">Customer</a><ul class='methods'><li data-type='method'><a href="Customer.html#getCustomer">getCustomer</a></li></ul></li><li><a href="Mandate.html">Mandate</a><ul class='methods'><li data-type='method'><a href="Mandate.html#deleteMandate">deleteMandate</a></li><li data-type='method'><a href="Mandate.html#listMandates">listMandates</a></li></ul></li><li><a href="OAuth.html">OAuth</a><ul class='methods'><li data-type='method'><a href="OAuth.html#getAccessToken">getAccessToken</a></li><li data-type='method'><a href="OAuth.html#getOAuthToken">getOAuthToken</a></li><li data-type='method'><a href="OAuth.html#refreshAccessToken">refreshAccessToken</a></li></ul></li><li><a href="Payment.html">Payment</a><ul class='methods'><li data-type='method'><a href="Payment.html#listScheduledPayments">listScheduledPayments</a></li><li data-type='method'><a href="Payment.html#makeLocalPayment">makeLocalPayment</a></li></ul></li><li><a href="Starling.html">Starling</a><ul class='methods'><li data-type='method'><a href="Starling.html#createContact">createContact</a></li><li data-type='method'><a href="Starling.html#deleteMandate">deleteMandate</a></li><li data-type='method'><a href="Starling.html#getAccessToken">getAccessToken</a></li><li data-type='method'><a href="Starling.html#getAccount">getAccount</a></li><li data-type='method'><a href="Starling.html#getAddresses">getAddresses</a></li><li data-type='method'><a href="Starling.html#getBalance">getBalance</a></li><li data-type='method'><a href="Starling.html#getCard">getCard</a></li><li data-type='method'><a href="Starling.html#getContactAccount">getContactAccount</a></li><li data-type='method'><a href="Starling.html#getContacts">getContacts</a></li><li data-type='method'><a href="Starling.html#getCustomer">getCustomer</a></li><li data-type='method'><a href="Starling.html#getTransaction">getTransaction</a></li><li data-type='method'><a href="Starling.html#getTransactions">getTransactions</a></li><li data-type='method'><a href="Starling.html#listMandates">listMandates</a></li><li data-type='method'><a href="Starling.html#listScheduledPayments">listScheduledPayments</a></li><li data-type='method'><a href="Starling.html#makeLocalPayment">makeLocalPayment</a></li><li data-type='method'><a href="Starling.html#refreshAccessToken">refreshAccessToken</a></li></ul></li><li><a href="Transaction.html">Transaction</a><ul class='methods'><li data-type='method'><a href="Transaction.html#getTransaction">getTransaction</a></li><li data-type='method'><a href="Transaction.html#getTransactions">getTransactions</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">entities/mandate.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from 'axios';
+import debug from 'debug';
+import {defaultHeaders} from '../utils/http';
+import {typeValidation} from '../utils/validator';
+
+const log = debug('starling:mandate-service');
+
+
+/**
+ * Service to interact with a customer's transactions
+ */
+class Mandate {
+  /**
+   * Create a new transaction service
+   * @param {Object} options - configuration parameters
+   */
+  constructor (options) {
+    this.options = options;
+  }
+
+  /**
+   * Gets a list of the customer's current direct debit mandates
+   * @param {string} accessToken - the oauth bearer token.
+   * @return {Promise} - the http request promise
+   */
+  listMandates (accessToken) {
+    typeValidation(arguments, listMandatesParameterDefinition);
+    const url = `${this.options.apiUrl}/api/v1/direct-debit/mandates`;
+    log(`GET ${url}`);
+    return axios({
+      method: 'GET',
+      url,
+      headers: defaultHeaders(accessToken)
+    });
+  }
+
+  /**
+   * Deletes specific direct debit mandate
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} mandateId - the unique mandate ID
+   * @return {Promise} - the http request promise
+   */
+  deleteMandate (accessToken, mandateId) {
+    typeValidation(arguments, deleteMandateParameterDefinition);
+    const url = `${this.options.apiUrl}/api/v1/direct-debit/mandates/${mandateId}`;
+    log(`DELETE ${url}`);
+    return axios({
+      method: 'DELETE',
+      url,
+      headers: defaultHeaders(accessToken)
+    });
+  }
+}
+
+const listMandatesParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']}
+];
+
+const deleteMandateParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']},
+  {name: 'mandateId', validations: ['required', 'string']}
+];
+
+module.exports = Mandate;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Mar 30 2017 11:11:15 GMT+0100 (BST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
