@@ -2,7 +2,7 @@
   "name": "starling-developer-sdk",
   "version": "0.0.12",
   "description": "Starling Bank Developer SDK",
-  "main": "dist/components/starling.js",
+  "main": "dist/starling.js",
   "scripts": {
     "clean": "gulp clean",
     "build": "gulp build",
