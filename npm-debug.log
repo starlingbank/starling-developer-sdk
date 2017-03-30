@@ -1,0 +1,157 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/node/7.5.0/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'publish' ]
+2 info using npm@4.1.2
+3 info using node@v7.5.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   escapedName: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/stephanblakeslee/Development/starling-developer-sdk',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/stephanblakeslee/.npm/starling-developer-sdk/0.1.0/package.tgz not in flight; packing
+9 verbose correctMkdir /Users/stephanblakeslee/.npm correctMkdir not in flight; initializing
+10 info lifecycle starling-developer-sdk@0.1.0~prepublish: starling-developer-sdk@0.1.0
+11 silly lifecycle starling-developer-sdk@0.1.0~prepublish: no script for prepublish, continuing
+12 info lifecycle starling-developer-sdk@0.1.0~prepare: starling-developer-sdk@0.1.0
+13 silly lifecycle starling-developer-sdk@0.1.0~prepare: no script for prepare, continuing
+14 verbose tar pack [ '/Users/stephanblakeslee/.npm/starling-developer-sdk/0.1.0/package.tgz',
+14 verbose tar pack   '/Users/stephanblakeslee/Development/starling-developer-sdk' ]
+15 verbose tarball /Users/stephanblakeslee/.npm/starling-developer-sdk/0.1.0/package.tgz
+16 verbose folder /Users/stephanblakeslee/Development/starling-developer-sdk
+17 verbose addLocalTarball adding from inside cache /Users/stephanblakeslee/.npm/starling-developer-sdk/0.1.0/package.tgz
+18 verbose correctMkdir /Users/stephanblakeslee/.npm correctMkdir not in flight; initializing
+19 silly cache afterAdd starling-developer-sdk@0.1.0
+20 verbose afterAdd /Users/stephanblakeslee/.npm/starling-developer-sdk/0.1.0/package/package.json not in flight; writing
+21 verbose correctMkdir /Users/stephanblakeslee/.npm correctMkdir not in flight; initializing
+22 verbose afterAdd /Users/stephanblakeslee/.npm/starling-developer-sdk/0.1.0/package/package.json written
+23 silly publish { name: 'starling-developer-sdk',
+23 silly publish   version: '0.1.0',
+23 silly publish   description: 'Starling Bank Developer SDK',
+23 silly publish   main: 'dist/starling.js',
+23 silly publish   scripts:
+23 silly publish    { clean: 'gulp clean',
+23 silly publish      build: 'gulp build',
+23 silly publish      test: 'mocha --opts test/mocha.opts test/*.spec.js test/entities/*spec.js test/utils/*spec.js',
+23 silly publish      'test-verbose': 'DEBUG=starling* npm test',
+23 silly publish      lint: 'gulp lint',
+23 silly publish      'make-docs': 'jsdoc -c .jsdoc.json --verbose' },
+23 silly publish   repository:
+23 silly publish    { type: 'git',
+23 silly publish      url: 'git+https://github.com/starlingbank/starling-developer-sdk.git' },
+23 silly publish   keywords: [ 'starlingbank, starling, bank, open, API, SDK' ],
+23 silly publish   babel:
+23 silly publish    { presets: [ 'es2015' ],
+23 silly publish      plugins: [ [Object] ],
+23 silly publish      env: { development: [Object] } },
+23 silly publish   files: [ 'dist/*' ],
+23 silly publish   dependencies:
+23 silly publish    { axios: '^0.10.0',
+23 silly publish      debug: '^2.2.0',
+23 silly publish      'es6-promise': '^3.0.2',
+23 silly publish      'js-base64': '^2.1.9',
+23 silly publish      utf8: '^2.1.1' },
+23 silly publish   devDependencies:
+23 silly publish    { 'babel-core': '^6.7.7',
+23 silly publish      'babel-plugin-transform-es2015-modules-umd': '^6.5.0',
+23 silly publish      'babel-preset-es2015': '^6.5.0',
+23 silly publish      'babel-register': '^6.7.2',
+23 silly publish      babelify: '^7.3.0',
+23 silly publish      browserify: '^13.0.0',
+23 silly publish      codecov: '^1.0.1',
+23 silly publish      del: '^2.2.0',
+23 silly publish      eslint: '^2.7.0',
+23 silly publish      'eslint-config-google': '^0.5.0',
+23 silly publish      'eslint-config-xo': '^0.15.4',
+23 silly publish      'eslint-plugin-mocha': '^2.2.0',
+23 silly publish      gulp: '^3.9.1',
+23 silly publish      'gulp-babel': '^6.1.2',
+23 silly publish      'gulp-eslint': '^2.0.0',
+23 silly publish      'gulp-jscs': '^3.0.2',
+23 silly publish      'gulp-jscs-stylish': '^1.3.0',
+23 silly publish      'gulp-rename': '^1.2.2',
+23 silly publish      'gulp-sourcemaps': '^1.6.0',
+23 silly publish      'gulp-uglify': '^1.5.1',
+23 silly publish      jsdoc: '^3.4.0',
+23 silly publish      minami: '^1.1.1',
+23 silly publish      mocha: '^3.0.2',
+23 silly publish      must: '^0.13.1',
+23 silly publish      nock: '^8.0.0',
+23 silly publish      'vinyl-buffer': '^1.0.0',
+23 silly publish      'vinyl-source-stream': '^1.1.0' },
+23 silly publish   license: 'ISC',
+23 silly publish   bugs: { url: 'https://github.com/starlingbank/starling-developer-sdk/issues' },
+23 silly publish   homepage: 'https://github.com/starlingbank/starling-developer-sdk#readme',
+23 silly publish   readme: '# Starling Javascript SDK \n\n## Documentation\n\nThe documentation for our SDK can be found <a href="https://starlingbank.github.io/starling-developer-sdk/">here</a>.\n\n\n## Installation\n\n```bash\n$ yarn add starling-developer-sdk\n```\n\n## Usage\n\n```javascript\nconst Starling = require(\'starling-developer-sdk\');\n\nconst client = new Starling({\n    accessToken: \'<oauth access token>\'\n});\n\nclient.getBalance()\n    .then(({data}) =>  console.log(data))\n    .catch(err => console.log(err));\n```\n\n## Developing the SDK\n\nInstall dependencies as follows\n\n```bash\n$ yarn install --save\n```\n\nThe following scripts are at your disposal:\n\n|`$ yarn <script>` | Description |\n|------------------|-----------|\n|`clean`|Removes the compiled code.|\n|`build`|Compiles the application to disk (`dist/` by default).|\n|`lint`|Lint all `.js` files.|\n|`test`|Runs unit tests with mocha.|\n|`test-verbose`|Runs unit tests with debug logging.|\n\n### Developing the docs locally\n\nYou can develop the docs locally by running a jekyll server. Checkout the gh-pages branch and execute\n\n```bash\n$ bundle install\n$ bundle exec jekyll serve\n```\n\nThis depends on ruby and bundler (see <a href="https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/"> here</a> for more info on Jekyll and Github Pages)\n',
+23 silly publish   readmeFilename: 'README.md',
+23 silly publish   gitHead: 'b094cb0c35b24b8c494723642b9eb4fe7af7dbcc',
+23 silly publish   _id: 'starling-developer-sdk@0.1.0',
+23 silly publish   _shasum: '1e858549323e33beea50dbc8e0397c4f5d75b150',
+23 silly publish   _from: '.' }
+24 info lifecycle starling-developer-sdk@0.1.0~prepublishOnly: starling-developer-sdk@0.1.0
+25 silly lifecycle starling-developer-sdk@0.1.0~prepublishOnly: no script for prepublishOnly, continuing
+26 verbose getPublishConfig undefined
+27 silly mapToRegistry name starling-developer-sdk
+28 silly mapToRegistry using default registry
+29 silly mapToRegistry registry https://registry.npmjs.org/
+30 silly mapToRegistry data Result {
+30 silly mapToRegistry   raw: 'starling-developer-sdk',
+30 silly mapToRegistry   scope: null,
+30 silly mapToRegistry   escapedName: 'starling-developer-sdk',
+30 silly mapToRegistry   name: 'starling-developer-sdk',
+30 silly mapToRegistry   rawSpec: '',
+30 silly mapToRegistry   spec: 'latest',
+30 silly mapToRegistry   type: 'tag' }
+31 silly mapToRegistry uri https://registry.npmjs.org/starling-developer-sdk
+32 verbose publish registryBase https://registry.npmjs.org/
+33 silly publish uploading /Users/stephanblakeslee/.npm/starling-developer-sdk/0.1.0/package.tgz
+34 verbose request uri https://registry.npmjs.org/starling-developer-sdk
+35 verbose request sending authorization for write operation
+36 info attempt registry request try #1 at 11:03:12
+37 verbose request using bearer token for auth
+38 verbose request id d3a25909f34a934b
+39 http request PUT https://registry.npmjs.org/starling-developer-sdk
+40 http 403 https://registry.npmjs.org/starling-developer-sdk
+41 verbose headers { 'content-type': 'application/json',
+41 verbose headers   'cache-control': 'max-age=300',
+41 verbose headers   'content-length': '95',
+41 verbose headers   'accept-ranges': 'bytes',
+41 verbose headers   date: 'Thu, 30 Mar 2017 10:03:14 GMT',
+41 verbose headers   via: '1.1 varnish',
+41 verbose headers   connection: 'keep-alive',
+41 verbose headers   'x-served-by': 'cache-ams4425-AMS',
+41 verbose headers   'x-cache': 'MISS',
+41 verbose headers   'x-cache-hits': '0',
+41 verbose headers   'x-timer': 'S1490868192.861011,VS0,VE1174',
+41 verbose headers   vary: 'Accept-Encoding' }
+42 verbose request invalidating /Users/stephanblakeslee/.npm/registry.npmjs.org/starling-developer-sdk on PUT
+43 error publish Failed PUT 403
+44 verbose stack Error: "You cannot publish over the previously published version 0.1.0." : starling-developer-sdk
+44 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:304:12)
+44 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:292:14)
+44 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:212:14)
+44 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:186:22)
+44 verbose stack     at emitTwo (events.js:106:13)
+44 verbose stack     at Request.emit (events.js:192:7)
+44 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1081:10)
+44 verbose stack     at emitOne (events.js:96:13)
+44 verbose stack     at Request.emit (events.js:189:7)
+44 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1001:12)
+45 verbose statusCode 403
+46 verbose pkgid starling-developer-sdk
+47 verbose cwd /Users/stephanblakeslee/Development/starling-developer-sdk
+48 error Darwin 16.5.0
+49 error argv "/usr/local/Cellar/node/7.5.0/bin/node" "/usr/local/bin/npm" "publish"
+50 error node v7.5.0
+51 error npm  v4.1.2
+52 error code E403
+53 error "You cannot publish over the previously published version 0.1.0." : starling-developer-sdk
+54 error If you need help, you may report this error at:
+54 error     <https://github.com/npm/npm/issues>
+55 verbose exit [ 1, true ]
