@@ -1,6 +1,16 @@
 docs/
 coverage/
 node_modules/
+test/
+_site/
 
 .DS_Store
 sauce.json
+
+.jsdoc.json
+_config.yml
+Gemfile
+Gemfile.lock
+release.sh
+index.md
+.idea
