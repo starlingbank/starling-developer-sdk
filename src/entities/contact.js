@@ -70,7 +70,7 @@ class Contact {
       method: 'POST',
       url,
       headers: postHeaders(accessToken),
-      body: JSON.stringify({
+      data: JSON.stringify({
         name,
         accountType,
         accountNumber,

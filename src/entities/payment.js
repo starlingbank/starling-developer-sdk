@@ -35,7 +35,7 @@ class Payment {
       method: 'POST',
       url,
       headers: postHeaders(accessToken),
-      body: JSON.stringify({
+      data: JSON.stringify({
         destinationAccountUid,
         payment: {
           amount,
