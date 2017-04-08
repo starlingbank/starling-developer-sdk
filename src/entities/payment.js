@@ -1,6 +1,6 @@
 import axios from 'axios';
 import debug from 'debug';
-import {defaultHeaders} from '../utils/http';
+import {defaultHeaders, postHeaders} from '../utils/http';
 import {typeValidation} from '../utils/validator';
 
 const log = debug('starling:payment-service');
@@ -34,7 +34,7 @@ class Payment {
     return axios({
       method: 'POST',
       url,
-      headers: defaultHeaders(accessToken),
+      headers: postHeaders(accessToken),
       body: JSON.stringify({
         destinationAccountId,
         payment: {
