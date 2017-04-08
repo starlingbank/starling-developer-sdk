@@ -17,7 +17,7 @@ describe('Payments', function () {
   });
 
 
-  const destinationAccountId = '11eb8d9b-386a-43ba-825d-7edee5c6b01a';
+  const destinationAccountUid = '11eb8d9b-386a-43ba-825d-7edee5c6b01a';
   const reference = 'Dinner';
   const amount = '10';
 
@@ -27,7 +27,7 @@ describe('Payments', function () {
 
   it('should instruct a payment on the customer\'s behalf', function (done) {
     starlingCli
-      .makeLocalPayment(accessToken, destinationAccountId, reference, amount)
+      .makeLocalPayment(accessToken, destinationAccountUid, reference, amount)
       .then(function ({status}) {
         expect(status).to.be(202);
         done();

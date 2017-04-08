@@ -21,13 +21,13 @@ class Payment {
   /**
    * Makes a payment on behalf of the customer to another UK bank account using the Faster Payments network
    * @param {string} accessToken - the oauth bearer token.
-   *  @param {string} destinationAccountId - the account identifier of the recipient
+   *  @param {string} destinationAccountUid - the account identifier of the recipient
    * @param {string} reference - The payment reference, max. 18 characters.
    * @param {string} amount - the amount to be send.
    * @param {string=} currency - the currency, optional, defaults to "GBP".
    * @return {Promise} - the http request promise
    */
-  makeLocalPayment (accessToken, destinationAccountId, reference, amount, currency) {
+  makeLocalPayment (accessToken, destinationAccountUid, reference, amount, currency) {
     typeValidation(arguments, makeLocalPaymentParameterDefinition);
     const url = `${this.options.apiUrl}/api/v1/payments/local`;
     log(`POST ${url}`);
@@ -36,7 +36,7 @@ class Payment {
       url,
       headers: postHeaders(accessToken),
       body: JSON.stringify({
-        destinationAccountId,
+        destinationAccountUid,
         payment: {
           amount,
           currency
@@ -66,7 +66,7 @@ class Payment {
 
 const makeLocalPaymentParameterDefinition = [
   {name: 'accessToken', validations: ['required', 'string']},
-  {name: 'destinationAccountId', validations: ['required', 'string']},
+  {name: 'destinationAccountUid', validations: ['required', 'string']},
   {name: 'reference', validations: ['required', 'string']},
   {name: 'amount', validations: ['required', 'string']},
   {name: 'currency', validations: ['optional', 'string']}
