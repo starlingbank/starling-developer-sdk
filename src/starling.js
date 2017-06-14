@@ -7,6 +7,7 @@ import OAuth from './entities/oauth';
 import Contact from './entities/contact';
 import Payment from './entities/payment';
 import Mandate from './entities/mandate';
+import WhoAmI from './entities/whoAmI';
 
 /**
  * Facade to dispatch operations to services
@@ -27,6 +28,7 @@ class Starling {
 
     this.config = Object.assign({}, defaults, options);
 
+    this.whoAmI = new WhoAmI(this.config);
     this.customer = new Customer(this.config);
     this.account = new Account(this.config);
     this.address = new Address(this.config);
@@ -36,6 +38,16 @@ class Starling {
     this.contact = new Contact(this.config);
     this.card = new Card(this.config);
     this.oAuth = new OAuth(this.config);
+  }
+
+  /**
+   * Gets the customer UUID and permissions corresponding to the access token passed
+   * @param {string=} accessToken - the oauth bearer token.  If not
+   * specified, the accessToken on the options object is used.
+   * @return {Promise} - the http request promise
+   */
+  getMe (accessToken = this.config.accessToken) {
+    return this.whoAmI.getMe(accessToken);
   }
 
   /**
