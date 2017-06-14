@@ -1,0 +1,11 @@
+{
+  "customerUid": "e0be8f6a-f239-40f8-a0b8-58205e722cd7",
+  "authenticated": true,
+  "expiresInSeconds": 3243,
+  "scopes": [
+    "account:read",
+    "balance:read",
+    "customer:read",
+    "transaction:read"
+  ]
+}
