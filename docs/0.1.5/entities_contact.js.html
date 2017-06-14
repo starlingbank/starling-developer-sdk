@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>entities/contact.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Account.html">Account</a><ul class='methods'><li data-type='method'><a href="Account.html#getAccount">getAccount</a></li><li data-type='method'><a href="Account.html#getBalance">getBalance</a></li></ul></li><li><a href="Address.html">Address</a><ul class='methods'><li data-type='method'><a href="Address.html#getAddresses">getAddresses</a></li></ul></li><li><a href="Card.html">Card</a><ul class='methods'><li data-type='method'><a href="Card.html#getCard">getCard</a></li></ul></li><li><a href="Contact.html">Contact</a><ul class='methods'><li data-type='method'><a href="Contact.html#createContact">createContact</a></li><li data-type='method'><a href="Contact.html#deleteContact">deleteContact</a></li><li data-type='method'><a href="Contact.html#getContactAccount">getContactAccount</a></li><li data-type='method'><a href="Contact.html#getContacts">getContacts</a></li></ul></li><li><a href="Customer.html">Customer</a><ul class='methods'><li data-type='method'><a href="Customer.html#getCustomer">getCustomer</a></li></ul></li><li><a href="Mandate.html">Mandate</a><ul class='methods'><li data-type='method'><a href="Mandate.html#deleteMandate">deleteMandate</a></li><li data-type='method'><a href="Mandate.html#listMandates">listMandates</a></li></ul></li><li><a href="OAuth.html">OAuth</a><ul class='methods'><li data-type='method'><a href="OAuth.html#getAccessToken">getAccessToken</a></li><li data-type='method'><a href="OAuth.html#getOAuthToken">getOAuthToken</a></li><li data-type='method'><a href="OAuth.html#refreshAccessToken">refreshAccessToken</a></li></ul></li><li><a href="Payment.html">Payment</a><ul class='methods'><li data-type='method'><a href="Payment.html#listScheduledPayments">listScheduledPayments</a></li><li data-type='method'><a href="Payment.html#makeLocalPayment">makeLocalPayment</a></li></ul></li><li><a href="Starling.html">Starling</a><ul class='methods'><li data-type='method'><a href="Starling.html#createContact">createContact</a></li><li data-type='method'><a href="Starling.html#deleteMandate">deleteMandate</a></li><li data-type='method'><a href="Starling.html#getAccessToken">getAccessToken</a></li><li data-type='method'><a href="Starling.html#getAccount">getAccount</a></li><li data-type='method'><a href="Starling.html#getAddresses">getAddresses</a></li><li data-type='method'><a href="Starling.html#getBalance">getBalance</a></li><li data-type='method'><a href="Starling.html#getCard">getCard</a></li><li data-type='method'><a href="Starling.html#getContactAccount">getContactAccount</a></li><li data-type='method'><a href="Starling.html#getContacts">getContacts</a></li><li data-type='method'><a href="Starling.html#getCustomer">getCustomer</a></li><li data-type='method'><a href="Starling.html#getMe">getMe</a></li><li data-type='method'><a href="Starling.html#getTransaction">getTransaction</a></li><li data-type='method'><a href="Starling.html#getTransactions">getTransactions</a></li><li data-type='method'><a href="Starling.html#listMandates">listMandates</a></li><li data-type='method'><a href="Starling.html#listScheduledPayments">listScheduledPayments</a></li><li data-type='method'><a href="Starling.html#makeLocalPayment">makeLocalPayment</a></li><li data-type='method'><a href="Starling.html#refreshAccessToken">refreshAccessToken</a></li></ul></li><li><a href="Transaction.html">Transaction</a><ul class='methods'><li data-type='method'><a href="Transaction.html#getTransaction">getTransaction</a></li><li data-type='method'><a href="Transaction.html#getTransactions">getTransactions</a></li></ul></li><li><a href="WhoAmI.html">WhoAmI</a><ul class='methods'><li data-type='method'><a href="WhoAmI.html#getMe">getMe</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">entities/contact.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from 'axios';
+import debug from 'debug';
+import {defaultHeaders, postHeaders} from '../utils/http';
+import {typeValidation} from '../utils/validator';
+
+const log = debug('starling:contact-service');
+
+/**
+ * Service to interact with a customer's contacts (payees)
+ */
+class Contact {
+
+  /**
+   * Create a new contact service
+   * @param {Object} options - configuration parameters
+   */
+  constructor (options) {
+    this.options = options;
+  }
+
+  /**
+   * Gets the customer's contacts (payees)
+   * @param {string} accessToken - the oauth bearer token.
+   * @return {Promise} - the http request promise
+   */
+  getContacts (accessToken) {
+    typeValidation(arguments, getContactsParameterDefinition);
+    const url = `${this.options.apiUrl}/api/v1/contacts`;
+    log(`GET ${url}`);
+
+    return axios({
+      method: 'GET',
+      url,
+      headers: defaultHeaders(accessToken)
+    });
+  }
+
+  /**
+   * Gets a specific contact's (payee) account details
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} contactId - the contact's ID.
+   * @return {Promise} - the http request promise
+   */
+  getContactAccount (accessToken, contactId) {
+    typeValidation(arguments, getContactAccountParameterDefinition);
+    const url = `${this.options.apiUrl}/api/v1/contacts/${contactId}/accounts`;
+    log(`GET ${url}`);
+    return axios({
+      method: 'GET',
+      url,
+      headers: defaultHeaders(accessToken)
+    });
+  }
+
+  /**
+   * Creates a contact (payee) for the customer
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} name - the name of the new contact.
+   * @param {string} accountType - the account type (domestic or international).
+   * @param {string} accountNumber - the contact's bank account number.
+   * @param {string} sortCode - the contact's sort code.
+   * @param {string} customerId - the customer's ID. (optional)
+   * @return {Promise} - the http request promise
+   */
+  createContact (accessToken, name, accountType, accountNumber, sortCode, customerId) {
+    typeValidation(arguments, createContactParameterDefinition);
+    const url = `${this.options.apiUrl}/api/v1/contacts`;
+    log(`POST ${url}`);
+    return axios({
+      method: 'POST',
+      url,
+      headers: postHeaders(accessToken),
+      data: JSON.stringify({
+        name,
+        accountType,
+        accountNumber,
+        sortCode,
+        customerId
+      }),
+    });
+  }
+
+
+  /**
+   * Deletes a specific contact (payee) from the customer's account
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} contactId - the Identifier of the contact to be deleted.
+   * @return {Promise} - the http request promise
+   */
+  deleteContact (accessToken, contactId) {
+    typeValidation(arguments, deleteContactParameterDefinition);
+    const url = `${this.options.apiUrl}/api/v1/contacts/${contactId}`;
+    log(`DELETE ${url}`);
+    return axios({
+      method: 'DELETE',
+      url,
+      headers: defaultHeaders(accessToken),
+    });
+  }
+}
+
+const getContactsParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']}
+  ];
+
+const getContactAccountParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']},
+  {name: 'contactId', validations: ['required', 'string']}
+  ];
+
+const createContactParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']},
+  {name: 'name', validations: ['required', 'string']},
+  {name: 'accountType', validations: ['required', 'string']},
+  {name: 'accountNumber', validations: ['required', 'string']},
+  {name: 'sortCode', validations: ['required', 'string']},
+  {name: 'customerId', validations: ['optional', 'string']}
+  ];
+
+const deleteContactParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']},
+  {name: 'contactId', validations: ['required', 'string']}
+];
+
+module.exports = Contact;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Jun 14 2017 16:15:08 GMT+0100 (BST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

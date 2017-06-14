@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Account.html">Account</a><ul class='methods'><li data-type='method'><a href="Account.html#getAccount">getAccount</a></li><li data-type='method'><a href="Account.html#getBalance">getBalance</a></li></ul></li><li><a href="Address.html">Address</a><ul class='methods'><li data-type='method'><a href="Address.html#getAddresses">getAddresses</a></li></ul></li><li><a href="Card.html">Card</a><ul class='methods'><li data-type='method'><a href="Card.html#getCard">getCard</a></li></ul></li><li><a href="Contact.html">Contact</a><ul class='methods'><li data-type='method'><a href="Contact.html#createContact">createContact</a></li><li data-type='method'><a href="Contact.html#deleteContact">deleteContact</a></li><li data-type='method'><a href="Contact.html#getContactAccount">getContactAccount</a></li><li data-type='method'><a href="Contact.html#getContacts">getContacts</a></li></ul></li><li><a href="Customer.html">Customer</a><ul class='methods'><li data-type='method'><a href="Customer.html#getCustomer">getCustomer</a></li></ul></li><li><a href="Mandate.html">Mandate</a><ul class='methods'><li data-type='method'><a href="Mandate.html#deleteMandate">deleteMandate</a></li><li data-type='method'><a href="Mandate.html#listMandates">listMandates</a></li></ul></li><li><a href="OAuth.html">OAuth</a><ul class='methods'><li data-type='method'><a href="OAuth.html#getAccessToken">getAccessToken</a></li><li data-type='method'><a href="OAuth.html#getOAuthToken">getOAuthToken</a></li><li data-type='method'><a href="OAuth.html#refreshAccessToken">refreshAccessToken</a></li></ul></li><li><a href="Payment.html">Payment</a><ul class='methods'><li data-type='method'><a href="Payment.html#listScheduledPayments">listScheduledPayments</a></li><li data-type='method'><a href="Payment.html#makeLocalPayment">makeLocalPayment</a></li></ul></li><li><a href="Starling.html">Starling</a><ul class='methods'><li data-type='method'><a href="Starling.html#createContact">createContact</a></li><li data-type='method'><a href="Starling.html#deleteMandate">deleteMandate</a></li><li data-type='method'><a href="Starling.html#getAccessToken">getAccessToken</a></li><li data-type='method'><a href="Starling.html#getAccount">getAccount</a></li><li data-type='method'><a href="Starling.html#getAddresses">getAddresses</a></li><li data-type='method'><a href="Starling.html#getBalance">getBalance</a></li><li data-type='method'><a href="Starling.html#getCard">getCard</a></li><li data-type='method'><a href="Starling.html#getContactAccount">getContactAccount</a></li><li data-type='method'><a href="Starling.html#getContacts">getContacts</a></li><li data-type='method'><a href="Starling.html#getCustomer">getCustomer</a></li><li data-type='method'><a href="Starling.html#getMe">getMe</a></li><li data-type='method'><a href="Starling.html#getTransaction">getTransaction</a></li><li data-type='method'><a href="Starling.html#getTransactions">getTransactions</a></li><li data-type='method'><a href="Starling.html#listMandates">listMandates</a></li><li data-type='method'><a href="Starling.html#listScheduledPayments">listScheduledPayments</a></li><li data-type='method'><a href="Starling.html#makeLocalPayment">makeLocalPayment</a></li><li data-type='method'><a href="Starling.html#refreshAccessToken">refreshAccessToken</a></li></ul></li><li><a href="Transaction.html">Transaction</a><ul class='methods'><li data-type='method'><a href="Transaction.html#getTransaction">getTransaction</a></li><li data-type='method'><a href="Transaction.html#getTransactions">getTransactions</a></li></ul></li><li><a href="WhoAmI.html">WhoAmI</a><ul class='methods'><li data-type='method'><a href="WhoAmI.html#getMe">getMe</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1>Starling Javascript SDK</h1><h2>Documentation</h2><p>The documentation for our SDK can be found <a href="https://starlingbank.github.io/starling-developer-sdk/">here</a>.</p>
+<h2>Installation</h2><pre class="prettyprint source lang-bash"><code>$ yarn add starling-developer-sdk</code></pre><h2>Usage</h2><pre class="prettyprint source lang-javascript"><code>const Starling = require('starling-developer-sdk');
+
+const client = new Starling({
+    accessToken: '&lt;oauth access token>'
+});
+
+client.getBalance()
+    .then(({data}) =>  console.log(data))
+    .catch(err => console.log(err));</code></pre><h2>Developing the SDK</h2><p>Install dependencies as follows</p>
+<pre class="prettyprint source lang-bash"><code>$ yarn install --save</code></pre><p>The following scripts are at your disposal:</p>
+<table>
+<thead>
+<tr>
+<th><code>$ yarn &lt;script&gt;</code></th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>clean</code></td>
+<td>Removes the compiled code.</td>
+</tr>
+<tr>
+<td><code>build</code></td>
+<td>Compiles the application to disk (<code>dist/</code> by default).</td>
+</tr>
+<tr>
+<td><code>lint</code></td>
+<td>Lint all <code>.js</code> files.</td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>Runs unit tests with mocha.</td>
+</tr>
+<tr>
+<td><code>test-verbose</code></td>
+<td>Runs unit tests with debug logging.</td>
+</tr>
+</tbody>
+</table>
+<h3>Developing the docs locally</h3><p>You can develop the docs locally by running a jekyll server. Checkout the gh-pages branch and execute</p>
+<pre class="prettyprint source lang-bash"><code>$ bundle install
+$ bundle exec jekyll serve</code></pre><p>This depends on ruby and bundler (see <a href="https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/"> here</a> for more info on Jekyll and Github Pages)</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Jun 14 2017 16:15:08 GMT+0100 (BST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
