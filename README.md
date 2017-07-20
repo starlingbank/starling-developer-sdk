@@ -1,5 +1,5 @@
 # Starling Javascript SDK 
-[![npm version](https://badge.fury.io/js/starling-developer-sdk.svg)](https://badge.fury.io/js/starling-developer-sdk)
+[![npm version](https://badge.fury.io/js/starling-developer-sdk.svg)](https://www.npmjs.com/package/starling-developer-sdk)
 ## Documentation
 
 The documentation for our SDK can be found <a href="https://starlingbank.github.io/starling-developer-sdk/">here</a>.
