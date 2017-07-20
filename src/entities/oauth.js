@@ -68,11 +68,11 @@ class OAuth {
     }
 
     const url = `${this.options.oauthUrl}/oauth/access-token`;
-    log(`GET ${url} queryParams:${JSON.stringify(params)}`);
+    log(`POST ${url} queryParams:${JSON.stringify(params)}`);
 
     return axios({
       url,
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         Accept: 'application/json'
