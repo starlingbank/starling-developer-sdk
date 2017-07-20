@@ -21,7 +21,7 @@ describe('OAuth', function () {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   })
-    .get('/oauth/access-token')
+    .post('/oauth/access-token')
     .query(true)
     .reply(200, response);
 
