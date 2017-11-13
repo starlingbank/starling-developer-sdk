@@ -6,11 +6,11 @@ import { typeValidation } from '../utils/validator';
 const log = debug('starling:saving-goals-service');
 
 /**
- * Service to interact with a customer's transactions
+ * Service to interact with a customer's savings goals
  */
 class SavingsGoals {
   /**
-   * Create a new transaction service
+   * Create a new savings goal service
    * @param {Object} options - configuration parameters
    */
   constructor (options) {
@@ -51,7 +51,7 @@ class SavingsGoals {
   }
 
   /**
-   * Creates a contact (payee) for the customer
+   * Creates a savings goal
    * @param {string} accessToken - the oauth bearer token.
    * @param {string} savingsGoalId - the savings goal's ID, generate one if creating a goal.
    * @param {string} name - the name of the new contact.
@@ -82,7 +82,7 @@ class SavingsGoals {
   }
 
   /**
-   * Deletes specific direct debit mandate
+   * Deletes specific savings goal
    * @param {string} accessToken - the oauth bearer token.
    * @param {string} savingsGoalId - the unique mandate ID
    * @return {Promise} - the http request promise
