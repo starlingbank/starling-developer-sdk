@@ -41,4 +41,20 @@ describe('List Mandates', function () {
       .catch(done);
   });
 
+  const mandateId = '12345-12345';
+
+  nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+    .delete(`/api/v1/direct-debit/mandates/${mandateId}`)
+    .reply(204);
+
+  it('should delete the specified mandate', function (done) {
+    starlingCli
+      .deleteMandate(accessToken, mandateId)
+      .then(function ({ status }) {
+        expect(status).to.be(204);
+        done();
+      })
+      .catch(done);
+  });
+
 });

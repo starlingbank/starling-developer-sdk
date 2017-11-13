@@ -7,6 +7,7 @@ import OAuth from './entities/oauth';
 import Contact from './entities/contact';
 import Payment from './entities/payment';
 import Mandate from './entities/mandate';
+import SavingsGoals from './entities/savingsGoals';
 import WhoAmI from './entities/whoAmI';
 
 /**
@@ -37,6 +38,7 @@ class Starling {
     this.mandate = new Mandate(this.config);
     this.contact = new Contact(this.config);
     this.card = new Card(this.config);
+    this.savingsGoals = new SavingsGoals(this.config);
     this.oAuth = new OAuth(this.config);
   }
 
@@ -184,7 +186,8 @@ class Starling {
    * Creates a contact (payee) for the customer
    * @param {string} accessToken - the oauth bearer token.
    * @param {string} name - the name of the new contact.
-   * @param {string=} accountType - the account type (domestic or international), optional and defaults to UK_ACCOUNT_AND_SORT_CODE.
+   * @param {string=} accountType - the account type (domestic or international), optional and defaults to
+   *   UK_ACCOUNT_AND_SORT_CODE.
    * @param {string} accountNumber - the contact's bank account number.
    * @param {string} sortCode - the contact's sort code.
    * @param {string} customerId - the customer's ID.
@@ -196,6 +199,50 @@ class Starling {
 
   deleteContact (accessToken, contactId) {
     return this.contact.deleteContact(accessToken, contactId);
+  }
+
+  /**
+   * Gets a list of the customer's savings goals
+   * @param {string} accessToken - the oauth bearer token.
+   * @return {Promise} - the http request promise
+   */
+  listSavingsGoals (accessToken = this.config.accessToken) {
+    return this.savingsGoals.listSavingsGoals(accessToken);
+  }
+
+  /**
+   * Gets a specific savings goal
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} savingsGoalId - the savings goal's ID.
+   * @return {Promise} - the http request promise
+   */
+  getSavingsGoal (accessToken = this.config.accessToken, savingsGoalId) {
+    return this.savingsGoals.getSavingsGoal(accessToken, savingsGoalId);
+  }
+
+  /**
+   * Creates a contact (payee) for the customer
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} savingsGoalId - the savings goal's ID, generate one if creating a goal.
+   * @param {string} name - the name of the new contact.
+   * @param {string} currency - the currency of the savings goal. Defaults to 'GBP'.
+   * @param {number} targetAmount - the target amount in minor units (e.g. 1234 => £12.34).
+   * @param {string} targetCurrency - the target currency, also defaults to 'GBP'.
+   * @param {string} base64EncodedPhoto - base64 encoded image to associate with the goal. (optional)
+   * @return {Promise} - the http request promise
+   */
+  createSavingsGoal (accessToken = this.config.accessToken, savingsGoalId, name, currency = 'GBP',  targetAmount, targetCurrency = 'GBP', base64EncodedPhoto) {
+    return this.savingsGoals.createSavingsGoal(accessToken, savingsGoalId, name, currency,  targetAmount, targetCurrency, base64EncodedPhoto);
+  }
+
+  /**
+   * Deletes specific direct debit mandate
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} savingsGoalId - the unique mandate ID
+   * @return {Promise} - the http request promise
+   */
+  deleteSavingsGoal (accessToken, savingsGoalId) {
+    return this.savingsGoals.deleteSavingsGoal(accessToken, savingsGoalId);
   }
 
   /**
