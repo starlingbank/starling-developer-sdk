@@ -1,0 +1,12 @@
+{
+  "name": "Trip to Paris",
+  "target": {
+    "currency": "GBP",
+    "minorUnits": 123400
+  },
+  "totalSaved": {
+    "currency": "GBP",
+    "minorUnits": 12340
+  },
+  "savedPercentage": 10
+}
