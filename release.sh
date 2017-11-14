@@ -13,8 +13,8 @@ fi
 rm -rf docs/ out/ dist/
 
 # install dependencies and run build
-yarn install
-yarn build
+npm install
+npm build
 
 # bump the version
 echo "npm version $1"
@@ -30,7 +30,7 @@ rm -rf docs/ out/
 mkdir out
 
 # make the docs
-yarn make-docs
+npm run make-docs
 VERSION=`ls docs/starling-developer-sdk`
 mv docs/starling-developer-sdk/* out/
 rm -rf docs/
