@@ -14,7 +14,7 @@ rm -rf docs/ out/ dist/
 
 # install dependencies and run build
 npm install
-npm build
+npm run build
 
 # bump the version
 echo "npm version $1"
