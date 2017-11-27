@@ -8,14 +8,15 @@ The documentation for our SDK can be found <a href="https://starlingbank.github.
 ## Installation
 
 ```bash
-$ yarn add starling-developer-sdk
+$ npm install --save starling-developer-sdk
 ```
 
 ## Usage
 
 ```javascript
 const Starling = require('starling-developer-sdk');
-
+// or 
+import Starling from 'starling-developer-sk'
 const client = new Starling({
     accessToken: '<oauth access token>'
 });
@@ -30,12 +31,12 @@ client.getBalance()
 Install dependencies as follows
 
 ```bash
-$ yarn install --save
+$ npm install --save
 ```
 
 The following scripts are at your disposal:
 
-|`$ yarn <script>` | Description |
+|`$ npm run <script>` | Description |
 |------------------|-----------|
 |`clean`|Removes the compiled code.|
 |`build`|Compiles the application to disk (`dist/` by default).|
