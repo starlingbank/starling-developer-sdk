@@ -17,6 +17,8 @@ describe('Savings Goals - ', function () {
   });
 
   const savingsGoalId = '12345-12345';
+  const transactionId = '54321-54321';
+  const minorAmount = 111;
 
   nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
     .get(`/api/v1/savings-goals/${savingsGoalId}`)
@@ -102,6 +104,29 @@ describe('Savings Goals - ', function () {
       .deleteSavingsGoal(accessToken, savingsGoalId)
       .then(function ({ status }) {
         expect(status).to.be(204);
+        done();
+      })
+      .catch(done);
+  });
+
+
+  nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+    .put(
+      `/api/v1/savings-goals/${savingsGoalId}/add-money/${transactionId}`,
+      {
+        "amount": {
+          "currency": "GBP",
+          "minorUnits": minorAmount
+        }
+      }
+    )
+    .reply(202);
+
+  it('should add money to a specific goal', function (done) {
+    starlingCli
+      .addMoneyToSavingsGoal(accessToken, savingsGoalId, transactionId, minorAmount)
+      .then(function ({ status }) {
+        expect(status).to.be(202);
         done();
       })
       .catch(done);
