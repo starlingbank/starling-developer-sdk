@@ -115,10 +115,10 @@ class SavingsGoals {
       url,
       headers: postHeaders(accessToken),
       data: JSON.stringify({
-         "amount": {
-           "currency": "GBP",
-           "minorUnits": amount,
-         }
+        amount: {
+          currency: 'GBP',
+          minorUnits: amount
+        }
       })
     });
   }
