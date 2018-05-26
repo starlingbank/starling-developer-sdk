@@ -228,8 +228,14 @@ class Starling {
    * @param {number} amount - an amount in minor unit
    * @return {Promise} - the http request promise
    */
-  addMoneyToSavingsGoal (accessToken = this.config.accessToken, savingsGoalId, transactionId, amount) {
-    return this.savingsGoals.addMoneyToSavingsGoal(accessToken, savingsGoalId, transactionId, amount);
+  addMoneyToSavingsGoal (accessToken = this.config.accessToken, savingsGoalId, transactionId, amount, currency = 'GBP') {
+    return this.savingsGoals.addMoneyToSavingsGoal(
+      accessToken,
+      savingsGoalId,
+      transactionId,
+      amount,
+      currency
+    );
   }
 
   /**

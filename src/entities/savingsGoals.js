@@ -106,7 +106,7 @@ class SavingsGoals {
    * @param {number} amount - an amount in minor unit
    * @return {Promise} - the http request promise
    */
-  addMoneyToSavingsGoal (accessToken, savingsGoalId, transactionId, amount) {
+  addMoneyToSavingsGoal (accessToken, savingsGoalId, transactionId, amount, currency) {
     typeValidation(arguments, addMoneySavingsGoalParameterDefinition);
     const url = `${this.options.apiUrl}/api/v1/savings-goals/${savingsGoalId}/add-money/${transactionId}`;
     log(`PUT ${url}`);
@@ -116,7 +116,7 @@ class SavingsGoals {
       headers: postHeaders(accessToken),
       data: JSON.stringify({
         amount: {
-          currency: 'GBP',
+          currency,
           minorUnits: amount
         }
       })
