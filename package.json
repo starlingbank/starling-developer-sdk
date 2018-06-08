@@ -20,11 +20,11 @@
   ],
   "babel": {
     "presets": [
-      "es2015"
+      "@babel/preset-env"
     ],
     "plugins": [
       [
-        "transform-es2015-modules-umd",
+        "@babel/plugin-transform-modules-umd",
         {
           "globals": {
             "es6-promise": "Promise"
@@ -49,9 +49,11 @@
     "utf8": "^3.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-register": "^6.26.0",
-    "babelify": "^8.0.0",
+    "@babel/core": "7.0.0-beta.49",
+    "@babel/register": "7.0.0-beta.49",
+    "@babel/plugin-transform-modules-umd": "7.0.0-beta.49",
+    "@babel/preset-env": "7.0.0-beta.49",
+    "babelify": "^9.0.0",
     "browserify": "^13.0.0",
     "codecov": "^3.0.2",
     "del": "^2.2.0",
@@ -59,7 +61,7 @@
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-mocha": "^5.0.0",
     "gulp": "^4.0.0",
-    "gulp-babel": "^7.0.1",
+    "gulp-babel": "^8.0.0-beta.2",
     "gulp-eslint": "^4.0.2",
     "gulp-jscs": "^4.1.0",
     "gulp-jscs-stylish": "^1.4.0",
@@ -71,8 +73,8 @@
     "mocha": "^5.2.0",
     "must": "^0.13.4",
     "nock": "^9.3.2",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   },
   "license": "ISC",
   "bugs": {
