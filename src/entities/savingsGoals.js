@@ -97,6 +97,31 @@ class SavingsGoals {
       headers: defaultHeaders(accessToken)
     });
   }
+
+  /**
+   * Add money to a specific savings goal
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} savingsGoalId - the savings goal's ID.
+   * @param {string} transactionId - a transaction ID for this transaction
+   * @param {number} amount - an amount in minor unit
+   * @return {Promise} - the http request promise
+   */
+  addMoneyToSavingsGoal (accessToken, savingsGoalId, transactionId, amount, currency) {
+    typeValidation(arguments, addMoneySavingsGoalParameterDefinition);
+    const url = `${this.options.apiUrl}/api/v1/savings-goals/${savingsGoalId}/add-money/${transactionId}`;
+    log(`PUT ${url}`);
+    return axios({
+      method: 'PUT',
+      url,
+      headers: postHeaders(accessToken),
+      data: JSON.stringify({
+        amount: {
+          currency,
+          minorUnits: amount
+        }
+      })
+    });
+  }
 }
 
 const listSavingsGoalsParameterDefinition = [
@@ -121,6 +146,13 @@ const createSavingsGoalParameterDefinition = [
   { name: 'targetAmount', validations: [ 'optional', 'number' ] },
   { name: 'targetCurrency', validations: [ 'optional', 'string' ] },
   { name: 'base64EncodedPhoto', validations: [ 'optional', 'string' ] }
+];
+
+const addMoneySavingsGoalParameterDefinition = [
+  { name: 'accessToken', validations: [ 'required', 'string' ] },
+  { name: 'savingsGoalId', validations: [ 'required', 'string' ] },
+  { name: 'transactionId', validations: [ 'required', 'string' ] },
+  { name: 'amount', validations: [ 'required', 'number' ] },
 ];
 
 module.exports = SavingsGoals;

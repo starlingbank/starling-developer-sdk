@@ -221,6 +221,24 @@ class Starling {
   }
 
   /**
+   * Add money to a specific savings goal
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} savingsGoalId - the savings goal's ID.
+   * @param {string} transactionId - a transaction ID for this transaction
+   * @param {number} amount - an amount in minor unit
+   * @return {Promise} - the http request promise
+   */
+  addMoneyToSavingsGoal (accessToken = this.config.accessToken, savingsGoalId, transactionId, amount, currency = 'GBP') {
+    return this.savingsGoals.addMoneyToSavingsGoal(
+      accessToken,
+      savingsGoalId,
+      transactionId,
+      amount,
+      currency
+    );
+  }
+
+  /**
    * Creates a contact (payee) for the customer
    * @param {string} accessToken - the oauth bearer token.
    * @param {string} savingsGoalId - the savings goal's ID, generate one if creating a goal.

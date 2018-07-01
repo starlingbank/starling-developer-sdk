@@ -107,4 +107,30 @@ describe('Savings Goals - ', function () {
       .catch(done);
   });
 
+  const transactionId = '54321-54321';
+  const minorAmount = 111;
+  const savingsCurrency = 'BRL';
+
+  nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+    .put(
+      `/api/v1/savings-goals/${savingsGoalId}/add-money/${transactionId}`,
+      {
+        "amount": {
+          "currency": savingsCurrency,
+          "minorUnits": minorAmount
+        }
+      }
+    )
+    .reply(202);
+
+  it('should add money to a specific goal', function (done) {
+    starlingCli
+      .addMoneyToSavingsGoal(accessToken, savingsGoalId, transactionId, minorAmount, savingsCurrency)
+      .then(function ({ status }) {
+        expect(status).to.be(202);
+        done();
+      })
+      .catch(done);
+  });
+
 });
