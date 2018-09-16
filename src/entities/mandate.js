@@ -34,6 +34,22 @@ class Mandate {
     });
   }
 
+    /**
+   * Gets a specific direct debit mandate
+   * @param {string} accessToken - the oauth bearer token.
+   * @return {Promise} - the http request promise
+   */
+  getMandate (accessToken, mandateId) {
+    typeValidation(arguments, getMandateParameterDefinition);
+    const url = `${this.options.apiUrl}/api/v1/direct-debit/mandates/${mandateId}`;
+    log(`GET ${url}`);
+    return axios({
+      method: 'GET',
+      url,
+      headers: defaultHeaders(accessToken)
+    });
+  }
+
   /**
    * Deletes specific direct debit mandate
    * @param {string} accessToken - the oauth bearer token.
@@ -54,6 +70,11 @@ class Mandate {
 
 const listMandatesParameterDefinition = [
   {name: 'accessToken', validations: ['required', 'string']}
+];
+
+const getMandateParameterDefinition = [
+  {name: 'accessToken', validations: ['required', 'string']},
+  {name: 'mandateId', validations: ['required', 'string']}  
 ];
 
 const deleteMandateParameterDefinition = [
