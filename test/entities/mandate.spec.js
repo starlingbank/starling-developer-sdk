@@ -7,6 +7,7 @@ const log = debug('starling:mandate-test');
 
 import Starling from '../../src/starling';
 import listMandatesResponse from '../responses/v1-list-mandates.json';
+import getMandateResponse from '../responses/v1-get-mandate.json'
 
 describe('List Mandates', function () {
   this.timeout(30 * 1000);
@@ -43,11 +44,34 @@ describe('List Mandates', function () {
 
   const mandateId = '12345-12345';
 
-  nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+  it('should get the specified mandate', function (done) {
+    
+        nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+        .get(`/api/v1/direct-debit/mandates/${mandateId}`)
+        .reply(200, getMandateResponse);
+    
+        starlingCli
+          .getMandate(accessToken, mandateId)
+          .then(function ({ data }) {
+            expect(data.uid).to.be("0931e8a3-7b4a-4c2d-9729-df2296dde98");
+            expect(data.reference).to.be("747338448");
+            expect(data.status).to.be("LIVE");
+            expect(data.source).to.be("ELECTRONIC");
+            expect(data.created).to.be("2017-02-21T08:53:26.144Z");
+            expect(data.originatorName).to.be("AFFINITY WATER LTD");
+            expect(data.originatorUid).to.be("c44adbfe-779b-4afe-b03f-a861db75ab78");
+            log(JSON.stringify(data));
+            done();
+          })
+          .catch(done);
+      });
+
+  it('should delete the specified mandate', function (done) {
+
+    nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
     .delete(`/api/v1/direct-debit/mandates/${mandateId}`)
     .reply(204);
 
-  it('should delete the specified mandate', function (done) {
     starlingCli
       .deleteMandate(accessToken, mandateId)
       .then(function ({ status }) {

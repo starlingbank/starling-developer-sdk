@@ -131,6 +131,16 @@ class Starling {
     return this.mandate.listMandates(accessToken);
   }
 
+   /**
+   * Gets a specific direct debit mandate
+   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} mandateId - the unique mandate ID
+   * @return {Promise} - the http request promise
+   */
+  getMandate (accessToken = this.config.accessToken, mandateId) {
+    return this.mandate.getMandate(accessToken, mandateId);
+  }
+
   /**
    * Deletes specific direct debit mandate
    * @param {string} accessToken - the oauth bearer token.
