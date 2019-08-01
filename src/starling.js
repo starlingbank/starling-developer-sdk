@@ -9,6 +9,7 @@ import Payment from './entities/payment';
 import Mandate from './entities/mandate';
 import SavingsGoals from './entities/savingsGoals';
 import WhoAmI from './entities/whoAmI';
+import Merchant from './entities/merchant';
 
 /**
  * Facade to dispatch operations to services
@@ -29,6 +30,7 @@ class Starling {
 
     this.config = Object.assign({}, defaults, options);
 
+    this.merchant = new Merchant(this.config);
     this.whoAmI = new WhoAmI(this.config);
     this.customer = new Customer(this.config);
     this.account = new Account(this.config);
@@ -119,6 +121,16 @@ class Starling {
    */
   getTransaction (accessToken = this.config.accessToken, transactionId, source) {
     return this.transaction.getTransaction(accessToken, transactionId, source);
+  }
+
+  /**
+   * Retrieves details of the merchant
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string=} merchantUid - Unique identifier of the merchant the location belongs to.
+   * @return {Promise} - the http request promise
+   */
+  getMerchant (accessToken = this.config.accessToken, merchantUid) {
+    return this.merchant.getMerchant(accessToken, merchantUid);
   }
 
   /**
