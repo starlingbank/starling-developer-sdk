@@ -134,6 +134,17 @@ class Starling {
   }
 
   /**
+   * Gets the details of a specific location of the merchant where a transaction took place. 
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string=} merchantUid - Unique identifier of the merchant the location belongs to.
+   * @param {string=} merchantLocationUid - Unique identifier of the location for the merchant.
+   * @return {Promise} - the http request promise
+   */
+  getMerchantLocation (accessToken = this.config.accessToken, merchantUid, merchantLocationUid) {
+    return this.merchant.getMerchantLocation(accessToken, merchantUid, merchantLocationUid);
+  }
+
+  /**
    * Gets the customer's current direct-debit mandates
    * @param {string=} accessToken - the oauth bearer token.  If not
    * specified, the accessToken on the options object is used.
