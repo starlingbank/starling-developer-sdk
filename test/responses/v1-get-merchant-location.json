@@ -1,0 +1,21 @@
+{
+  "address": "22 Frockle Street",
+  "googlePlaceId": "ABCA",
+  "locationName": "Best Shop",
+  "mastercardMerchantCategoryCode": 3,
+  "merchant": {
+    "deprecation": "https://api.starlingbank.com/notreal/url",
+    "href": "text",
+    "hreflang": "text",
+    "name": "Best Shop",
+    "profile": "https://api.starlingbank.com/notreal/uri",
+    "templated": true,
+    "title": "Bestest",
+    "type": "Shop"
+  },
+  "merchantUid": "32b4d093-f3b3-45da-9f89-d6a1395ab397",
+  "name": "Best Shop",
+  "phoneNumber": "020123456",
+  "twitterUsername": "bestshop",
+  "website": "http://www.bestshop.com"
+}
