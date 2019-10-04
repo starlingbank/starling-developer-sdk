@@ -124,7 +124,7 @@ class Starling {
   }
 
   /**
-   * Retrieves details of the merchant
+   * Retrieves a merchant
    * @param {string=} accessToken - the oauth bearer token
    * @param {string=} merchantUid - Unique identifier of the merchant the location belongs to.
    * @return {Promise} - the http request promise
@@ -134,7 +134,7 @@ class Starling {
   }
 
   /**
-   * Gets the details of a specific location of the merchant where a transaction took place. 
+   * Retrieves a merchant location of a merchant
    * @param {string=} accessToken - the oauth bearer token
    * @param {string=} merchantUid - Unique identifier of the merchant the location belongs to.
    * @param {string=} merchantLocationUid - Unique identifier of the location for the merchant.
