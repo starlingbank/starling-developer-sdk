@@ -1,29 +1,12 @@
 import gulp from 'gulp'
-import eslint from 'gulp-eslint'
 import babel from 'gulp-babel'
 import rename from 'gulp-rename'
 
 import browserify from 'browserify'
 import buffer from 'vinyl-buffer'
-import del from 'del'
 import source from 'vinyl-source-stream'
 import sourcemaps from 'gulp-sourcemaps'
 import uglify from 'gulp-uglify'
-
-gulp.task('lint', () => {
-  return gulp.src(['*.js',
-    'src/**/*.js',
-    'test/**/*.js',
-    '!node_modules/**'
-  ])
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError())
-})
-
-gulp.task('clean', () => {
-  return Promise.all([del('dist/'), del('coverage/')])
-})
 
 gulp.task('build:bundled:min', function bundledMin () {
   return buildBundle(bundledConfig, '.bundle.min.js', true)
