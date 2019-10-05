@@ -14,16 +14,21 @@ jobs:
       matrix:
         node-version: [8, 10, 12]
 
+    env:
+      CI: true
+
     steps:
-    - uses: starlingbank/checkout@v1
+    - name: Checkout ${{ github.sha }}
+      uses: starlingbank/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
       uses: starlingbank/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
-      run: |
-        npm install
-        npm run build
-        npm test
-      env:
-        CI: true
+    - name: Install dependencies
+      run: npm ci
+    - name: Lint
+      run: npm run lint
+    - name: Test
+      run: npm test
+    - name: Build
+      run: npm run build
