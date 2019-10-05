@@ -1,24 +1,41 @@
 # Contributing to the Starling Bank Developer SDK
 
-:+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
+First off, thanks for taking the time to contribute! 👍
 
-The following is a set of guidelines for contributors. These are not rules, so feel free to propose changes to this document in a pull request.
+The following is a set of guidelines for contributors. These are not rules, so feel free to propose changes to this document in a pull request. 📝
 
-### Git Commit Messages
+## Developing the SDK
 
-* Use the present tense ("Add feature" not "Added feature")
-* Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-* Limit the first line to 72 characters or less
-* Reference issues and pull requests liberally
-* Consider starting the commit message with an applicable emoji:
-    * :art: `:art:` when improving the format/structure of the code
-    * :racehorse: `:racehorse:` when improving performance
-    * :memo: `:memo:` when writing docs
-    * :bug: `:bug:` when fixing a bug
-    * :fire: `:fire:` when removing code or files
-    * :green_heart: `:green_heart:` when fixing the CI build
-    * :white_check_mark: `:white_check_mark:` when adding tests
-    * :lock: `:lock:` when dealing with security
-    * :arrow_up: `:arrow_up:` when upgrading dependencies
-    * :arrow_down: `:arrow_down:` when downgrading dependencies
-    * :shirt: `:shirt:` when removing linter warnings
+Install dependencies with `npm install`
+
+The following scripts are at your disposal:
+
+| `npm run <script>` | Description                                           |
+|--------------------|-------------------------------------------------------|
+| `clean`            | Removes the compiled code.                            |
+| `build`            | Compiles the application to disk (`dist` by default). |
+| `lint`             | Lint all `.js` files.                                 |
+| `test`             | Runs unit tests with mocha.                           |
+| `test-verbose`     | Runs unit tests with debug logging.                   |
+
+In developing it, you'll likely want to check out the [Starling Bank API docs](https://developer.starlingbank.com/docs).
+
+### Developing the docs locally
+
+You can develop the docs locally by running a jekyll server. Checkout the `gh-pages` branch and execute
+
+```bash
+bundle install
+bundle exec jekyll serve
+```
+
+This depends on ruby and bundler (see [here](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll) for more info on Jekyll and Github Pages)
+
+## Commit messages
+
+- Follow [The 7 Rules](https://chris.beams.io/posts/git-commit/#seven-rules)
+- Feel free to spice them up with some [Gitmoji](https://gitmoji.carloscuesta.me/)
+
+## Pull requests
+
+- Try to create a [perfect pull request](https://opensource.com/article/18/6/anatomy-perfect-pull-request)
