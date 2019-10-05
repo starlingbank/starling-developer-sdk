@@ -1,23 +1,23 @@
-import axios from 'axios';
-import debug from 'debug';
-import {defaultHeaders} from '../utils/http';
-import {typeValidation} from '../utils/validator';
+import axios from 'axios'
+import debug from 'debug'
+import { defaultHeaders } from '../utils/http'
+import { typeValidation } from '../utils/validator'
 
-const log = debug('starling:transaction-service');
+const log = debug('starling:transaction-service')
 
 const transactionSource = (source) => {
   if (source === 'MASTER_CARD') {
-    return '/mastercard';
+    return '/mastercard'
   } else if (source === 'FASTER_PAYMENTS_IN') {
-    return '/fps/in';
+    return '/fps/in'
   } else if (source === 'FASTER_PAYMENTS_OUT') {
-    return '/fps/out';
+    return '/fps/out'
   } else if (source === 'DIRECT_DEBIT') {
-    return '/direct-debit';
+    return '/direct-debit'
   } else {
     return ''
   }
-};
+}
 
 /**
  * Service to interact with a customer's transactions
@@ -28,7 +28,7 @@ class Transaction {
    * @param {Object} options - configuration parameters
    */
   constructor (options) {
-    this.options = options;
+    this.options = options
   }
 
   /**
@@ -41,9 +41,9 @@ class Transaction {
    * @return {Promise} - the http request promise
    */
   getTransactions (accessToken, fromDate, toDate, source) {
-    typeValidation(arguments, getTransactionsParameterDefinition);
-    const url = `${this.options.apiUrl}/api/v1/transactions${transactionSource(source)}`;
-    log(`GET ${url} from=${fromDate} to=${toDate}`);
+    typeValidation(arguments, getTransactionsParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v1/transactions${transactionSource(source)}`
+    log(`GET ${url} from=${fromDate} to=${toDate}`)
 
     return axios({
       method: 'GET',
@@ -53,7 +53,7 @@ class Transaction {
         to: toDate
       },
       headers: defaultHeaders(accessToken)
-    });
+    })
   }
 
   /**
@@ -65,28 +65,28 @@ class Transaction {
    * @return {Promise} - the http request promise
    */
   getTransaction (accessToken, transactionId, source) {
-    typeValidation(arguments, getTransactionParameterDefinition);
-    const url = `${this.options.apiUrl}/api/v1/transactions${transactionSource(source)}/${transactionId}`;
-    log(`GET ${url}`);
+    typeValidation(arguments, getTransactionParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v1/transactions${transactionSource(source)}/${transactionId}`
+    log(`GET ${url}`)
     return axios({
       method: 'GET',
       url,
       headers: defaultHeaders(accessToken)
-    });
+    })
   }
 }
 
 const getTransactionsParameterDefinition = [
-  {name: 'accessToken', validations: ['required', 'string']},
-  {name: 'fromDate', validations: ['optional', 'string']},
-  {name: 'toDate', validations: ['optional', 'string']},
-  {name: 'source', validations: ['optional', 'string']}
-];
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'fromDate', validations: ['optional', 'string'] },
+  { name: 'toDate', validations: ['optional', 'string'] },
+  { name: 'source', validations: ['optional', 'string'] }
+]
 
 const getTransactionParameterDefinition = [
-  {name: 'accessToken', validations: ['required', 'string']},
-  {name: 'transactionId', validations: ['required', 'string']},
-  {name: 'source', validations: ['optional', 'string']}
-];
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'transactionId', validations: ['required', 'string'] },
+  { name: 'source', validations: ['optional', 'string'] }
+]
 
-module.exports = Transaction;
+module.exports = Transaction

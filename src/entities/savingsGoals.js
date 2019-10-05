@@ -1,9 +1,9 @@
-import axios from 'axios';
-import debug from 'debug';
-import { defaultHeaders, postHeaders } from '../utils/http';
-import { typeValidation } from '../utils/validator';
+import axios from 'axios'
+import debug from 'debug'
+import { defaultHeaders, postHeaders } from '../utils/http'
+import { typeValidation } from '../utils/validator'
 
-const log = debug('starling:saving-goals-service');
+const log = debug('starling:saving-goals-service')
 
 /**
  * Service to interact with a customer's savings goals
@@ -14,7 +14,7 @@ class SavingsGoals {
    * @param {Object} options - configuration parameters
    */
   constructor (options) {
-    this.options = options;
+    this.options = options
   }
 
   /**
@@ -23,14 +23,14 @@ class SavingsGoals {
    * @return {Promise} - the http request promise
    */
   listSavingsGoals (accessToken) {
-    typeValidation(arguments, listSavingsGoalsParameterDefinition);
-    const url = `${this.options.apiUrl}/api/v1/savings-goals`;
-    log(`GET ${url}`);
+    typeValidation(arguments, listSavingsGoalsParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v1/savings-goals`
+    log(`GET ${url}`)
     return axios({
       method: 'GET',
       url,
       headers: defaultHeaders(accessToken)
-    });
+    })
   }
 
   /**
@@ -40,14 +40,14 @@ class SavingsGoals {
    * @return {Promise} - the http request promise
    */
   getSavingsGoal (accessToken, savingsGoalId) {
-    typeValidation(arguments, getSavingsGoalParameterDefinition);
-    const url = `${this.options.apiUrl}/api/v1/savings-goals/${savingsGoalId}`;
-    log(`GET ${url}`);
+    typeValidation(arguments, getSavingsGoalParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v1/savings-goals/${savingsGoalId}`
+    log(`GET ${url}`)
     return axios({
       method: 'GET',
       url,
       headers: defaultHeaders(accessToken)
-    });
+    })
   }
 
   /**
@@ -62,9 +62,9 @@ class SavingsGoals {
    * @return {Promise} - the http request promise
    */
   createSavingsGoal (accessToken, savingsGoalId, name, currency, targetAmount, targetCurrency, base64EncodedPhoto) {
-    typeValidation(arguments, createSavingsGoalParameterDefinition);
-    const url = `${this.options.apiUrl}/api/v1/savings-goals/${savingsGoalId}`;
-    log(`PUT ${url}`);
+    typeValidation(arguments, createSavingsGoalParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v1/savings-goals/${savingsGoalId}`
+    log(`PUT ${url}`)
     return axios({
       method: 'PUT',
       url,
@@ -78,7 +78,7 @@ class SavingsGoals {
         },
         base64EncodedPhoto
       })
-    });
+    })
   }
 
   /**
@@ -88,14 +88,14 @@ class SavingsGoals {
    * @return {Promise} - the http request promise
    */
   deleteSavingsGoal (accessToken, savingsGoalId) {
-    typeValidation(arguments, deleteSavingsGoalParameterDefinition);
-    const url = `${this.options.apiUrl}/api/v1/savings-goals/${savingsGoalId}`;
-    log(`DELETE ${url}`);
+    typeValidation(arguments, deleteSavingsGoalParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v1/savings-goals/${savingsGoalId}`
+    log(`DELETE ${url}`)
     return axios({
       method: 'DELETE',
       url,
       headers: defaultHeaders(accessToken)
-    });
+    })
   }
 
   /**
@@ -107,9 +107,9 @@ class SavingsGoals {
    * @return {Promise} - the http request promise
    */
   addMoneyToSavingsGoal (accessToken, savingsGoalId, transactionId, amount, currency) {
-    typeValidation(arguments, addMoneySavingsGoalParameterDefinition);
-    const url = `${this.options.apiUrl}/api/v1/savings-goals/${savingsGoalId}/add-money/${transactionId}`;
-    log(`PUT ${url}`);
+    typeValidation(arguments, addMoneySavingsGoalParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v1/savings-goals/${savingsGoalId}/add-money/${transactionId}`
+    log(`PUT ${url}`)
     return axios({
       method: 'PUT',
       url,
@@ -120,39 +120,39 @@ class SavingsGoals {
           minorUnits: amount
         }
       })
-    });
+    })
   }
 }
 
 const listSavingsGoalsParameterDefinition = [
-  { name: 'accessToken', validations: [ 'required', 'string' ] }
-];
+  { name: 'accessToken', validations: ['required', 'string'] }
+]
 
 const getSavingsGoalParameterDefinition = [
-  { name: 'accessToken', validations: [ 'required', 'string' ] },
-  { name: 'savingsGoalId', validations: [ 'required', 'string' ] }
-];
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'savingsGoalId', validations: ['required', 'string'] }
+]
 
 const deleteSavingsGoalParameterDefinition = [
-  { name: 'accessToken', validations: [ 'required', 'string' ] },
-  { name: 'savingsGoalId', validations: [ 'required', 'string' ] }
-];
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'savingsGoalId', validations: ['required', 'string'] }
+]
 
 const createSavingsGoalParameterDefinition = [
-  { name: 'accessToken', validations: [ 'required', 'string' ] },
-  { name: 'savingsGoalId', validations: [ 'required', 'string' ] },
-  { name: 'name', validations: [ 'required', 'string' ] },
-  { name: 'currency', validations: [ 'required', 'string' ] },
-  { name: 'targetAmount', validations: [ 'optional', 'number' ] },
-  { name: 'targetCurrency', validations: [ 'optional', 'string' ] },
-  { name: 'base64EncodedPhoto', validations: [ 'optional', 'string' ] }
-];
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'savingsGoalId', validations: ['required', 'string'] },
+  { name: 'name', validations: ['required', 'string'] },
+  { name: 'currency', validations: ['required', 'string'] },
+  { name: 'targetAmount', validations: ['optional', 'number'] },
+  { name: 'targetCurrency', validations: ['optional', 'string'] },
+  { name: 'base64EncodedPhoto', validations: ['optional', 'string'] }
+]
 
 const addMoneySavingsGoalParameterDefinition = [
-  { name: 'accessToken', validations: [ 'required', 'string' ] },
-  { name: 'savingsGoalId', validations: [ 'required', 'string' ] },
-  { name: 'transactionId', validations: [ 'required', 'string' ] },
-  { name: 'amount', validations: [ 'required', 'number' ] },
-];
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'savingsGoalId', validations: ['required', 'string'] },
+  { name: 'transactionId', validations: ['required', 'string'] },
+  { name: 'amount', validations: ['required', 'number'] }
+]
 
-module.exports = SavingsGoals;
+module.exports = SavingsGoals

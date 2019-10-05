@@ -1,21 +1,20 @@
-import Customer from './entities/customer';
-import Account from './entities/account';
-import Address from './entities/address';
-import Transaction from './entities/transaction';
-import Card from './entities/card';
-import OAuth from './entities/oauth';
-import Contact from './entities/contact';
-import Payment from './entities/payment';
-import Mandate from './entities/mandate';
-import SavingsGoals from './entities/savingsGoals';
-import WhoAmI from './entities/whoAmI';
-import Merchant from './entities/merchant';
+import Customer from './entities/customer'
+import Account from './entities/account'
+import Address from './entities/address'
+import Transaction from './entities/transaction'
+import Card from './entities/card'
+import OAuth from './entities/oauth'
+import Contact from './entities/contact'
+import Payment from './entities/payment'
+import Mandate from './entities/mandate'
+import SavingsGoals from './entities/savingsGoals'
+import WhoAmI from './entities/whoAmI'
+import Merchant from './entities/merchant'
 
 /**
  * Facade to dispatch operations to services
  */
 class Starling {
-
   /**
    * Create an instance of the starling client
    * @param {Object=} options - configuration parameters
@@ -26,22 +25,22 @@ class Starling {
       oauthUrl: 'https://oauth.starlingbank.com',
       clientId: '',
       clientSecret: ''
-    };
+    }
 
-    this.config = Object.assign({}, defaults, options);
+    this.config = Object.assign({}, defaults, options)
 
-    this.merchant = new Merchant(this.config);
-    this.whoAmI = new WhoAmI(this.config);
-    this.customer = new Customer(this.config);
-    this.account = new Account(this.config);
-    this.address = new Address(this.config);
-    this.transaction = new Transaction(this.config);
-    this.payment = new Payment(this.config);
-    this.mandate = new Mandate(this.config);
-    this.contact = new Contact(this.config);
-    this.card = new Card(this.config);
-    this.savingsGoals = new SavingsGoals(this.config);
-    this.oAuth = new OAuth(this.config);
+    this.merchant = new Merchant(this.config)
+    this.whoAmI = new WhoAmI(this.config)
+    this.customer = new Customer(this.config)
+    this.account = new Account(this.config)
+    this.address = new Address(this.config)
+    this.transaction = new Transaction(this.config)
+    this.payment = new Payment(this.config)
+    this.mandate = new Mandate(this.config)
+    this.contact = new Contact(this.config)
+    this.card = new Card(this.config)
+    this.savingsGoals = new SavingsGoals(this.config)
+    this.oAuth = new OAuth(this.config)
   }
 
   /**
@@ -51,7 +50,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getMe (accessToken = this.config.accessToken) {
-    return this.whoAmI.getMe(accessToken);
+    return this.whoAmI.getMe(accessToken)
   }
 
   /**
@@ -61,7 +60,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getCustomer (accessToken = this.config.accessToken) {
-    return this.customer.getCustomer(accessToken);
+    return this.customer.getCustomer(accessToken)
   }
 
   /**
@@ -71,7 +70,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getAccount (accessToken = this.config.accessToken) {
-    return this.account.getAccount(accessToken);
+    return this.account.getAccount(accessToken)
   }
 
   /**
@@ -81,7 +80,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getBalance (accessToken = this.config.accessToken) {
-    return this.account.getBalance(accessToken);
+    return this.account.getBalance(accessToken)
   }
 
   /**
@@ -91,7 +90,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getAddresses (accessToken = this.config.accessToken) {
-    return this.address.getAddresses(accessToken);
+    return this.address.getAddresses(accessToken)
   }
 
   /**
@@ -107,7 +106,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getTransactions (accessToken = this.config.accessToken, fromDate, toDate, source) {
-    return this.transaction.getTransactions(accessToken, fromDate, toDate, source);
+    return this.transaction.getTransactions(accessToken, fromDate, toDate, source)
   }
 
   /**
@@ -120,7 +119,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getTransaction (accessToken = this.config.accessToken, transactionId, source) {
-    return this.transaction.getTransaction(accessToken, transactionId, source);
+    return this.transaction.getTransaction(accessToken, transactionId, source)
   }
 
   /**
@@ -130,7 +129,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getMerchant (accessToken = this.config.accessToken, merchantUid) {
-    return this.merchant.getMerchant(accessToken, merchantUid);
+    return this.merchant.getMerchant(accessToken, merchantUid)
   }
 
   /**
@@ -141,7 +140,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getMerchantLocation (accessToken = this.config.accessToken, merchantUid, merchantLocationUid) {
-    return this.merchant.getMerchantLocation(accessToken, merchantUid, merchantLocationUid);
+    return this.merchant.getMerchantLocation(accessToken, merchantUid, merchantLocationUid)
   }
 
   /**
@@ -151,17 +150,17 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   listMandates (accessToken = this.config.accessToken) {
-    return this.mandate.listMandates(accessToken);
+    return this.mandate.listMandates(accessToken)
   }
 
-   /**
+  /**
    * Gets a specific direct debit mandate
    * @param {string} accessToken - the oauth bearer token.
    * @param {string} mandateId - the unique mandate ID
    * @return {Promise} - the http request promise
    */
   getMandate (accessToken = this.config.accessToken, mandateId) {
-    return this.mandate.getMandate(accessToken, mandateId);
+    return this.mandate.getMandate(accessToken, mandateId)
   }
 
   /**
@@ -171,7 +170,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   deleteMandate (accessToken = this.config.accessToken, mandateId) {
-    return this.mandate.deleteMandate(accessToken, mandateId);
+    return this.mandate.deleteMandate(accessToken, mandateId)
   }
 
   /**
@@ -180,7 +179,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   listScheduledPayments (accessToken = this.config.accessToken) {
-    return this.payment.listScheduledPayments(accessToken);
+    return this.payment.listScheduledPayments(accessToken)
   }
 
   /**
@@ -193,7 +192,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   makeLocalPayment (accessToken = this.config.accessToken, destinationAccountUid, reference, amount, currency = 'GBP') {
-    return this.payment.makeLocalPayment(accessToken, destinationAccountUid, reference, amount, currency);
+    return this.payment.makeLocalPayment(accessToken, destinationAccountUid, reference, amount, currency)
   }
 
   /**
@@ -202,7 +201,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getContacts (accessToken = this.config.accessToken) {
-    return this.contact.getContacts(accessToken);
+    return this.contact.getContacts(accessToken)
   }
 
   /**
@@ -212,7 +211,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getContactAccount (accessToken = this.config.accessToken, contactId) {
-    return this.contact.getContactAccount(accessToken, contactId);
+    return this.contact.getContactAccount(accessToken, contactId)
   }
 
   /**
@@ -227,11 +226,11 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   createContact (accessToken = this.config.accessToken, name, accountType = 'UK_ACCOUNT_AND_SORT_CODE', accountNumber, sortCode, customerId) {
-    return this.contact.createContact(accessToken, name, accountType, accountNumber, sortCode, customerId);
+    return this.contact.createContact(accessToken, name, accountType, accountNumber, sortCode, customerId)
   }
 
   deleteContact (accessToken, contactId) {
-    return this.contact.deleteContact(accessToken, contactId);
+    return this.contact.deleteContact(accessToken, contactId)
   }
 
   /**
@@ -240,7 +239,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   listSavingsGoals (accessToken = this.config.accessToken) {
-    return this.savingsGoals.listSavingsGoals(accessToken);
+    return this.savingsGoals.listSavingsGoals(accessToken)
   }
 
   /**
@@ -250,7 +249,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getSavingsGoal (accessToken = this.config.accessToken, savingsGoalId) {
-    return this.savingsGoals.getSavingsGoal(accessToken, savingsGoalId);
+    return this.savingsGoals.getSavingsGoal(accessToken, savingsGoalId)
   }
 
   /**
@@ -268,7 +267,7 @@ class Starling {
       transactionId,
       amount,
       currency
-    );
+    )
   }
 
   /**
@@ -282,8 +281,8 @@ class Starling {
    * @param {string} base64EncodedPhoto - base64 encoded image to associate with the goal. (optional)
    * @return {Promise} - the http request promise
    */
-  createSavingsGoal (accessToken = this.config.accessToken, savingsGoalId, name, currency = 'GBP',  targetAmount, targetCurrency = 'GBP', base64EncodedPhoto) {
-    return this.savingsGoals.createSavingsGoal(accessToken, savingsGoalId, name, currency,  targetAmount, targetCurrency, base64EncodedPhoto);
+  createSavingsGoal (accessToken = this.config.accessToken, savingsGoalId, name, currency = 'GBP', targetAmount, targetCurrency = 'GBP', base64EncodedPhoto) {
+    return this.savingsGoals.createSavingsGoal(accessToken, savingsGoalId, name, currency, targetAmount, targetCurrency, base64EncodedPhoto)
   }
 
   /**
@@ -293,7 +292,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   deleteSavingsGoal (accessToken, savingsGoalId) {
-    return this.savingsGoals.deleteSavingsGoal(accessToken, savingsGoalId);
+    return this.savingsGoals.deleteSavingsGoal(accessToken, savingsGoalId)
   }
 
   /**
@@ -303,7 +302,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getCard (accessToken = this.config.accessToken) {
-    return this.card.getCard(accessToken);
+    return this.card.getCard(accessToken)
   }
 
   /**
@@ -313,7 +312,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getAccessToken (authorizationCode) {
-    return this.oAuth.getAccessToken(authorizationCode);
+    return this.oAuth.getAccessToken(authorizationCode)
   }
 
   /**
@@ -323,8 +322,8 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   refreshAccessToken (refreshToken) {
-    return this.oAuth.refreshAccessToken(refreshToken);
+    return this.oAuth.refreshAccessToken(refreshToken)
   }
 }
 
-module.exports = Starling;
+module.exports = Starling

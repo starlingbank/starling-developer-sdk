@@ -1,23 +1,22 @@
-import axios from 'axios';
-import debug from 'debug';
-import {typeValidation} from '../utils/validator';
+import axios from 'axios'
+import debug from 'debug'
+import { typeValidation } from '../utils/validator'
 
-const ACCESS_TOKEN_GRANT_TYPE = 'authorization_code';
-const REFRESH_TOKEN_GRANT_TYPE = 'refresh_token';
+const ACCESS_TOKEN_GRANT_TYPE = 'authorization_code'
+const REFRESH_TOKEN_GRANT_TYPE = 'refresh_token'
 
-const log = debug('starling:oauth-service');
+const log = debug('starling:oauth-service')
 
 /**
  * Service to interact with a the oauth endpoint
  */
 class OAuth {
-
   /**
    * Create a new oauth service
    * @param {Object} options - configuration parameters
    */
   constructor (options) {
-    this.options = options;
+    this.options = options
   }
 
   /**
@@ -27,14 +26,14 @@ class OAuth {
    * @return {Promise} - the http request promise
    */
   getAccessToken (authorizationCode) {
-    typeValidation(arguments, authorizationCodeParameterDefinition);
+    typeValidation(arguments, authorizationCodeParameterDefinition)
     return this.getOAuthToken({
-      'code': authorizationCode,
-      'grant_type': ACCESS_TOKEN_GRANT_TYPE,
-      'client_id': this.options.clientId,
-      'client_secret': this.options.clientSecret,
-      'redirect_uri': this.options.redirectUri
-    });
+      code: authorizationCode,
+      grant_type: ACCESS_TOKEN_GRANT_TYPE,
+      client_id: this.options.clientId,
+      client_secret: this.options.clientSecret,
+      redirect_uri: this.options.redirectUri
+    })
   }
 
   /**
@@ -44,13 +43,13 @@ class OAuth {
    * @return {Promise} - the http request promise
    */
   refreshAccessToken (refreshToken) {
-    typeValidation(arguments, refreshTokenParameterDefinition);
+    typeValidation(arguments, refreshTokenParameterDefinition)
     return this.getOAuthToken({
-      'refresh_token': refreshToken,
-      'grant_type': REFRESH_TOKEN_GRANT_TYPE,
-      'client_id': this.options.clientId,
-      'client_secret': this.options.clientSecret
-    });
+      refresh_token: refreshToken,
+      grant_type: REFRESH_TOKEN_GRANT_TYPE,
+      client_id: this.options.clientId,
+      client_secret: this.options.clientSecret
+    })
   }
 
   /**
@@ -60,15 +59,15 @@ class OAuth {
    */
   getOAuthToken (params) {
     if (!this.options.clientId) {
-      throw Error('clientId is not configured');
+      throw Error('clientId is not configured')
     }
 
     if (!this.options.clientSecret) {
-      throw Error('clientSecret is not configured');
+      throw Error('clientSecret is not configured')
     }
 
-    const url = `${this.options.oauthUrl}/oauth/access-token`;
-    log(`POST ${url} queryParams:${JSON.stringify(params)}`);
+    const url = `${this.options.oauthUrl}/oauth/access-token`
+    log(`POST ${url} queryParams:${JSON.stringify(params)}`)
 
     return axios({
       url,
@@ -78,16 +77,16 @@ class OAuth {
         Accept: 'application/json'
       },
       params: params
-    });
+    })
   }
 }
 
 const refreshTokenParameterDefinition = [
-  {name: 'refreshToken', validations: ['required', 'string']}
-];
+  { name: 'refreshToken', validations: ['required', 'string'] }
+]
 
 const authorizationCodeParameterDefinition = [
-  {name: 'authorizationCode', validations: ['required', 'string']}
-];
+  { name: 'authorizationCode', validations: ['required', 'string'] }
+]
 
-module.exports = OAuth;
+module.exports = OAuth

@@ -1,21 +1,20 @@
-import axios from 'axios';
-import debug from 'debug';
-import {defaultHeaders, postHeaders} from '../utils/http';
-import {typeValidation} from '../utils/validator';
+import axios from 'axios'
+import debug from 'debug'
+import { defaultHeaders, postHeaders } from '../utils/http'
+import { typeValidation } from '../utils/validator'
 
-const log = debug('starling:contact-service');
+const log = debug('starling:contact-service')
 
 /**
  * Service to interact with a customer's contacts (payees)
  */
 class Contact {
-
   /**
    * Create a new contact service
    * @param {Object} options - configuration parameters
    */
   constructor (options) {
-    this.options = options;
+    this.options = options
   }
 
   /**
@@ -24,15 +23,15 @@ class Contact {
    * @return {Promise} - the http request promise
    */
   getContacts (accessToken) {
-    typeValidation(arguments, getContactsParameterDefinition);
-    const url = `${this.options.apiUrl}/api/v1/contacts`;
-    log(`GET ${url}`);
+    typeValidation(arguments, getContactsParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v1/contacts`
+    log(`GET ${url}`)
 
     return axios({
       method: 'GET',
       url,
       headers: defaultHeaders(accessToken)
-    });
+    })
   }
 
   /**
@@ -42,14 +41,14 @@ class Contact {
    * @return {Promise} - the http request promise
    */
   getContactAccount (accessToken, contactId) {
-    typeValidation(arguments, getContactAccountParameterDefinition);
-    const url = `${this.options.apiUrl}/api/v1/contacts/${contactId}/accounts`;
-    log(`GET ${url}`);
+    typeValidation(arguments, getContactAccountParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v1/contacts/${contactId}/accounts`
+    log(`GET ${url}`)
     return axios({
       method: 'GET',
       url,
       headers: defaultHeaders(accessToken)
-    });
+    })
   }
 
   /**
@@ -63,9 +62,9 @@ class Contact {
    * @return {Promise} - the http request promise
    */
   createContact (accessToken, name, accountType, accountNumber, sortCode, customerId) {
-    typeValidation(arguments, createContactParameterDefinition);
-    const url = `${this.options.apiUrl}/api/v1/contacts`;
-    log(`POST ${url}`);
+    typeValidation(arguments, createContactParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v1/contacts`
+    log(`POST ${url}`)
     return axios({
       method: 'POST',
       url,
@@ -76,10 +75,9 @@ class Contact {
         accountNumber,
         sortCode,
         customerId
-      }),
-    });
+      })
+    })
   }
-
 
   /**
    * Deletes a specific contact (payee) from the customer's account
@@ -88,38 +86,38 @@ class Contact {
    * @return {Promise} - the http request promise
    */
   deleteContact (accessToken, contactId) {
-    typeValidation(arguments, deleteContactParameterDefinition);
-    const url = `${this.options.apiUrl}/api/v1/contacts/${contactId}`;
-    log(`DELETE ${url}`);
+    typeValidation(arguments, deleteContactParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v1/contacts/${contactId}`
+    log(`DELETE ${url}`)
     return axios({
       method: 'DELETE',
       url,
-      headers: defaultHeaders(accessToken),
-    });
+      headers: defaultHeaders(accessToken)
+    })
   }
 }
 
 const getContactsParameterDefinition = [
-  {name: 'accessToken', validations: ['required', 'string']}
-  ];
+  { name: 'accessToken', validations: ['required', 'string'] }
+]
 
 const getContactAccountParameterDefinition = [
-  {name: 'accessToken', validations: ['required', 'string']},
-  {name: 'contactId', validations: ['required', 'string']}
-  ];
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'contactId', validations: ['required', 'string'] }
+]
 
 const createContactParameterDefinition = [
-  {name: 'accessToken', validations: ['required', 'string']},
-  {name: 'name', validations: ['required', 'string']},
-  {name: 'accountType', validations: ['required', 'string']},
-  {name: 'accountNumber', validations: ['required', 'string']},
-  {name: 'sortCode', validations: ['required', 'string']},
-  {name: 'customerId', validations: ['optional', 'string']}
-  ];
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'name', validations: ['required', 'string'] },
+  { name: 'accountType', validations: ['required', 'string'] },
+  { name: 'accountNumber', validations: ['required', 'string'] },
+  { name: 'sortCode', validations: ['required', 'string'] },
+  { name: 'customerId', validations: ['optional', 'string'] }
+]
 
 const deleteContactParameterDefinition = [
-  {name: 'accessToken', validations: ['required', 'string']},
-  {name: 'contactId', validations: ['required', 'string']}
-];
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'contactId', validations: ['required', 'string'] }
+]
 
-module.exports = Contact;
+module.exports = Contact

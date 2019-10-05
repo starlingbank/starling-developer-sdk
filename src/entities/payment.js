@@ -1,10 +1,9 @@
-import axios from 'axios';
-import debug from 'debug';
-import {defaultHeaders, postHeaders} from '../utils/http';
-import {typeValidation} from '../utils/validator';
+import axios from 'axios'
+import debug from 'debug'
+import { defaultHeaders, postHeaders } from '../utils/http'
+import { typeValidation } from '../utils/validator'
 
-const log = debug('starling:payment-service');
-
+const log = debug('starling:payment-service')
 
 /**
  * Service to interact with a customer's transactions
@@ -15,7 +14,7 @@ class Payment {
    * @param {Object} options - configuration parameters
    */
   constructor (options) {
-    this.options = options;
+    this.options = options
   }
 
   /**
@@ -28,9 +27,9 @@ class Payment {
    * @return {Promise} - the http request promise
    */
   makeLocalPayment (accessToken, destinationAccountUid, reference, amount, currency) {
-    typeValidation(arguments, makeLocalPaymentParameterDefinition);
-    const url = `${this.options.apiUrl}/api/v1/payments/local`;
-    log(`POST ${url}`);
+    typeValidation(arguments, makeLocalPaymentParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v1/payments/local`
+    log(`POST ${url}`)
     return axios({
       method: 'POST',
       url,
@@ -43,9 +42,8 @@ class Payment {
         },
         reference
       })
-    });
+    })
   }
-
 
   /**
    * Lists the customer's scheduled payments
@@ -53,27 +51,27 @@ class Payment {
    * @return {Promise} - the http request promise
    */
   listScheduledPayments (accessToken) {
-    typeValidation(arguments, listScheduledPaymentsParameterDefinition);
-    const url = `${this.options.apiUrl}/api/v1/payments/scheduled`;
-    log(`GET ${url}`);
+    typeValidation(arguments, listScheduledPaymentsParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v1/payments/scheduled`
+    log(`GET ${url}`)
     return axios({
       method: 'GET',
       url,
       headers: defaultHeaders(accessToken)
-    });
+    })
   }
 }
 
 const makeLocalPaymentParameterDefinition = [
-  {name: 'accessToken', validations: ['required', 'string']},
-  {name: 'destinationAccountUid', validations: ['required', 'string']},
-  {name: 'reference', validations: ['required', 'string']},
-  {name: 'amount', validations: ['required', 'string']},
-  {name: 'currency', validations: ['optional', 'string']}
-];
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'destinationAccountUid', validations: ['required', 'string'] },
+  { name: 'reference', validations: ['required', 'string'] },
+  { name: 'amount', validations: ['required', 'string'] },
+  { name: 'currency', validations: ['optional', 'string'] }
+]
 
 const listScheduledPaymentsParameterDefinition = [
-  {name: 'accessToken', validations: ['required', 'string']}
-];
+  { name: 'accessToken', validations: ['required', 'string'] }
+]
 
-module.exports = Payment;
+module.exports = Payment
