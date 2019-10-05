@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "gulp clean",
     "build": "gulp build",
-    "test": "mocha --opts test/mocha.opts test/*.spec.js test/entities/*spec.js test/utils/*spec.js",
+    "test": "jest test",
+    "test:dev": "jest test --watch",
     "test:verbose": "DEBUG=starling* npm test",
     "lint": "standard",
     "lint:fix": "standard --fix",
@@ -41,7 +42,7 @@
   },
   "standard": {
     "env": [
-      "mocha"
+      "jest"
     ]
   },
   "files": [
@@ -74,10 +75,9 @@
     "gulp-rename": "^1.2.3",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
+    "jest": "^24.9.0",
     "jsdoc": "^3.5.5",
     "minami": "^1.2.3",
-    "mocha": "^5.2.0",
-    "must": "^0.13.4",
     "nock": "^9.3.2",
     "standard": "^14.3.1",
     "vinyl-buffer": "^1.0.1",

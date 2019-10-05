@@ -1,5 +1,4 @@
 import nock from 'nock'
-import expect from 'must'
 import debug from 'debug'
 
 import Starling from '../../src/starling'
@@ -8,31 +7,29 @@ import { expectAuthorizationHeader } from '../testSupport'
 
 const log = debug('starling:customer-test')
 
-describe('Customer', function () {
-  this.timeout(30 * 1000)
-
+describe('Customer', () => {
   const accessToken = '0123456789'
 
-  nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+  nock('http://localhost', expectAuthorizationHeader(accessToken))
     .get('/api/v1/customers')
     .reply(200, getCustomerResponse)
 
-  it('should retrieve the customer details', function (done) {
+  test('should retrieve the customer details', done => {
     const starlingCli = new Starling({
-      apiUrl: 'http://localhost:8080'
+      apiUrl: 'http://localhost'
     })
 
     starlingCli
       .getCustomer(accessToken)
       .then(function ({ data }) {
-        expect(data.firstName).to.be('Sam')
-        expect(data.lastName).to.be('Jones')
-        expect(data.dateOfBirth).to.be('1982-11-24')
-        expect(data.email).to.be('samjonese121666@gmail.com')
+        expect(data.firstName).toBe('Sam')
+        expect(data.lastName).toBe('Jones')
+        expect(data.dateOfBirth).toBe('1982-11-24')
+        expect(data.email).toBe('samjonese121666@gmail.com')
 
         log(JSON.stringify(data))
 
         done()
-      }).catch(done)
+      })
   })
 })

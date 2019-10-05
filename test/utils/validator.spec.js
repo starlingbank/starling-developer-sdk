@@ -1,7 +1,6 @@
-import expect from 'must'
 import { typeValidation } from '../../src/utils/validator'
 
-describe('Type Validator', function () {
+describe('Type Validator', () => {
   let apiCallArgs
   function setupApiCallArgs () { apiCallArgs = arguments }
 
@@ -20,75 +19,64 @@ describe('Type Validator', function () {
     { name: 'iAmOptionalString', validations: ['optional', 'string'] },
     { name: 'iAmRequiredString', validations: ['required', 'string'] }]
 
-  it('should not throw errors, as types are correct', function () {
-    try {
+  test('should not throw errors, as types are correct', () => {
+    expect(() => {
       setupApiCallArgs({ a: 1 }, 42, 'HAI')
       typeValidation(apiCallArgs, ruleSet)
-    } catch (problems) {
-      expect('this line not').to.be('called')
-    }
+    }).not.toThrow()
   })
 
-  it('should not throw errors, as types are correct, even though we have been given spares', function () {
-    try {
-      setupApiCallArgs({ a: 1 }, 42, 'HAI', 1, 2, 3, 4)
-      typeValidation(apiCallArgs, ruleSet)
-    } catch (problems) {
-      expect('this line not').to.be('called')
+  test(
+    'should not throw errors, as types are correct, even though we have been given spares',
+    () => {
+      expect(() => {
+        setupApiCallArgs({ a: 1 }, 42, 'HAI', 1, 2, 3, 4)
+        typeValidation(apiCallArgs, ruleSet)
+      }).not.toThrow()
     }
-  })
+  )
 
-  it('should not throw errors as required args are specified', function () {
-    try {
+  test('should not throw errors as required args are specified', () => {
+    expect(() => {
       setupApiCallArgs(42, 'HAI')
       typeValidation(apiCallArgs, anotherRuleSet)
-    } catch (problems) {
-      expect('this line not').to.be('called')
-    }
+    }).not.toThrow()
   })
 
-  it('should not throw errors as required args are specified', function () {
-    try {
+  test('should not throw errors as required args are specified', () => {
+    expect(() => {
       setupApiCallArgs(42, 'HAI', undefined)
       typeValidation(apiCallArgs, anotherRuleSet)
-    } catch (problems) {
-      expect('this line not').to.be('called')
-    }
+    }).not.toThrow()
   })
 
-  it('should throw an error as the undefined input is required', function () {
-    try {
+  test('should throw an error as the undefined input is required', () => {
+    expect(() => {
       setupApiCallArgs()
       typeValidation(apiCallArgs, ruleSet)
-      expect('this line not').to.be('called')
-    } catch (e) {
-      e.must.have.length(3)
-      e[0].must.equal('iAmRequiredObject parameter in position 0 is a required object but was undefined')
-      e[1].must.equal('iAmRequiredNumber parameter in position 1 is a required number but was undefined')
-      e[2].must.equal('iAmRequiredString parameter in position 2 is a required string but was undefined')
-    }
+    }).toThrow([
+      'iAmRequiredObject parameter in position 0 is a required object but was undefined',
+      'iAmRequiredNumber parameter in position 1 is a required number but was undefined',
+      'iAmRequiredString parameter in position 2 is a required string but was undefined'
+    ].toString())
   })
 
-  it('should cope with less args than defs', function () {
-    try {
+  test('should cope with less args than defs', () => {
+    expect(() => {
       setupApiCallArgs(undefined, undefined, undefined)
       typeValidation(apiCallArgs, wonkyRuleSet)
-      expect('this line not').to.be('called')
-    } catch (e) {
-      e.must.have.length(2)
-      e[0].must.include('position 0', 'number but was undefined')
-      e[1].must.include('position 2', 'string but was undefined')
-    }
+    }).toThrow([
+      'iAmRequiredNumber parameter in position 0 is a required number but was undefined',
+      'iAmRequiredString parameter in position 2 is a required string but was undefined'
+    ].toString())
   })
 
-  it('should throw with optional args as wrong type', function () {
-    try {
+  test('should throw with optional args as wrong type', () => {
+    expect(() => {
       setupApiCallArgs(1, 3, 'sd')
       typeValidation(apiCallArgs, anotherRuleSet)
-      expect('this line not').to.be('called')
-    } catch (e) {
-      e.must.have.length(1)
-      e[0].must.include('position 1', 'string but was number')
-    }
+    }).toThrow([
+      'iAmRequiredString parameter in position 1 is a required string but was number'
+    ].toString())
   })
 })

@@ -16,7 +16,8 @@ The following scripts are at your disposal:
 | `build`            | Compile the application to disk (`dist` by default) |
 | `lint`             | Find lint issues                                    |
 | `lint:fix`         | Fix most lint issues                                |
-| `test`             | Run unit tests with mocha                           |
+| `test`             | Run unit tests                                      |
+| `test:dev`         | Run unit tests on save (watch mode)                 |
 | `test:verbose`     | Run unit tests with debug logging                   |
 
 In developing it, you'll likely want to check out the [Starling Bank API docs](https://developer.starlingbank.com/docs).

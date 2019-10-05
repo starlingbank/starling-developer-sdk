@@ -1,5 +1,4 @@
 import nock from 'nock'
-import expect from 'must'
 import debug from 'debug'
 import { expectAuthorizationHeader } from '../testSupport'
 import Starling from '../../src/starling'
@@ -8,61 +7,57 @@ import getContactAccountResponse from '../responses/v1-get-contact-account.json'
 
 const log = debug('starling:contact-test')
 
-describe('Contact', function () {
-  this.timeout(30 * 1000)
-
+describe('Contact', () => {
   const accessToken = '0123456789'
 
   const starlingCli = new Starling({
-    apiUrl: 'http://localhost:8080'
+    apiUrl: 'http://localhost'
   })
 
-  nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+  nock('http://localhost', expectAuthorizationHeader(accessToken))
     .get('/api/v1/contacts')
     .reply(200, getContactsResponse)
 
-  it('should retrieve the customer\'s contacts', function (done) {
+  test('should retrieve the customer\'s contacts', done => {
     starlingCli
       .getContacts(accessToken)
       .then(function ({ data }) {
         const renato = data.contacts[0]
-        expect(renato.id).to.be('fc17e7d5-ff2c-4a3c-8f64-9ac93d80de62')
-        expect(renato.name).to.be('Renato')
-        expect(renato.self.href).to.be('api/v1/contacts/fc17e7d5-ff2c-4a3c-8f64-9ac93d80de62')
-        expect(renato.photo.href).to.be('api/v1/contacts/fc17e7d5-ff2c-4a3c-8f64-9ac93d80de62/photo')
-        expect(renato.accounts.href).to.be('api/v1/contacts/fc17e7d5-ff2c-4a3c-8f64-9ac93d80de62/accounts')
+        expect(renato.id).toBe('fc17e7d5-ff2c-4a3c-8f64-9ac93d80de62')
+        expect(renato.name).toBe('Renato')
+        expect(renato.self.href).toBe('api/v1/contacts/fc17e7d5-ff2c-4a3c-8f64-9ac93d80de62')
+        expect(renato.photo.href).toBe('api/v1/contacts/fc17e7d5-ff2c-4a3c-8f64-9ac93d80de62/photo')
+        expect(renato.accounts.href).toBe('api/v1/contacts/fc17e7d5-ff2c-4a3c-8f64-9ac93d80de62/accounts')
 
         const carol = data.contacts[1]
-        expect(carol.id).to.be('00609e17-80f8-4ffb-bd68-75d0cc6f1e86')
-        expect(carol.name).to.be('Carol')
+        expect(carol.id).toBe('00609e17-80f8-4ffb-bd68-75d0cc6f1e86')
+        expect(carol.name).toBe('Carol')
 
         log(JSON.stringify(data))
 
         done()
       })
-      .catch(done)
   })
 
   const contactId = 'fc17e7d5-ff2c-4a3c-8f64-9ac93d80de62'
 
-  nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+  nock('http://localhost', expectAuthorizationHeader(accessToken))
     .get(`/api/v1/contacts/${contactId}/accounts`)
     .reply(200, getContactAccountResponse)
 
-  it('should retrieve a specific contact\'s account details', function (done) {
+  test('should retrieve a specific contact\'s account details', done => {
     starlingCli
       .getContactAccount(accessToken, contactId)
       .then(function ({ data }) {
         const johnny = data.contactAccounts[0]
-        expect(johnny.id).to.be('a47ace5b-41d5-4e51-b9cb-c3b493cb1696')
-        expect(johnny.name).to.be('Johnny Boy')
-        expect(johnny.self.href).to.be('api/v1/contacts/a47ace5b-41d5-4e51-b9cb-c3b493cb1696/accounts/a47ace5b-41d5-4e51-b9cb-c3b493cb1696')
+        expect(johnny.id).toBe('a47ace5b-41d5-4e51-b9cb-c3b493cb1696')
+        expect(johnny.name).toBe('Johnny Boy')
+        expect(johnny.self.href).toBe('api/v1/contacts/a47ace5b-41d5-4e51-b9cb-c3b493cb1696/accounts/a47ace5b-41d5-4e51-b9cb-c3b493cb1696')
 
         log(JSON.stringify(data))
 
         done()
       })
-      .catch(done)
   })
 
   const name = 'Mickey Mouse'
@@ -71,31 +66,29 @@ describe('Contact', function () {
   const sortCode = '60-83-71'
   const customerId = '2022a9c9-01fa-4c8d-ab19-daec80d7a111'
 
-  nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+  nock('http://localhost', expectAuthorizationHeader(accessToken))
     .post('/api/v1/contacts')
     .reply(202)
 
-  it('should create a new contact for the customer', function (done) {
+  test('should create a new contact for the customer', done => {
     starlingCli
       .createContact(accessToken, name, accountType, accountNumber, sortCode, customerId)
       .then(function ({ status }) {
-        expect(status).to.be(202)
+        expect(status).toBe(202)
         done()
       })
-      .catch(done)
   })
 
-  nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+  nock('http://localhost', expectAuthorizationHeader(accessToken))
     .delete(`/api/v1/contacts/${contactId}`)
     .reply(204)
 
-  it('should delete the specified contact', function (done) {
+  test('should delete the specified contact', done => {
     starlingCli
       .deleteContact(accessToken, contactId)
       .then(function ({ status }) {
-        expect(status).to.be(204)
+        expect(status).toBe(204)
         done()
       })
-      .catch(done)
   })
 })

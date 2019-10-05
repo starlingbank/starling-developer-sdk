@@ -1,5 +1,4 @@
 import nock from 'nock'
-import expect from 'must'
 import debug from 'debug'
 import { expectAuthorizationHeader } from '../testSupport'
 
@@ -9,17 +8,15 @@ import getMandateResponse from '../responses/v1-get-mandate.json'
 
 const log = debug('starling:mandate-test')
 
-describe('List Mandates', function () {
-  this.timeout(30 * 1000)
-
+describe('List Mandates', () => {
   const accessToken = '0123456789'
 
   const starlingCli = new Starling({
-    apiUrl: 'http://localhost:8080'
+    apiUrl: 'http://localhost'
   })
 
-  it('should retrieve the customer\'s mandates', function (done) {
-    nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+  test('should retrieve the customer\'s mandates', done => {
+    nock('http://localhost', expectAuthorizationHeader(accessToken))
       .get('/api/v1/direct-debit/mandates')
       .reply(200, listMandatesResponse)
 
@@ -27,53 +24,50 @@ describe('List Mandates', function () {
       .listMandates(accessToken)
       .then(function ({ data }) {
         const man = data._embedded.mandates[1]
-        expect(man.uid).to.be('d645e090-d704-415e-84d6-e249f02aa642')
-        expect(man.reference).to.be('18187876L02')
-        expect(man.status).to.be('LIVE')
-        expect(man.source).to.be('ELECTRONIC')
-        expect(man.created).to.be('2017-02-02T09:05:15.771Z')
-        expect(man.originatorName).to.be('ASSURANT DIRECT LTD')
-        expect(man.originatorUid).to.be('3fd24317-2b24-4b6a-b8f9-3ab7f5ed00e0')
+        expect(man.uid).toBe('d645e090-d704-415e-84d6-e249f02aa642')
+        expect(man.reference).toBe('18187876L02')
+        expect(man.status).toBe('LIVE')
+        expect(man.source).toBe('ELECTRONIC')
+        expect(man.created).toBe('2017-02-02T09:05:15.771Z')
+        expect(man.originatorName).toBe('ASSURANT DIRECT LTD')
+        expect(man.originatorUid).toBe('3fd24317-2b24-4b6a-b8f9-3ab7f5ed00e0')
         log(JSON.stringify(data))
         done()
       })
-      .catch(done)
   })
 
   const mandateId = '12345-12345'
 
-  it('should get the specified mandate', function (done) {
-    nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+  test('should get the specified mandate', done => {
+    nock('http://localhost', expectAuthorizationHeader(accessToken))
       .get(`/api/v1/direct-debit/mandates/${mandateId}`)
       .reply(200, getMandateResponse)
 
     starlingCli
       .getMandate(accessToken, mandateId)
       .then(function ({ data }) {
-        expect(data.uid).to.be('0931e8a3-7b4a-4c2d-9729-df2296dde98')
-        expect(data.reference).to.be('747338448')
-        expect(data.status).to.be('LIVE')
-        expect(data.source).to.be('ELECTRONIC')
-        expect(data.created).to.be('2017-02-21T08:53:26.144Z')
-        expect(data.originatorName).to.be('AFFINITY WATER LTD')
-        expect(data.originatorUid).to.be('c44adbfe-779b-4afe-b03f-a861db75ab78')
+        expect(data.uid).toBe('0931e8a3-7b4a-4c2d-9729-df2296dde98')
+        expect(data.reference).toBe('747338448')
+        expect(data.status).toBe('LIVE')
+        expect(data.source).toBe('ELECTRONIC')
+        expect(data.created).toBe('2017-02-21T08:53:26.144Z')
+        expect(data.originatorName).toBe('AFFINITY WATER LTD')
+        expect(data.originatorUid).toBe('c44adbfe-779b-4afe-b03f-a861db75ab78')
         log(JSON.stringify(data))
         done()
       })
-      .catch(done)
   })
 
-  it('should delete the specified mandate', function (done) {
-    nock('http://localhost:8080', expectAuthorizationHeader(accessToken))
+  test('should delete the specified mandate', done => {
+    nock('http://localhost', expectAuthorizationHeader(accessToken))
       .delete(`/api/v1/direct-debit/mandates/${mandateId}`)
       .reply(204)
 
     starlingCli
       .deleteMandate(accessToken, mandateId)
       .then(function ({ status }) {
-        expect(status).to.be(204)
+        expect(status).toBe(204)
         done()
       })
-      .catch(done)
   })
 })
