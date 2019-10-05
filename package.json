@@ -7,13 +7,14 @@
     "clean": "gulp clean",
     "build": "gulp build",
     "test": "mocha --opts test/mocha.opts test/*.spec.js test/entities/*spec.js test/utils/*spec.js",
-    "test-verbose": "DEBUG=starling* npm test",
-    "lint": "gulp lint",
-    "make-docs": "node_modules/.bin/jsdoc -c .jsdoc.json --verbose"
+    "test:verbose": "DEBUG=starling* npm test",
+    "lint": "standard",
+    "lint:fix": "standard --fix",
+    "jsdoc": "node_modules/.bin/jsdoc -c .jsdoc.json --verbose"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/starlingbank/starling-developer-sdk.git"
+    "url": "git+https://github.com/starlingbank/starling-developer-js-sdk.git"
   },
   "keywords": [
     "starlingbank, starling, bank, open, API, SDK"
@@ -37,6 +38,11 @@
         "sourceMaps": "inline"
       }
     }
+  },
+  "standard": {
+    "env": [
+      "mocha"
+    ]
   },
   "files": [
     "dist/*"
@@ -73,12 +79,13 @@
     "mocha": "^5.2.0",
     "must": "^0.13.4",
     "nock": "^9.3.2",
+    "standard": "^14.3.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   },
-  "license": "ISC",
+  "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/starlingbank/starling-developer-sdk/issues"
+    "url": "https://github.com/starlingbank/starling-developer-js-sdk/issues"
   },
-  "homepage": "https://github.com/starlingbank/starling-developer-sdk#readme"
+  "homepage": "https://github.com/starlingbank/starling-developer-js-sdk#readme"
 }

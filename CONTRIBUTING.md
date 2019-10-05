@@ -10,13 +10,14 @@ Install dependencies with `npm install`
 
 The following scripts are at your disposal:
 
-| `npm run <script>` | Description                                           |
-|--------------------|-------------------------------------------------------|
-| `clean`            | Removes the compiled code.                            |
-| `build`            | Compiles the application to disk (`dist` by default). |
-| `lint`             | Lint all `.js` files.                                 |
-| `test`             | Runs unit tests with mocha.                           |
-| `test-verbose`     | Runs unit tests with debug logging.                   |
+| `npm run <script>` | Description                                         |
+|--------------------|-----------------------------------------------------|
+| `clean`            | Remove compiled code                                |
+| `build`            | Compile the application to disk (`dist` by default) |
+| `lint`             | Find lint issues                                    |
+| `lint:fix`         | Fix most lint issues                                |
+| `test`             | Run unit tests with mocha                           |
+| `test:verbose`     | Run unit tests with debug logging                   |
 
 In developing it, you'll likely want to check out the [Starling Bank API docs](https://developer.starlingbank.com/docs).
 

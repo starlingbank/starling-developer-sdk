@@ -1,5 +1,6 @@
 # Starling Javascript SDK 
 
+[![JavaScript Standard Style](https://img.shields.io/badge/code_style-standard-informational.svg)](https://standardjs.com)
 [![NPM Package Version](https://img.shields.io/npm/v/starling-developer-sdk?color=informational)](https://www.npmjs.com/package/starling-developer-sdk)
 [![Bundle size](https://img.shields.io/bundlephobia/minzip/starling-developer-sdk?label=size)](https://bundlephobia.com/result?p=starling-developer-sdk@latest)
 

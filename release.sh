@@ -30,7 +30,7 @@ rm -rf docs/ out/
 mkdir out
 
 # make the docs
-npm run make-docs
+npm run jsdoc
 VERSION=`ls docs/starling-developer-sdk`
 mv docs/starling-developer-sdk/* out/
 rm -rf docs/
