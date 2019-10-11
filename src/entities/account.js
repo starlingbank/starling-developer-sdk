@@ -18,13 +18,13 @@ class Account {
   }
 
   /**
-   * Retrieves a customer's account
+   * Retrieves a customer's accounts
    * @param {string} accessToken - the oauth bearer token
    * @return {Promise} - the http request promise
    */
-  getAccount (accessToken) {
+  getAccounts (accessToken) {
     typeValidation(arguments, getAccountParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v1/accounts`
+    const url = `${this.options.apiUrl}/api/v2/accounts`
     log(`GET ${url}`)
 
     return axios({

@@ -69,8 +69,8 @@ class Starling {
    * specified, the accessToken on the options object is used.
    * @return {Promise} - the http request promise
    */
-  getAccount (accessToken = this.config.accessToken) {
-    return this.account.getAccount(accessToken)
+  getAccounts (accessToken = this.config.accessToken) {
+    return this.account.getAccounts(accessToken)
   }
 
   /**
