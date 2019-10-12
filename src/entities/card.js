@@ -18,13 +18,13 @@ class Card {
   }
 
   /**
-   * Retrieves a customer's card
+   * Get all the cards for an account holder
    * @param {string} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
-  getCard (accessToken) {
-    typeValidation(arguments, getCardParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v1/cards`
+  getCards (accessToken) {
+    typeValidation(arguments, getCardsParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v2/cards`
     log(`GET ${url}`)
 
     return axios({
@@ -35,7 +35,7 @@ class Card {
   }
 }
 
-const getCardParameterDefinition = [
+const getCardsParameterDefinition = [
   { name: 'accessToken', validations: ['required', 'string'] }
 ]
 

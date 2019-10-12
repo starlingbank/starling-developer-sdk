@@ -297,13 +297,13 @@ class Starling {
   }
 
   /**
-   * Gets the customer's card
+   * Get all the cards for an account holder
    * @param {string=} accessToken - the oauth bearer token.  If not
    * specified, the accessToken on the options object is used.
    * @return {Promise} - the http request promise
    */
-  getCard (accessToken = this.config.accessToken) {
-    return this.card.getCard(accessToken)
+  getCards (accessToken = this.config.accessToken) {
+    return this.card.getCards(accessToken)
   }
 
   /**

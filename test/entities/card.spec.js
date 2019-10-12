@@ -3,7 +3,7 @@ import debug from 'debug'
 import { expectAuthorizationHeader } from '../testSupport'
 
 import Starling from '../../src/starling'
-import card from '../responses/v1-get-card.json'
+import cards from '../responses/v2-get-cards.json'
 
 const log = debug('starling:card-test')
 
@@ -15,18 +15,29 @@ describe('Card', () => {
   })
 
   nock('http://localhost', expectAuthorizationHeader(accessToken))
-    .get('/api/v1/cards')
-    .reply(200, card)
+    .get('/api/v2/cards')
+    .reply(200, cards)
 
   test('should retrieve the customer\'s card details', done => {
     starlingCli
-      .getCard(accessToken)
+      .getCards(accessToken)
       .then(function ({ data }) {
-        expect(data.nameOnCard).toBe('Ms XXX YYY')
-        expect(data.lastFourDigits).toBe('4321')
-        expect(data.expiryDate).toBe('2020-01-01')
+        expect(data.cards).toHaveLength(1)
+        expect(data.cards[0].cardUid).toBe('a0be8f6a-faa9-40f8-a0b8-58205e722cd7')
+        expect(data.cards[0].publicToken).toBe('a0be8f6a')
+        expect(data.cards[0].walletNotificationEnabled).toBe(true)
+        expect(data.cards[0].posEnabled).toBe(true)
+        expect(data.cards[0].atmEnabled).toBe(true)
+        expect(data.cards[0].onlineEnabled).toBe(true)
+        expect(data.cards[0].mobileWalletEnabled).toBe(true)
+        expect(data.cards[0].gamblingEnabled).toBe(true)
+        expect(data.cards[0].magStripeEnabled).toBe(true)
+        expect(data.cards[0].cancelled).toBe(false)
+        expect(data.cards[0].activationRequested).toBe(true)
+        expect(data.cards[0].activated).toBe(true)
+        expect(data.cards[0].endOfCardNumber).toBe('59312')
 
-        log(JSON.stringify(card))
+        log(JSON.stringify(data))
 
         done()
       })

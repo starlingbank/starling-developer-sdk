@@ -1,0 +1,20 @@
+{
+  "cards": [
+    {
+      "cardUid": "a0be8f6a-faa9-40f8-a0b8-58205e722cd7",
+      "publicToken": "a0be8f6a",
+      "enabled": true,
+      "walletNotificationEnabled": true,
+      "posEnabled": true,
+      "atmEnabled": true,
+      "onlineEnabled": true,
+      "mobileWalletEnabled": true,
+      "gamblingEnabled": true,
+      "magStripeEnabled": true,
+      "cancelled": false,
+      "activationRequested": true,
+      "activated": true,
+      "endOfCardNumber": "59312"
+    }
+  ]
+}
