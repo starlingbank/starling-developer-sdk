@@ -33,9 +33,30 @@ class Identity {
       headers: defaultHeaders(accessToken)
     })
   }
+
+  /**
+   * Get the authorising individual's identity
+   * @param {string} accessToken - the oauth bearer token.
+   * @return {Promise} - the http request promise
+   */
+  getAuthorisingIndividual (accessToken) {
+    typeValidation(arguments, getAuthorisingIndividualParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v2/identity/individual`
+    log(`GET ${url}`)
+
+    return axios({
+      method: 'GET',
+      url,
+      headers: defaultHeaders(accessToken)
+    })
+  }
 }
 
 const getTokenIdentityParameterDefinition = [
+  { name: 'accessToken', validations: ['required', 'string'] }
+]
+
+const getAuthorisingIndividualParameterDefinition = [
   { name: 'accessToken', validations: ['required', 'string'] }
 ]
 

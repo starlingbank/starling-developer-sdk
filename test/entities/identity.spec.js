@@ -4,6 +4,7 @@ import { expectAuthorizationHeader } from '../testSupport'
 
 import Starling from '../../src/starling'
 import identityToken from '../responses/v2-get-identity-token.json'
+import identityIndividual from '../responses/v2-get-identity-individual.json'
 
 const log = debug('starling:identity-test')
 
@@ -18,6 +19,10 @@ describe('Identity', () => {
     .get('/api/v2/identity/token')
     .reply(200, identityToken)
 
+  nock('http://localhost', expectAuthorizationHeader(accessToken))
+    .get('/api/v2/identity/individual')
+    .reply(200, identityIndividual)
+
   test('should retrieve the token identity',
     done => {
       starlingCli
@@ -29,6 +34,24 @@ describe('Identity', () => {
           expect(data.scopes).toHaveLength(1)
           expect(data.scopes[0]).toBe('balance:read')
           expect(data.authenticated).toBe(true)
+
+          log(JSON.stringify(data))
+
+          done()
+        })
+    }
+  )
+
+  test('should retrieve the authorising individual\'s identity',
+    done => {
+      starlingCli
+        .getAuthorisingIndividual(accessToken)
+        .then(function ({ data }) {
+          expect(data.firstName).toBe('Dave')
+          expect(data.lastName).toBe('Bowman')
+          expect(data.dateOfBirth).toBe('1968-04-02')
+          expect(data.email).toBe('dave@bowman.uk')
+          expect(data.phone).toBe('079876543210')
 
           log(JSON.stringify(data))
 

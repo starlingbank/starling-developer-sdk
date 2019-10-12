@@ -54,6 +54,16 @@ class Starling {
   }
 
   /**
+   * Get the authorising individual's identity
+   * @param {string=} accessToken - the oauth bearer token.  If not
+   * specified, the accessToken on the options object is used.
+   * @return {Promise} - the http request promise
+   */
+  getAuthorisingIndividual (accessToken = this.config.accessToken) {
+    return this.identity.getAuthorisingIndividual(accessToken)
+  }
+
+  /**
    * Gets the customer's details
    * @param {string=} accessToken - the oauth bearer token. If not
    * specified, the accessToken on the options object is used.
