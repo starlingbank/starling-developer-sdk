@@ -24,7 +24,7 @@ class Address {
    */
   getAddresses (accessToken) {
     typeValidation(arguments, getAddressParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v1/addresses`
+    const url = `${this.options.apiUrl}/api/v2/addresses`
     log(`GET ${url}`)
 
     return axios({

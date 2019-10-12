@@ -1,0 +1,18 @@
+{
+  "current": {
+    "line1": "1A Admiralty Arch",
+    "line2": "The Mall",
+    "line3": "City of Westminster",
+    "postTown": "LONDON",
+    "postCode": "SW1A 2WH",
+    "countryCode": "GB"
+  },
+  "previous": [
+    {
+      "line1": "3rd Floor, 2 Finsbury Avenue",
+      "postTown": "LONDON",
+      "postCode": "EC2M 2PP",
+      "countryCode": "GB"
+    }
+  ]
+}
