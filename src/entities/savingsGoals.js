@@ -1,6 +1,6 @@
 import axios from 'axios'
 import debug from 'debug'
-import { defaultHeaders, postHeaders } from '../utils/http'
+import { defaultHeaders, payloadHeaders } from '../utils/http'
 import { typeValidation } from '../utils/validator'
 
 const log = debug('starling:saving-goals-service')
@@ -68,7 +68,7 @@ class SavingsGoals {
     return axios({
       method: 'PUT',
       url,
-      headers: postHeaders(accessToken),
+      headers: payloadHeaders(accessToken),
       data: JSON.stringify({
         name,
         currency,
@@ -113,7 +113,7 @@ class SavingsGoals {
     return axios({
       method: 'PUT',
       url,
-      headers: postHeaders(accessToken),
+      headers: payloadHeaders(accessToken),
       data: JSON.stringify({
         amount: {
           currency,

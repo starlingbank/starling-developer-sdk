@@ -18,13 +18,26 @@ const runRules = (pos, name, rules, value) => {
 
 export const typeValidation = (args, def) => {
   const problems = []
-  for (let i = 0; i < def.length; i++) {
-    const pos = i
-    const name = def[i].name
-    const rules = def[i].validations
-    const value = i <= args.length ? args[i] : undefined
-    const problem = runRules(pos, name, rules, value)
-    if (problem) problems.push(problem)
+
+  if (Object.prototype.hasOwnProperty.call(args, 'length')) {
+    for (let i = 0; i < def.length; i++) {
+      const pos = i
+      const name = def[i].name
+      const rules = def[i].validations
+      const value = i <= args.length ? args[i] : undefined
+      const problem = runRules(pos, name, rules, value)
+      if (problem) problems.push(problem)
+    }
+  } else if (typeof args === 'object') {
+    for (const check of def) {
+      const name = check.name
+      const rules = check.validations
+      const value = args[name]
+      const problem = runRules(name, name, rules, value)
+      if (problem) problems.push(problem)
+    }
+  } else {
+    throw new Error('Type validation args must be an array or an object')
   }
 
   if (problems.length) {

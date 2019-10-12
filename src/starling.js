@@ -4,7 +4,7 @@ import Address from './entities/address'
 import Transaction from './entities/transaction'
 import Card from './entities/card'
 import OAuth from './entities/oauth'
-import Contact from './entities/contact'
+import Payee from './entities/payee'
 import Payment from './entities/payment'
 import Mandate from './entities/mandate'
 import SavingsGoals from './entities/savingsGoals'
@@ -37,7 +37,7 @@ class Starling {
     this.transaction = new Transaction(this.config)
     this.payment = new Payment(this.config)
     this.mandate = new Mandate(this.config)
-    this.contact = new Contact(this.config)
+    this.payee = new Payee(this.config)
     this.card = new Card(this.config)
     this.savingsGoals = new SavingsGoals(this.config)
     this.oAuth = new OAuth(this.config)
@@ -207,41 +207,47 @@ class Starling {
   }
 
   /**
-   * Gets the customer's contacts (payees)
-   * @param {string} accessToken - the oauth bearer token.
+   * Get an account holder's payees
+   * @param {string=} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
-  getContacts (accessToken = this.config.accessToken) {
-    return this.contact.getContacts(accessToken)
+  getPayees (accessToken = this.config.accessToken) {
+    return this.payee.getPayees(accessToken)
   }
 
   /**
-   * Gets a specific contact (payee)
-   * @param {string} accessToken - the oauth bearer token.
-   * @param {string} contactId - the contact's ID.
+   * Create a payee
+   * @param {string=} accessToken - the oauth bearer token.
+   * @param {Object} payeeCreationRequest - the payee creation request.
+   * @param {string} payeeCreationRequest.payeeName - the name of the new payee.
+   * @param {string=} payeeCreationRequest.phoneNumber - the phone number of the new payee.
+   * @param {string} payeeCreationRequest.payeeType - the payee type of the new payee.
+   * @param {string=} payeeCreationRequest.firstName - the first name of the new payee.
+   * @param {string=} payeeCreationRequest.middleName - the middle name of the new payee.
+   * @param {string=} payeeCreationRequest.lastName - the last name of the new payee.
+   * @param {string=} payeeCreationRequest.businessName - the business name of the new payee.
+   * @param {string=} payeeCreationRequest.dateOfBirth - the date of birth of the new payee.
+   * @param {Object[]=} payeeCreationRequest.accounts - the new payee's accounts, a list of payee account creation requests.
+   * @param {string} payeeCreationRequest.accounts[].description - the account description.
+   * @param {boolean} payeeCreationRequest.accounts[].defaultAccount - whether this is the default account for the new payee.
+   * @param {string} payeeCreationRequest.accounts[].countryCode - the country code for the account (ISO 3166-1 alpha-2).
+   * @param {string} payeeCreationRequest.accounts[].accountIdentifier - the account identifier.
+   * @param {string} payeeCreationRequest.accounts[].bankIdentifier - the bank identifier.
+   * @param {string} payeeCreationRequest.accounts[].bankIdentifierType - the bank identifier type.
    * @return {Promise} - the http request promise
    */
-  getContactAccount (accessToken = this.config.accessToken, contactId) {
-    return this.contact.getContactAccount(accessToken, contactId)
+  createPayee (accessToken = this.config.accessToken, payeeCreationRequest) {
+    return this.payee.createPayee(accessToken, payeeCreationRequest)
   }
 
   /**
-   * Creates a contact (payee) for the customer
-   * @param {string} accessToken - the oauth bearer token.
-   * @param {string} name - the name of the new contact.
-   * @param {string=} accountType - the account type (domestic or international), optional and defaults to
-   *   UK_ACCOUNT_AND_SORT_CODE.
-   * @param {string} accountNumber - the contact's bank account number.
-   * @param {string} sortCode - the contact's sort code.
-   * @param {string} customerId - the customer's ID.
+   * Delete an account holder's payee
+   * @param {string=} accessToken - the oauth bearer token.
+   * @param {string} payeeUid - the payeeUid of the payee to be deleted.
    * @return {Promise} - the http request promise
    */
-  createContact (accessToken = this.config.accessToken, name, accountType = 'UK_ACCOUNT_AND_SORT_CODE', accountNumber, sortCode, customerId) {
-    return this.contact.createContact(accessToken, name, accountType, accountNumber, sortCode, customerId)
-  }
-
-  deleteContact (accessToken, contactId) {
-    return this.contact.deleteContact(accessToken, contactId)
+  deletePayee (accessToken = this.config.accessToken, payeeUid) {
+    return this.payee.deletePayee(accessToken, payeeUid)
   }
 
   /**

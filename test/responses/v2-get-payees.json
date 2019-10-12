@@ -1,0 +1,57 @@
+{
+  "payees": [
+    {
+      "payeeUid": "8cdab926-1d16-46a7-b4a9-6cb38f0c9b49",
+      "payeeName": "Bob's accounts",
+      "phoneNumber": "+447700900123",
+      "payeeType": "INDIVIDUAL",
+      "firstName": "Bob",
+      "middleName": "Bobity",
+      "lastName": "Bobbington",
+      "businessName": null,
+      "dateOfBirth": null,
+      "accounts": [
+        {
+          "payeeAccountUid": "fc17e7d5-ff2c-4a3c-8f64-9ac93d80de62",
+          "description": "Bob's business account",
+          "defaultAccount": true,
+          "countryCode": "GB",
+          "accountIdentifier": "12345678",
+          "bankIdentifier": "123456",
+          "bankIdentifierType": "SORT_CODE"
+        },
+        {
+          "payeeAccountUid": "00609e17-80f8-4ffb-bd68-75d0cc6f1e86",
+          "description": "Bob's personal account",
+          "defaultAccount": false,
+          "countryCode": "GB",
+          "accountIdentifier": "87654321",
+          "bankIdentifier": "654321",
+          "bankIdentifierType": "SORT_CODE"
+        }
+      ]
+    },
+    {
+      "payeeUid": "ac566df6-dd27-422f-a21f-c2841492fac4",
+      "payeeName": "Carol",
+      "phoneNumber": null,
+      "payeeType": "INDIVIDUAL",
+      "firstName": "Carol",
+      "middleName": null,
+      "lastName": "Marin",
+      "businessName": null,
+      "dateOfBirth": "1990-11-30",
+      "accounts": [
+        {
+          "payeeAccountUid": "4afcf1c7-1faa-41db-acf6-ce37ef7e6c9c",
+          "description": "Carol's main account",
+          "defaultAccount": true,
+          "countryCode": "GB",
+          "accountIdentifier": "12121212",
+          "bankIdentifier": "121212",
+          "bankIdentifierType": "SORT_CODE"
+        }
+      ]
+    }
+  ]
+}

@@ -5,7 +5,7 @@ export const defaultHeaders = (accessToken) => {
   }
 }
 
-export const postHeaders = (accessToken) => {
+export const payloadHeaders = (accessToken) => {
   return {
     Accept: 'application/json',
     'Content-Type': 'application/json',
