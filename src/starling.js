@@ -8,7 +8,7 @@ import Contact from './entities/contact'
 import Payment from './entities/payment'
 import Mandate from './entities/mandate'
 import SavingsGoals from './entities/savingsGoals'
-import WhoAmI from './entities/whoAmI'
+import Identity from './entities/identity'
 import Merchant from './entities/merchant'
 
 /**
@@ -30,7 +30,7 @@ class Starling {
     this.config = Object.assign({}, defaults, options)
 
     this.merchant = new Merchant(this.config)
-    this.whoAmI = new WhoAmI(this.config)
+    this.identity = new Identity(this.config)
     this.customer = new Customer(this.config)
     this.account = new Account(this.config)
     this.address = new Address(this.config)
@@ -44,13 +44,13 @@ class Starling {
   }
 
   /**
-   * Gets the customer UUID and permissions corresponding to the access token passed
+   * Get the current token identity
    * @param {string=} accessToken - the oauth bearer token.  If not
    * specified, the accessToken on the options object is used.
    * @return {Promise} - the http request promise
    */
-  getMe (accessToken = this.config.accessToken) {
-    return this.whoAmI.getMe(accessToken)
+  getTokenIdentity (accessToken = this.config.accessToken) {
+    return this.identity.getTokenIdentity(accessToken)
   }
 
   /**

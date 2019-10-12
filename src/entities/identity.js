@@ -3,14 +3,14 @@ import debug from 'debug'
 import { defaultHeaders } from '../utils/http'
 import { typeValidation } from '../utils/validator'
 
-const log = debug('starling:who-am-i-service')
+const log = debug('starling:identity-service')
 
 /**
- * Service to interact with the Who Am I endpoint
+ * Service to interact with the API User identities endpoints
  */
-class WhoAmI {
+class Identity {
   /**
-   * Creates an instance of the who am I client
+   * Creates an instance of the identity client
    * @param {Object} options - configuration parameters
    */
   constructor (options) {
@@ -18,13 +18,13 @@ class WhoAmI {
   }
 
   /**
-   * Retrieves the customer UUID and permissions corresponding to the access token passed
+   * Get the current token identity
    * @param {string} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
-  getMe (accessToken) {
-    typeValidation(arguments, getMeParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v1/me`
+  getTokenIdentity (accessToken) {
+    typeValidation(arguments, getTokenIdentityParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v2/identity/token`
     log(`GET ${url}`)
 
     return axios({
@@ -35,8 +35,8 @@ class WhoAmI {
   }
 }
 
-const getMeParameterDefinition = [
+const getTokenIdentityParameterDefinition = [
   { name: 'accessToken', validations: ['required', 'string'] }
 ]
 
-module.exports = WhoAmI
+module.exports = Identity
