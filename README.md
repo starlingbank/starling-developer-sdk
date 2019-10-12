@@ -25,7 +25,7 @@ const client = new Starling({
   accessToken: '<oauth access token>'
 })
 
-client.getBalance()
+client.getAccounts()
   .then(({ data }) => console.log(data))
   .catch(err => console.log(err))
 ```

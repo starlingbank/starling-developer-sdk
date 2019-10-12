@@ -77,10 +77,11 @@ class Starling {
    * Gets the customer's balance
    * @param {string=} accessToken - the oauth bearer token.  If not
    * specified, the accessToken on the options object is used.
+   * @param {string} accountUid - the account uid
    * @return {Promise} - the http request promise
    */
-  getBalance (accessToken = this.config.accessToken) {
-    return this.account.getBalance(accessToken)
+  getBalance (accessToken = this.config.accessToken, accountUid) {
+    return this.account.getBalance(accessToken, accountUid)
   }
 
   /**

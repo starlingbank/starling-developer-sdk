@@ -35,13 +35,14 @@ class Account {
   }
 
   /**
-   * Retrieves the customer's balance
+   * Retrieves an account's balance
    * @param {string} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
    * @return {Promise} - the http request promise
    */
-  getBalance (accessToken) {
+  getBalance (accessToken, accountUid) {
     typeValidation(arguments, getBalanceParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v1/accounts/balance`
+    const url = `${this.options.apiUrl}/api/v2/accounts/${accountUid}/balance`
     log(`GET ${url}`)
 
     return axios({
@@ -57,7 +58,8 @@ const getAccountParameterDefinition = [
 ]
 
 const getBalanceParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] }
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'accountUid', validations: ['required', 'string'] }
 ]
 
 module.exports = Account
