@@ -45,8 +45,7 @@ class Starling {
 
   /**
    * Get the current token identity
-   * @param {string=} accessToken - the oauth bearer token.  If not
-   * specified, the accessToken on the options object is used.
+   * @param {string=} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
   getTokenIdentity (accessToken = this.config.accessToken) {
@@ -55,8 +54,7 @@ class Starling {
 
   /**
    * Get the authorising individual's identity
-   * @param {string=} accessToken - the oauth bearer token.  If not
-   * specified, the accessToken on the options object is used.
+   * @param {string=} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
   getAuthorisingIndividual (accessToken = this.config.accessToken) {
@@ -65,8 +63,7 @@ class Starling {
 
   /**
    * Gets the customer's details
-   * @param {string=} accessToken - the oauth bearer token. If not
-   * specified, the accessToken on the options object is used.
+   * @param {string=} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
   getCustomer (accessToken = this.config.accessToken) {
@@ -75,8 +72,7 @@ class Starling {
 
   /**
    * Gets the customer's account details
-   * @param {string=} accessToken - the oauth bearer token.  If not
-   * specified, the accessToken on the options object is used.
+   * @param {string=} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
   getAccounts (accessToken = this.config.accessToken) {
@@ -85,8 +81,7 @@ class Starling {
 
   /**
    * Gets the customer's balance
-   * @param {string=} accessToken - the oauth bearer token.  If not
-   * specified, the accessToken on the options object is used.
+   * @param {string=} accessToken - the oauth bearer token.
    * @param {string} accountUid - the account uid
    * @return {Promise} - the http request promise
    */
@@ -96,8 +91,7 @@ class Starling {
 
   /**
    * Gets the customer's addresses (current and previous)
-   * @param {string=} accessToken - the oauth bearer token.  If not
-   * specified, the accessToken on the options object is used.
+   * @param {string=} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
   getAddresses (accessToken = this.config.accessToken) {
@@ -106,14 +100,10 @@ class Starling {
 
   /**
    * Gets the customer's transaction history
-   * @param {string=} accessToken - the oauth bearer token.  If not
-   * specified, the accessToken on the options object is used.
-   * @param {string} fromDate - filter transactions after this date. Format: YYYY-MM-DD (optional,
-   *   defaults to most recent 100 transactions)
-   * @param {string} toDate - filter transactions before this date. Format: YYYY-MM-DD (optional,
-   *   defaults to current date if not provided)
-   * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
-   * If not specified, results are not filtered by source.
+   * @param {string=} accessToken - the oauth bearer token.
+   * @param {string=} fromDate - filter transactions after this date. Format: YYYY-MM-DD (defaults to most recent 100 transactions)
+   * @param {string=} toDate - filter transactions before this date. Format: YYYY-MM-DD (defaults to current date if not provided)
+   * @param {string=} source - the transaction type (e.g. faster payments, mastercard). If not specified, results are not filtered by source.
    * @return {Promise} - the http request promise
    */
   getTransactions (accessToken = this.config.accessToken, fromDate, toDate, source) {
@@ -122,8 +112,7 @@ class Starling {
 
   /**
    * Gets the full details of a single transaction
-   * @param {string=} accessToken - the oauth bearer token.  If not
-   * specified, the accessToken on the options object is used.
+   * @param {string=} accessToken - the oauth bearer token.
    * @param {string} transactionId - the unique transaction ID
    * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
    * If not specified, only generic transaction information will be returned.
@@ -136,7 +125,7 @@ class Starling {
   /**
    * Retrieves a merchant
    * @param {string=} accessToken - the oauth bearer token
-   * @param {string=} merchantUid - Unique identifier of the merchant the location belongs to.
+   * @param {string=} merchantUid - unique identifier of the merchant.
    * @return {Promise} - the http request promise
    */
   getMerchant (accessToken = this.config.accessToken, merchantUid) {
@@ -146,8 +135,8 @@ class Starling {
   /**
    * Retrieves a merchant location of a merchant
    * @param {string=} accessToken - the oauth bearer token
-   * @param {string=} merchantUid - Unique identifier of the merchant the location belongs to.
-   * @param {string=} merchantLocationUid - Unique identifier of the location for the merchant.
+   * @param {string=} merchantUid - unique identifier of the merchant the location belongs to.
+   * @param {string=} merchantLocationUid - unique identifier of the location for the merchant.
    * @return {Promise} - the http request promise
    */
   getMerchantLocation (accessToken = this.config.accessToken, merchantUid, merchantLocationUid) {
@@ -156,8 +145,7 @@ class Starling {
 
   /**
    * Gets the customer's current direct-debit mandates
-   * @param {string=} accessToken - the oauth bearer token.  If not
-   * specified, the accessToken on the options object is used.
+   * @param {string=} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
   listMandates (accessToken = this.config.accessToken) {
@@ -166,7 +154,7 @@ class Starling {
 
   /**
    * Gets a specific direct debit mandate
-   * @param {string} accessToken - the oauth bearer token.
+   * @param {string=} accessToken - the oauth bearer token.
    * @param {string} mandateId - the unique mandate ID
    * @return {Promise} - the http request promise
    */
@@ -176,7 +164,7 @@ class Starling {
 
   /**
    * Deletes specific direct debit mandate
-   * @param {string} accessToken - the oauth bearer token.
+   * @param {string=} accessToken - the oauth bearer token.
    * @param {string} mandateId - the unique mandate ID
    * @return {Promise} - the http request promise
    */
@@ -186,7 +174,7 @@ class Starling {
 
   /**
    * Lists the customer's scheduled payments
-   * @param {string} accessToken - the oauth bearer token.
+   * @param {string=} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
   listScheduledPayments (accessToken = this.config.accessToken) {
@@ -195,10 +183,10 @@ class Starling {
 
   /**
    * Makes a payment on behalf of the customer to another UK bank account using the Faster Payments network
-   * @param {string} accessToken - the oauth bearer token.
-   *  @param {string} destinationAccountUid - the account identifier of the recipient
-   * @param {string} reference - The payment reference, max. 18 characters.
-   * @param {string} amount - the amount to be send.
+   * @param {string=} accessToken - the oauth bearer token.
+   * @param {string} destinationAccountUid - the account identifier of the recipient
+   * @param {string} reference - the payment reference, max. 18 characters.
+   * @param {string} amount - the amount to be sent.
    * @param {string=} currency - the currency, optional, defaults to "GBP".
    * @return {Promise} - the http request promise
    */
@@ -252,7 +240,7 @@ class Starling {
 
   /**
    * Gets a list of the customer's savings goals
-   * @param {string} accessToken - the oauth bearer token.
+   * @param {string=} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
   listSavingsGoals (accessToken = this.config.accessToken) {
@@ -261,7 +249,7 @@ class Starling {
 
   /**
    * Gets a specific savings goal
-   * @param {string} accessToken - the oauth bearer token.
+   * @param {string=} accessToken - the oauth bearer token.
    * @param {string} savingsGoalId - the savings goal's ID.
    * @return {Promise} - the http request promise
    */
@@ -271,7 +259,7 @@ class Starling {
 
   /**
    * Add money to a specific savings goal
-   * @param {string} accessToken - the oauth bearer token.
+   * @param {string=} accessToken - the oauth bearer token.
    * @param {string} savingsGoalId - the savings goal's ID.
    * @param {string} transactionId - a transaction ID for this transaction
    * @param {number} amount - an amount in minor unit
@@ -288,14 +276,14 @@ class Starling {
   }
 
   /**
-   * Creates a contact (payee) for the customer
-   * @param {string} accessToken - the oauth bearer token.
+   * Create a savings goal
+   * @param {string=} accessToken - the oauth bearer token.
    * @param {string} savingsGoalId - the savings goal's ID, generate one if creating a goal.
-   * @param {string} name - the name of the new contact.
-   * @param {string} currency - the currency of the savings goal. Defaults to 'GBP'.
+   * @param {string} name - the name of the new savings goal.
+   * @param {string=} currency - the currency of the savings goal. Defaults to 'GBP'.
    * @param {number} targetAmount - the target amount in minor units (e.g. 1234 => £12.34).
-   * @param {string} targetCurrency - the target currency, also defaults to 'GBP'.
-   * @param {string} base64EncodedPhoto - base64 encoded image to associate with the goal. (optional)
+   * @param {string=} targetCurrency - the target currency, also defaults to 'GBP'.
+   * @param {string=} base64EncodedPhoto - base64 encoded image to associate with the goal.
    * @return {Promise} - the http request promise
    */
   createSavingsGoal (accessToken = this.config.accessToken, savingsGoalId, name, currency = 'GBP', targetAmount, targetCurrency = 'GBP', base64EncodedPhoto) {
@@ -303,19 +291,18 @@ class Starling {
   }
 
   /**
-   * Deletes specific direct debit mandate
-   * @param {string} accessToken - the oauth bearer token.
-   * @param {string} savingsGoalId - the unique mandate ID
+   * Delete a savings goal
+   * @param {string=} accessToken - the oauth bearer token.
+   * @param {string} savingsGoalId - the savings goal id
    * @return {Promise} - the http request promise
    */
-  deleteSavingsGoal (accessToken, savingsGoalId) {
+  deleteSavingsGoal (accessToken = this.config.accessToken, savingsGoalId) {
     return this.savingsGoals.deleteSavingsGoal(accessToken, savingsGoalId)
   }
 
   /**
    * Get all the cards for an account holder
-   * @param {string=} accessToken - the oauth bearer token.  If not
-   * specified, the accessToken on the options object is used.
+   * @param {string=} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
   getCards (accessToken = this.config.accessToken) {
