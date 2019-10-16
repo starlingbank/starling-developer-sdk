@@ -193,24 +193,6 @@ class Starling {
   }
 
   /**
-   * Create domestic payment
-   * @param {string=} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid of the account to send the payment from
-   * @param {string} categoryUid - the category uid of the category to send the payment from
-   * @param {Object} instructLocalPaymentRequest - the instruct local payment request
-   * @param {string} instructLocalPaymentRequest.externalIdentifier - a unique identifier to ensure idemopotency, 0-100 characters
-   * @param {string} instructLocalPaymentRequest.destinationPayeeAccountUid - the payee uid of the recipient
-   * @param {string} instructLocalPaymentRequest.reference - The payment reference, 1-18 characters
-   * @param {Object} instructLocalPaymentRequest.amount - the currency and amount
-   * @param {string} instructLocalPaymentRequest.amount.currency - the currency, represented as an ISO-4217 3 character currency code
-   * @param {number} instructLocalPaymentRequest.amount.minorUnits - amount in the minor units of the given currency; eg pence in GBP, cents in EUR
-   * @return {Promise} - the http request promise
-   */
-  makeLocalPayment (accessToken = this.config.accessToken, accountUid, categoryUid, instructLocalPaymentRequest) {
-    return this.payment.makeLocalPayment(accessToken, accountUid, categoryUid, instructLocalPaymentRequest)
-  }
-
-  /**
    * List standing orders
    * @param {string=} accessToken - the oauth bearer token
    * @param {string} accountUid - the account uid of the account to get standing orders of
