@@ -6,11 +6,11 @@ import { typeValidation } from '../utils/validator'
 const log = debug('starling:mandate-service')
 
 /**
- * Service to interact with a customer's transactions
+ * Service to interact with a customer's mandates
  */
 class Mandate {
   /**
-   * Create a new transaction service
+   * Create a new mandate service
    * @param {Object} options - configuration parameters
    */
   constructor (options) {
@@ -19,12 +19,12 @@ class Mandate {
 
   /**
    * Gets a list of the customer's current direct debit mandates
-   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} accessToken - the oauth bearer token
    * @return {Promise} - the http request promise
    */
   listMandates (accessToken) {
     typeValidation(arguments, listMandatesParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v1/direct-debit/mandates`
+    const url = `${this.options.apiUrl}/api/v2/direct-debit/mandates`
     log(`GET ${url}`)
     return axios({
       method: 'GET',
@@ -35,12 +35,13 @@ class Mandate {
 
   /**
    * Gets a specific direct debit mandate
-   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} accessToken - the oauth bearer token
+   * @param {string} mandateUid - unique identifier of the mandate
    * @return {Promise} - the http request promise
    */
-  getMandate (accessToken, mandateId) {
+  getMandate (accessToken, mandateUid) {
     typeValidation(arguments, getMandateParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v1/direct-debit/mandates/${mandateId}`
+    const url = `${this.options.apiUrl}/api/v2/direct-debit/mandates/${mandateUid}`
     log(`GET ${url}`)
     return axios({
       method: 'GET',
@@ -52,12 +53,12 @@ class Mandate {
   /**
    * Deletes specific direct debit mandate
    * @param {string} accessToken - the oauth bearer token.
-   * @param {string} mandateId - the unique mandate ID
+   * @param {string} mandateUid - the unique mandate ID
    * @return {Promise} - the http request promise
    */
-  deleteMandate (accessToken, mandateId) {
+  deleteMandate (accessToken, mandateUid) {
     typeValidation(arguments, deleteMandateParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v1/direct-debit/mandates/${mandateId}`
+    const url = `${this.options.apiUrl}/api/v2/direct-debit/mandates/${mandateUid}`
     log(`DELETE ${url}`)
     return axios({
       method: 'DELETE',
@@ -73,12 +74,12 @@ const listMandatesParameterDefinition = [
 
 const getMandateParameterDefinition = [
   { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'mandateId', validations: ['required', 'string'] }
+  { name: 'mandateUid', validations: ['required', 'string'] }
 ]
 
 const deleteMandateParameterDefinition = [
   { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'mandateId', validations: ['required', 'string'] }
+  { name: 'mandateUid', validations: ['required', 'string'] }
 ]
 
 module.exports = Mandate

@@ -1,0 +1,15 @@
+{
+  "mandates": [
+    {
+      "uid": "d63cd8a9-bb4c-4ec4-9e8c-8a7e6cf48a85",
+      "reference": "Volcano Insurance",
+      "status": "LIVE",
+      "source": "ELECTRONIC",
+      "created": "2017-09-04T16:19:38.867Z",
+      "cancelled": "2017-09-04T16:22:02.527Z",
+      "originatorName": "ANTIQUARIES",
+      "originatorUid": "dfac6a0f-780a-4632-af6f-e9b9f341c2c6",
+      "merchantUid": "778b36c9-f07d-4f95-87ca-c4e57afc2cd1"
+    }
+  ]
+}
