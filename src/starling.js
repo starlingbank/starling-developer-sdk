@@ -173,25 +173,64 @@ class Starling {
   }
 
   /**
-   * Lists the customer's scheduled payments
-   * @param {string=} accessToken - the oauth bearer token.
+   * Get a payment order
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} paymentOrderUid - the payment order uid
    * @return {Promise} - the http request promise
    */
-  listScheduledPayments (accessToken = this.config.accessToken) {
-    return this.payment.listScheduledPayments(accessToken)
+  getPaymentOrder (accessToken = this.config.accessToken, paymentOrderUid) {
+    return this.payment.getPaymentOrder(accessToken, paymentOrderUid)
   }
 
   /**
-   * Makes a payment on behalf of the customer to another UK bank account using the Faster Payments network
-   * @param {string=} accessToken - the oauth bearer token.
-   * @param {string} destinationAccountUid - the account identifier of the recipient
-   * @param {string} reference - the payment reference, max. 18 characters.
-   * @param {string} amount - the amount to be sent.
-   * @param {string=} currency - the currency, optional, defaults to "GBP".
+   * Get a payment order's payments
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} paymentOrderUid - the payment order uid
    * @return {Promise} - the http request promise
    */
-  makeLocalPayment (accessToken = this.config.accessToken, destinationAccountUid, reference, amount, currency = 'GBP') {
-    return this.payment.makeLocalPayment(accessToken, destinationAccountUid, reference, amount, currency)
+  getPaymentOrderPayments (accessToken = this.config.accessToken, paymentOrderUid) {
+    return this.payment.getPaymentOrderPayments(accessToken, paymentOrderUid)
+  }
+
+  /**
+   * Create domestic payment
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid of the account to send the payment from
+   * @param {string} categoryUid - the category uid of the category to send the payment from
+   * @param {Object} instructLocalPaymentRequest - the instruct local payment request
+   * @param {string} instructLocalPaymentRequest.externalIdentifier - a unique identifier to ensure idemopotency, 0-100 characters
+   * @param {string} instructLocalPaymentRequest.destinationPayeeAccountUid - the payee uid of the recipient
+   * @param {string} instructLocalPaymentRequest.reference - The payment reference, 1-18 characters
+   * @param {Object} instructLocalPaymentRequest.amount - the currency and amount
+   * @param {string} instructLocalPaymentRequest.amount.currency - the currency, represented as an ISO-4217 3 character currency code
+   * @param {number} instructLocalPaymentRequest.amount.minorUnits - amount in the minor units of the given currency; eg pence in GBP, cents in EUR
+   * @return {Promise} - the http request promise
+   */
+  makeLocalPayment (accessToken = this.config.accessToken, accountUid, categoryUid, instructLocalPaymentRequest) {
+    return this.payment.makeLocalPayment(accessToken, accountUid, categoryUid, instructLocalPaymentRequest)
+  }
+
+  /**
+   * List standing orders
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid of the account to get standing orders of
+   * @param {string} categoryUid - the category uid of the category to get standing orders of
+   * @return {Promise} - the http request promise
+   */
+  listStandingOrders (accessToken = this.config.accessToken, accountUid, categoryUid) {
+    return this.payment.listStandingOrders(accessToken, accountUid, categoryUid)
+  }
+
+  /**
+   * Get a standing order
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid of the standing order
+   * @param {string} categoryUid - the category uid of the standing order
+   * @param {string} paymentOrderUid - the payment order uid of the standing order
+   * @return {Promise} - the http request promise
+   */
+  getStandingOrder (accessToken = this.config.accessToken, accountUid, categoryUid, paymentOrderUid) {
+    return this.payment.getStandingOrder(accessToken, accountUid, categoryUid, paymentOrderUid)
   }
 
   /**

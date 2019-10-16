@@ -1,0 +1,23 @@
+{
+  "standingOrders": [
+    {
+      "paymentOrderUid": "e0cb928a-075a-4254-833f-bddb26aef414",
+      "amount": {
+        "currency": "GBP",
+        "minorUnits": 11223344
+      },
+      "reference": "Payment reference",
+      "payeeUid": "e231c503-72cd-4fbf-a643-be61c3c5ba12",
+      "payeeAccountUid": "a2c6e45b-6f24-48be-ba52-58bff94bef59",
+      "standingOrderRecurrence": {
+        "startDate": "2017-09-23",
+        "frequency": "WEEKLY",
+        "interval": 4,
+        "count": 12,
+        "untilDate": "2018-09-23"
+      },
+      "nextDate": "2018-09-23",
+      "cancelledAt": "2017-09-04T16:19:38.867Z"
+    }
+  ]
+}

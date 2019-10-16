@@ -1,0 +1,21 @@
+{
+  "payments": [
+    {
+      "paymentUid": "d812059f-c15d-49d6-9c1c-76ae4e67f8cb",
+      "amount": {
+        "currency": "GBP",
+        "minorUnits": 11223344
+      },
+      "reference": "Payment reference",
+      "payeeUid": "e231c503-72cd-4fbf-a643-be61c3c5ba12",
+      "payeeAccountUid": "a2c6e45b-6f24-48be-ba52-58bff94bef59",
+      "createdAt": "2018-06-30T00:01:00.000Z",
+      "completedAt": "2018-06-30T00:02:00.000Z",
+      "rejectedAt": "2018-06-30T00:03:00.000Z",
+      "paymentStatusDetails": {
+        "paymentStatus": "ACCEPTED",
+        "description": "ACCEPTED"
+      }
+    }
+  ]
+}
