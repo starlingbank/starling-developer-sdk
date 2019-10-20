@@ -1,0 +1,17 @@
+{
+  "accountHolderUid": "a0be8f6a-faa9-40f8-a0b8-58205e722cd7",
+  "personOne": {
+    "firstName": "Dave",
+    "lastName": "Bowman",
+    "dateOfBirth": "1970-30-05",
+    "email": "dave.bowman@example.com",
+    "phone": "07700900123"
+  },
+  "personTwo": {
+    "firstName": "Betty",
+    "lastName": "Bowman",
+    "dateOfBirth": "1968-04-02",
+    "email": "betty.bowman@example.com",
+    "phone": "07700900321"
+  }
+}

@@ -1,5 +1,6 @@
 import Customer from './entities/customer'
 import Account from './entities/account'
+import AccountHolder from './entities/accountHolder'
 import Address from './entities/address'
 import Transaction from './entities/transaction'
 import Card from './entities/card'
@@ -32,6 +33,7 @@ class Starling {
     this.merchant = new Merchant(this.config)
     this.identity = new Identity(this.config)
     this.customer = new Customer(this.config)
+    this.accountHolder = new AccountHolder(this.config)
     this.account = new Account(this.config)
     this.address = new Address(this.config)
     this.transaction = new Transaction(this.config)
@@ -68,6 +70,51 @@ class Starling {
    */
   getCustomer (accessToken = this.config.accessToken) {
     return this.customer.getCustomer(accessToken)
+  }
+
+  /**
+   * Get basic information about the account holder
+   * @param {string} accessToken - the oauth bearer token
+   * @return {Promise} - the http request promise
+   */
+  getAccountHolder (accessToken = this.config.accessToken) {
+    return this.accountHolder.getAccountHolder(accessToken)
+  }
+
+  /**
+   * Get the name of the account holder
+   * @param {string} accessToken - the oauth bearer token
+   * @return {Promise} - the http request promise
+   */
+  getAccountHolderName (accessToken = this.config.accessToken) {
+    return this.accountHolder.getAccountHolderName(accessToken)
+  }
+
+  /**
+   * Get an individual account holder's details
+   * @param {string} accessToken - the oauth bearer token
+   * @return {Promise} - the http request promise
+   */
+  getAccountHolderIndividual (accessToken = this.config.accessToken) {
+    return this.accountHolder.getAccountHolderIndividual(accessToken)
+  }
+
+  /**
+   * Get a joint account holder's details
+   * @param {string} accessToken - the oauth bearer token
+   * @return {Promise} - the http request promise
+   */
+  getAccountHolderJoint (accessToken = this.config.accessToken) {
+    return this.accountHolder.getAccountHolderJoint(accessToken)
+  }
+
+  /**
+   * Get a business account holder's details
+   * @param {string} accessToken - the oauth bearer token
+   * @return {Promise} - the http request promise
+   */
+  getAccountHolderBusiness (accessToken = this.config.accessToken) {
+    return this.accountHolder.getAccountHolderBusiness(accessToken)
   }
 
   /**
