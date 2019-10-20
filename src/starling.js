@@ -1,4 +1,3 @@
-import Customer from './entities/customer'
 import Account from './entities/account'
 import AccountHolder from './entities/accountHolder'
 import Address from './entities/address'
@@ -32,7 +31,6 @@ class Starling {
 
     this.merchant = new Merchant(this.config)
     this.identity = new Identity(this.config)
-    this.customer = new Customer(this.config)
     this.accountHolder = new AccountHolder(this.config)
     this.account = new Account(this.config)
     this.address = new Address(this.config)
@@ -61,15 +59,6 @@ class Starling {
    */
   getAuthorisingIndividual (accessToken = this.config.accessToken) {
     return this.identity.getAuthorisingIndividual(accessToken)
-  }
-
-  /**
-   * Gets the customer's details
-   * @param {string=} accessToken - the oauth bearer token.
-   * @return {Promise} - the http request promise
-   */
-  getCustomer (accessToken = this.config.accessToken) {
-    return this.customer.getCustomer(accessToken)
   }
 
   /**
