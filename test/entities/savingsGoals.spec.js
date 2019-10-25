@@ -2,33 +2,92 @@ import nock from 'nock'
 import debug from 'debug'
 import { expectAuthorizationHeader } from '../testSupport'
 import Starling from '../../src/starling'
-import getSavingsGoalResponse from '../responses/v1-get-savings-goal.json'
-import listSavingsGoalsResponse from '../responses/v1-list-savings-goals.json'
+import getSavingsGoalsResponse from '../responses/v2-get-savings-goals.json'
+import getSavingsGoalResponse from '../responses/v2-get-savings-goal.json'
+import putSavingsGoalResponse from '../responses/v2-put-savings-goal.json'
+import putSavingsGoalTransferResponse from '../responses/v2-put-savings-goal-transfer.json'
 
 const log = debug('starling:savings-goals-test')
 
-describe('Savings Goals - ', () => {
+describe('Savings Goals', () => {
   const accessToken = '0123456789'
   const starlingCli = new Starling({
     apiUrl: 'http://localhost'
   })
-
-  const savingsGoalId = '12345-12345'
+  const accountUid = 'b0b20c9d-3b6b-42f1-a7d0-e70d4538e0d9'
+  const savingsGoalUid = '5031325f-49b2-4c8c-b9cb-3f5cfa7f6d6e'
+  const transferUid = '88998899-8899-8899-8899-889988998899'
 
   nock('http://localhost', expectAuthorizationHeader(accessToken))
-    .get(`/api/v1/savings-goals/${savingsGoalId}`)
+    .get(`/api/v2/account/${accountUid}/savings-goals`)
+    .reply(200, getSavingsGoalsResponse)
+
+  nock('http://localhost', expectAuthorizationHeader(accessToken))
+    .get(`/api/v2/account/${accountUid}/savings-goals/${savingsGoalUid}`)
     .reply(200, getSavingsGoalResponse)
 
-  test('should retrieve specified savings goal', done => {
+  nock('http://localhost', expectAuthorizationHeader(accessToken))
+    .put(`/api/v2/account/${accountUid}/savings-goals`,
+      obj => obj.name && obj.currency)
+    .reply(200, putSavingsGoalResponse)
+
+  nock('http://localhost', expectAuthorizationHeader(accessToken))
+    .put(`/api/v2/account/${accountUid}/savings-goals/${savingsGoalUid}`,
+      obj => obj.name && obj.currency)
+    .reply(200, putSavingsGoalResponse)
+
+  nock('http://localhost', expectAuthorizationHeader(accessToken))
+    .delete(`/api/v2/account/${accountUid}/savings-goals/${savingsGoalUid}`)
+    .reply(200)
+
+  nock('http://localhost', expectAuthorizationHeader(accessToken))
+    .put(`/api/v2/account/${accountUid}/savings-goals/${savingsGoalUid}/add-money/${transferUid}`,
+      obj => obj.amount && obj.amount.currency && obj.amount.minorUnits)
+    .reply(200, putSavingsGoalTransferResponse)
+
+  nock('http://localhost', expectAuthorizationHeader(accessToken))
+    .put(`/api/v2/account/${accountUid}/savings-goals/${savingsGoalUid}/withdraw-money/${transferUid}`,
+      obj => obj.amount && obj.amount.currency && obj.amount.minorUnits)
+    .reply(200, putSavingsGoalTransferResponse)
+
+  test('should retrieve the account\'s savings goals', done => {
     starlingCli
-      .getSavingsGoal(accessToken, savingsGoalId)
-      .then(function ({ data }) {
+      .getSavingsGoals(accessToken, accountUid)
+      .then(({ data }) => {
+        expect(data.savingsGoalList).toHaveLength(2)
+
+        const parisTrip = data.savingsGoalList[0]
+        expect(parisTrip.savingsGoalUid).toBe(savingsGoalUid)
+        expect(parisTrip.name).toBe('Trip to Paris')
+        expect(parisTrip.target.currency).toBe('GBP')
+        expect(parisTrip.target.minorUnits).toBe(11223344)
+        expect(parisTrip.totalSaved.currency).toBe('GBP')
+        expect(parisTrip.totalSaved.minorUnits).toBe(11223344)
+        expect(parisTrip.savedPercentage).toBe(100)
+
+        const bikeMaintenance = data.savingsGoalList[1]
+        expect(bikeMaintenance.savingsGoalUid).toBe('15b0a4c9-5976-4e3b-875d-390c58abba36')
+        expect(bikeMaintenance.name).toBe('Bike maintenance')
+        expect(bikeMaintenance.totalSaved.currency).toBe('GBP')
+        expect(bikeMaintenance.totalSaved.minorUnits).toBe(6798)
+
+        log(JSON.stringify(data))
+
+        done()
+      })
+  })
+
+  test('should retrieve an individual savings goal', done => {
+    starlingCli
+      .getSavingsGoal(accessToken, accountUid, savingsGoalUid)
+      .then(({ data }) => {
+        expect(data.savingsGoalUid).toBe(savingsGoalUid)
         expect(data.name).toBe('Trip to Paris')
-        expect(data.target.minorUnits).toBe(123400)
         expect(data.target.currency).toBe('GBP')
-        expect(data.totalSaved.minorUnits).toBe(12340)
+        expect(data.target.minorUnits).toBe(11223344)
         expect(data.totalSaved.currency).toBe('GBP')
-        expect(data.savedPercentage).toBe(10)
+        expect(data.totalSaved.minorUnits).toBe(11223344)
+        expect(data.savedPercentage).toBe(100)
 
         log(JSON.stringify(data))
 
@@ -36,29 +95,13 @@ describe('Savings Goals - ', () => {
       })
   })
 
-  nock('http://localhost', expectAuthorizationHeader(accessToken))
-    .get('/api/v1/savings-goals')
-    .reply(200, listSavingsGoalsResponse)
-
-  test('should list all savings goals', done => {
+  test('should create a savings goal', done => {
     starlingCli
-      .listSavingsGoals(accessToken)
-      .then(function ({ data }) {
-        const paris = data.savingsGoalList[0]
-        expect(paris.name).toBe('Trip to Paris')
-        expect(paris.target.minorUnits).toBe(123400)
-        expect(paris.target.currency).toBe('GBP')
-        expect(paris.totalSaved.minorUnits).toBe(12340)
-        expect(paris.totalSaved.currency).toBe('GBP')
-        expect(paris.savedPercentage).toBe(10)
-
-        const toy = data.savingsGoalList[1]
-        expect(toy.name).toBe('Toy')
-        expect(toy.target.minorUnits).toBe(35000)
-        expect(toy.target.currency).toBe('GBP')
-        expect(toy.totalSaved.minorUnits).toBe(10000)
-        expect(toy.totalSaved.currency).toBe('GBP')
-        expect(toy.savedPercentage).toBe(29)
+      .createSavingsGoal(accessToken, accountUid, 'Savings goal name', 'GBP')
+      .then(({ data }) => {
+        expect(data.savingsGoalUid).toBe(savingsGoalUid)
+        expect(data.success).toBe(true)
+        expect(data.errors).toHaveLength(0)
 
         log(JSON.stringify(data))
 
@@ -66,59 +109,39 @@ describe('Savings Goals - ', () => {
       })
   })
 
-  const name = 'Trip to Paris'
-  const currency = 'GBP'
-  const targetAmount = 123400
-  const targetCurrency = 'GBP'
-  const base64EncodedPhoto = 'base64wqertyuihgfdzxfcgcvhg=='
-
-  nock('http://localhost', expectAuthorizationHeader(accessToken))
-    .put(`/api/v1/savings-goals/${savingsGoalId}`)
-    .reply(202)
-
-  test('should create a new savings goal', done => {
+  test('should delete a savings goal', done => {
     starlingCli
-      .createSavingsGoal(accessToken, savingsGoalId, name, currency, targetAmount, targetCurrency, base64EncodedPhoto)
-      .then(function ({ status }) {
-        expect(status).toBe(202)
+      .deleteSavingsGoal(accessToken, accountUid, savingsGoalUid)
+      .then(({ data, status }) => {
+        expect(status).toBe(200)
         done()
       })
   })
 
-  nock('http://localhost', expectAuthorizationHeader(accessToken))
-    .delete(`/api/v1/savings-goals/${savingsGoalId}`)
-    .reply(204)
-
-  test('should delete the specified savings goal', done => {
+  test('should add money to a savings goal', done => {
     starlingCli
-      .deleteSavingsGoal(accessToken, savingsGoalId)
-      .then(function ({ status }) {
-        expect(status).toBe(204)
+      .addMoneyToSavingsGoal(accessToken, accountUid, savingsGoalUid, transferUid, 1000, 'GBP')
+      .then(({ data }) => {
+        expect(data.transferUid).toBe(transferUid)
+        expect(data.success).toBe(true)
+        expect(data.errors).toHaveLength(0)
+
+        log(JSON.stringify(data))
+
         done()
       })
   })
 
-  const transactionId = '54321-54321'
-  const minorAmount = 111
-  const savingsCurrency = 'BRL'
-
-  nock('http://localhost', expectAuthorizationHeader(accessToken))
-    .put(
-      `/api/v1/savings-goals/${savingsGoalId}/add-money/${transactionId}`,
-      {
-        amount: {
-          currency: savingsCurrency,
-          minorUnits: minorAmount
-        }
-      }
-    )
-    .reply(202)
-
-  test('should add money to a specific goal', done => {
+  test('should withdraw money from a savings goal', done => {
     starlingCli
-      .addMoneyToSavingsGoal(accessToken, savingsGoalId, transactionId, minorAmount, savingsCurrency)
-      .then(function ({ status }) {
-        expect(status).toBe(202)
+      .withdrawMoneyFromSavingsGoal(accessToken, accountUid, savingsGoalUid, transferUid, 1000, 'GBP')
+      .then(({ data }) => {
+        expect(data.transferUid).toBe(transferUid)
+        expect(data.success).toBe(true)
+        expect(data.errors).toHaveLength(0)
+
+        log(JSON.stringify(data))
+
         done()
       })
   })

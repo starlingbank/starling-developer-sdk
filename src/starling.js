@@ -296,37 +296,63 @@ class Starling {
   }
 
   /**
-   * Gets a list of the customer's savings goals
-   * @param {string=} accessToken - the oauth bearer token.
+   * Get all savings goals
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
    * @return {Promise} - the http request promise
    */
-  listSavingsGoals (accessToken = this.config.accessToken) {
-    return this.savingsGoals.listSavingsGoals(accessToken)
+  getSavingsGoals (accessToken = this.config.accessToken, accountUid) {
+    return this.savingsGoals.getSavingsGoals(accessToken, accountUid)
   }
 
   /**
-   * Gets a specific savings goal
-   * @param {string=} accessToken - the oauth bearer token.
-   * @param {string} savingsGoalId - the savings goal's ID.
+   * Get a specific savings goal
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @param {string} savingsGoalUid - the savings goal's uid
    * @return {Promise} - the http request promise
    */
-  getSavingsGoal (accessToken = this.config.accessToken, savingsGoalId) {
-    return this.savingsGoals.getSavingsGoal(accessToken, savingsGoalId)
+  getSavingsGoal (accessToken = this.config.accessToken, accountUid, savingsGoalUid) {
+    return this.savingsGoals.getSavingsGoal(accessToken, accountUid, savingsGoalUid)
   }
 
   /**
-   * Add money to a specific savings goal
-   * @param {string=} accessToken - the oauth bearer token.
-   * @param {string} savingsGoalId - the savings goal's ID.
-   * @param {string} transactionId - a transaction ID for this transaction
-   * @param {number} amount - an amount in minor unit
+   * Add money to a savings goal
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @param {string} savingsGoalUid - the savings goal's uid
+   * @param {string} transferUid - a transaction uid for this transaction
+   * @param {number} amount - amount in the minor units of the given currency; eg pence in GBP, cents in EUR
+   * @param {string=} currency - ISO-4217 3 character currency code, defaults to 'GBP'
    * @return {Promise} - the http request promise
    */
-  addMoneyToSavingsGoal (accessToken = this.config.accessToken, savingsGoalId, transactionId, amount, currency = 'GBP') {
+  addMoneyToSavingsGoal (accessToken = this.config.accessToken, accountUid, savingsGoalUid, transferUid, amount, currency = 'GBP') {
     return this.savingsGoals.addMoneyToSavingsGoal(
       accessToken,
-      savingsGoalId,
-      transactionId,
+      accountUid,
+      savingsGoalUid,
+      transferUid,
+      amount,
+      currency
+    )
+  }
+
+  /**
+   * Withdraw money from a savings goal
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @param {string} savingsGoalUid - the savings goal's uid
+   * @param {string} transferUid - a transaction uid for this transaction
+   * @param {number} amount - amount in the minor units of the given currency; eg pence in GBP, cents in EUR
+   * @param {string=} currency - ISO-4217 3 character currency code, defaults to 'GBP'
+   * @return {Promise} - the http request promise
+   */
+  withdrawMoneyFromSavingsGoal (accessToken = this.config.accessToken, accountUid, savingsGoalUid, transferUid, amount, currency = 'GBP') {
+    return this.savingsGoals.withdrawMoneyFromSavingsGoal(
+      accessToken,
+      accountUid,
+      savingsGoalUid,
+      transferUid,
       amount,
       currency
     )
@@ -335,26 +361,27 @@ class Starling {
   /**
    * Create a savings goal
    * @param {string=} accessToken - the oauth bearer token.
-   * @param {string} savingsGoalId - the savings goal's ID, generate one if creating a goal.
-   * @param {string} name - the name of the new savings goal.
-   * @param {string=} currency - the currency of the savings goal. Defaults to 'GBP'.
-   * @param {number} targetAmount - the target amount in minor units (e.g. 1234 => £12.34).
-   * @param {string=} targetCurrency - the target currency, also defaults to 'GBP'.
-   * @param {string=} base64EncodedPhoto - base64 encoded image to associate with the goal.
+   * @param {string} accountUid - the account uid of the account to create the savings goal in
+   * @param {string} name - the name of the new savings goal
+   * @param {string=} currency - ISO-4217 3 character currency code, defaults to 'GBP'
+   * @param {number=} targetAmount - the target amount in minor units (e.g. 1234 => £12.34), defaults to 0
+   * @param {string=} targetCurrency - the target currency, as an ISO-4217 3 character currency code, defaults to 'GBP'
+   * @param {string=} base64EncodedPhoto - base64 encoded image to associate with the goal
    * @return {Promise} - the http request promise
    */
-  createSavingsGoal (accessToken = this.config.accessToken, savingsGoalId, name, currency = 'GBP', targetAmount, targetCurrency = 'GBP', base64EncodedPhoto) {
-    return this.savingsGoals.createSavingsGoal(accessToken, savingsGoalId, name, currency, targetAmount, targetCurrency, base64EncodedPhoto)
+  createSavingsGoal (accessToken = this.config.accessToken, accountUid, name, currency = 'GBP', targetAmount = 0, targetCurrency = 'GBP', base64EncodedPhoto) {
+    return this.savingsGoals.createSavingsGoal(accessToken, accountUid, name, currency, targetAmount, targetCurrency, base64EncodedPhoto)
   }
 
   /**
    * Delete a savings goal
-   * @param {string=} accessToken - the oauth bearer token.
-   * @param {string} savingsGoalId - the savings goal id
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @param {string} savingsGoalUid - the savings goal's uid
    * @return {Promise} - the http request promise
    */
-  deleteSavingsGoal (accessToken = this.config.accessToken, savingsGoalId) {
-    return this.savingsGoals.deleteSavingsGoal(accessToken, savingsGoalId)
+  deleteSavingsGoal (accessToken = this.config.accessToken, accountUid, savingsGoalUid) {
+    return this.savingsGoals.deleteSavingsGoal(accessToken, accountUid, savingsGoalUid)
   }
 
   /**
