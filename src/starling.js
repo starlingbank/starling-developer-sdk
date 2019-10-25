@@ -63,7 +63,7 @@ class Starling {
 
   /**
    * Get basic information about the account holder
-   * @param {string} accessToken - the oauth bearer token
+   * @param {string=} accessToken - the oauth bearer token
    * @return {Promise} - the http request promise
    */
   getAccountHolder (accessToken = this.config.accessToken) {
@@ -72,7 +72,7 @@ class Starling {
 
   /**
    * Get the name of the account holder
-   * @param {string} accessToken - the oauth bearer token
+   * @param {string=} accessToken - the oauth bearer token
    * @return {Promise} - the http request promise
    */
   getAccountHolderName (accessToken = this.config.accessToken) {
@@ -81,7 +81,7 @@ class Starling {
 
   /**
    * Get an individual account holder's details
-   * @param {string} accessToken - the oauth bearer token
+   * @param {string=} accessToken - the oauth bearer token
    * @return {Promise} - the http request promise
    */
   getAccountHolderIndividual (accessToken = this.config.accessToken) {
@@ -90,7 +90,7 @@ class Starling {
 
   /**
    * Get a joint account holder's details
-   * @param {string} accessToken - the oauth bearer token
+   * @param {string=} accessToken - the oauth bearer token
    * @return {Promise} - the http request promise
    */
   getAccountHolderJoint (accessToken = this.config.accessToken) {
@@ -99,7 +99,7 @@ class Starling {
 
   /**
    * Get a business account holder's details
-   * @param {string} accessToken - the oauth bearer token
+   * @param {string=} accessToken - the oauth bearer token
    * @return {Promise} - the http request promise
    */
   getAccountHolderBusiness (accessToken = this.config.accessToken) {
