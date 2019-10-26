@@ -5,20 +5,6 @@ import { typeValidation } from '../utils/validator'
 
 const log = debug('starling:transaction-service')
 
-const transactionSource = (source) => {
-  if (source === 'MASTER_CARD') {
-    return '/mastercard'
-  } else if (source === 'FASTER_PAYMENTS_IN') {
-    return '/fps/in'
-  } else if (source === 'FASTER_PAYMENTS_OUT') {
-    return '/fps/out'
-  } else if (source === 'DIRECT_DEBIT') {
-    return '/direct-debit'
-  } else {
-    return ''
-  }
-}
-
 /**
  * Service to interact with a customer's transactions
  */
@@ -32,41 +18,40 @@ class Transaction {
   }
 
   /**
-   * Gets the customer's transactions over the given period
-   * @param {string} accessToken - the oauth bearer token.
-   * @param {string} fromDate - filter transactions after this date. Format: YYYY-MM-DD
-   * @param {string} toDate - filter transactions before this date. Format: YYYY-MM-DD
-   * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
-   * If not specified, results are not filtered by source.
+   * Get feed items created between two timestamps
+   * @param {string} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @param {string} categoryUid - the category uid
+   * @param {string} minTransactionTimestamp - timestamp e.g. '2019-10-25T12:34:56.789Z'
+   * @param {string} maxTransactionTimestamp - timestamp e.g. '2019-10-26T12:34:56.789Z'
    * @return {Promise} - the http request promise
    */
-  getTransactions (accessToken, fromDate, toDate, source) {
-    typeValidation(arguments, getTransactionsParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v1/transactions${transactionSource(source)}`
-    log(`GET ${url} from=${fromDate} to=${toDate}`)
-
+  getFeedItemsBetween (accessToken, accountUid, categoryUid, minTransactionTimestamp, maxTransactionTimestamp) {
+    typeValidation(arguments, getFeedItemsBetweenParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v2/feed/account/${accountUid}/category/${categoryUid}/transactions-between`
+    log(`GET ${url}`)
     return axios({
       method: 'GET',
       url,
       params: {
-        from: fromDate,
-        to: toDate
+        minTransactionTimestamp,
+        maxTransactionTimestamp
       },
       headers: defaultHeaders(accessToken)
     })
   }
 
   /**
-   * Gets the full details of a single transaction
+   * Get a feed item
    * @param {string} accessToken - the oauth bearer token
-   * @param {string} transactionId - the unique transaction ID
-   * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
-   * If not specified, only generic transaction information will be returned.
+   * @param {string} accountUid - the account uid
+   * @param {string} categoryUid - the category uid
+   * @param {string} feedItemUid - the feed item uid
    * @return {Promise} - the http request promise
    */
-  getTransaction (accessToken, transactionId, source) {
-    typeValidation(arguments, getTransactionParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v1/transactions${transactionSource(source)}/${transactionId}`
+  getFeedItem (accessToken, accountUid, categoryUid, feedItemUid) {
+    typeValidation(arguments, getFeedItemParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v2/feed/account/${accountUid}/category/${categoryUid}/${feedItemUid}`
     log(`GET ${url}`)
     return axios({
       method: 'GET',
@@ -76,17 +61,19 @@ class Transaction {
   }
 }
 
-const getTransactionsParameterDefinition = [
+const getFeedItemsBetweenParameterDefinition = [
   { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'fromDate', validations: ['optional', 'string'] },
-  { name: 'toDate', validations: ['optional', 'string'] },
-  { name: 'source', validations: ['optional', 'string'] }
+  { name: 'accountUid', validations: ['required', 'string'] },
+  { name: 'categoryUid', validations: ['required', 'string'] },
+  { name: 'minTransactionTimestamp', validations: ['required', 'string'] },
+  { name: 'maxTransactionTimestamp', validations: ['required', 'string'] }
 ]
 
-const getTransactionParameterDefinition = [
+const getFeedItemParameterDefinition = [
   { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'transactionId', validations: ['required', 'string'] },
-  { name: 'source', validations: ['optional', 'string'] }
+  { name: 'accountUid', validations: ['required', 'string'] },
+  { name: 'categoryUid', validations: ['required', 'string'] },
+  { name: 'feedItemUid', validations: ['required', 'string'] }
 ]
 
 module.exports = Transaction

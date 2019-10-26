@@ -135,27 +135,28 @@ class Starling {
   }
 
   /**
-   * Gets the customer's transaction history
-   * @param {string=} accessToken - the oauth bearer token.
-   * @param {string=} fromDate - filter transactions after this date. Format: YYYY-MM-DD (defaults to most recent 100 transactions)
-   * @param {string=} toDate - filter transactions before this date. Format: YYYY-MM-DD (defaults to current date if not provided)
-   * @param {string=} source - the transaction type (e.g. faster payments, mastercard). If not specified, results are not filtered by source.
+   * Get feed items created between two timestamps
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @param {string} categoryUid - the category uid
+   * @param {string} minTransactionTimestamp - timestamp e.g. '2019-10-25T12:34:56.789Z'
+   * @param {string} maxTransactionTimestamp - timestamp e.g. '2019-10-26T12:34:56.789Z'
    * @return {Promise} - the http request promise
    */
-  getTransactions (accessToken = this.config.accessToken, fromDate, toDate, source) {
-    return this.transaction.getTransactions(accessToken, fromDate, toDate, source)
+  getFeedItemsBetween (accessToken = this.config.accessToken, accountUid, categoryUid, minTransactionTimestamp, maxTransactionTimestamp) {
+    return this.transaction.getFeedItemsBetween(accessToken, accountUid, categoryUid, minTransactionTimestamp, maxTransactionTimestamp)
   }
 
   /**
-   * Gets the full details of a single transaction
-   * @param {string=} accessToken - the oauth bearer token.
-   * @param {string} transactionId - the unique transaction ID
-   * @param {string=} source - the transaction type (e.g. faster payments, mastercard).
-   * If not specified, only generic transaction information will be returned.
+   * Get a feed item
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @param {string} categoryUid - the category uid
+   * @param {string} feedItemUid - the feed item uid
    * @return {Promise} - the http request promise
    */
-  getTransaction (accessToken = this.config.accessToken, transactionId, source) {
-    return this.transaction.getTransaction(accessToken, transactionId, source)
+  getFeedItem (accessToken = this.config.accessToken, accountUid, categoryUid, feedItemUid) {
+    return this.transaction.getFeedItem(accessToken, accountUid, categoryUid, feedItemUid)
   }
 
   /**

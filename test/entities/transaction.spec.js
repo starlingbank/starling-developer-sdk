@@ -3,146 +3,111 @@ import debug from 'debug'
 import { expectAuthorizationHeader } from '../testSupport'
 
 import Starling from '../../src/starling'
-import getTransactionsResponse from '../responses/v1-get-transactions.json'
-import getTransactionResponse from '../responses/v1-get-transaction.json'
-import getTransactionFpsInResponse from '../responses/v1-get-transaction-fps-in.json'
-import getTransactionFpsOutResponse from '../responses/v1-get-transaction-fps-out.json'
-import getTransactionCardResponse from '../responses/v1-get-transaction-card.json'
+import getFeedItemsResponse from '../responses/v2-get-feed-items.json'
+import getFeedItemResponse from '../responses/v2-get-feed-item.json'
 
 const log = debug('starling:transaction-test')
 
-describe('GET Transaction(s)', () => {
-  const accessToken = '0123456789'
+const timestampRegex = /^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z)?$/
 
+describe('Transaction feed', () => {
+  const accessToken = '0123456789'
   const starlingCli = new Starling({
     apiUrl: 'http://localhost'
   })
+  const accountUid = 'b0b20c9d-3b6b-42f1-a7d0-e70d4538e0d9'
+  const categoryUid = 'cc2d03f9-9438-4c7b-a426-ba3199740d73'
+  const feedItemUid = '3303f51a-de75-43ad-b6b5-62c4b7c5b059'
 
-  test('should retrieve the customer\'s transaction history', done => {
-    nock('http://localhost', expectAuthorizationHeader(accessToken))
-      .get('/api/v1/transactions')
-      .query({ from: '2017-03-01', to: '2017-03-06' })
-      .reply(200, getTransactionsResponse)
+  nock('http://localhost', expectAuthorizationHeader(accessToken))
+    .get(`/api/v2/feed/account/${accountUid}/category/${categoryUid}/transactions-between`)
+    .query(params => params.minTransactionTimestamp && params.maxTransactionTimestamp && timestampRegex.test(params.minTransactionTimestamp) && timestampRegex.test(params.maxTransactionTimestamp))
+    .reply(200, getFeedItemsResponse)
 
+  nock('http://localhost', expectAuthorizationHeader(accessToken))
+    .get(`/api/v2/feed/account/${accountUid}/category/${categoryUid}/${feedItemUid}`)
+    .reply(200, getFeedItemResponse)
+
+  test('should retrieve the category\'s feed items', done => {
     starlingCli
-      .getTransactions(accessToken, '2017-03-01', '2017-03-06', '')
-      .then(function ({ data }) {
-        const tx = data._embedded.transactions[1]
-        expect(tx._links.detail.href).toBe('api/v1/transactions/mastercard/e336f58d-65ee-4248-84eb-ec4c88668f9e')
-        expect(tx.id).toBe('e336f58d-65ee-4248-84eb-ec4c88668f9e')
-        expect(tx.currency).toBe('GBP')
-        expect(tx.amount).toBe(-23.75)
-        expect(tx.direction).toBe('OUTBOUND')
-        expect(tx.created).toBe('2017-03-06T12:39:54.712Z')
-        expect(tx.reference).toBe('AMAZON EU')
-        expect(tx.source).toBe('MASTER_CARD')
-        expect(tx.balance).toBe(918.4)
+      .getFeedItemsBetween(accessToken, accountUid, categoryUid, '2019-10-23T00:00:00.000Z', '2019-10-26T00:00:00.000Z')
+      .then(({ data }) => {
+        expect(data.feedItems).toHaveLength(5)
+
+        const train = data.feedItems[0]
+        expect(train.feedItemUid).toBe(feedItemUid)
+        expect(train.categoryUid).toBe(categoryUid)
+        expect(train.amount.currency).toBe('GBP')
+        expect(train.amount.minorUnits).toBe(2375)
+        expect(train.sourceAmount.currency).toBe('GBP')
+        expect(train.sourceAmount.minorUnits).toBe(2375)
+        expect(train.direction).toBe('OUT')
+        expect(train.updatedAt).toBe('2019-10-25T22:37:51.094Z')
+        expect(train.transactionTime).toBe('2019-10-25T22:37:51.016Z')
+        expect(train.source).toBe('MASTER_CARD')
+        expect(train.sourceSubType).toBe('ONLINE')
+        expect(train.status).toBe('PENDING')
+        expect(train.counterPartyType).toBe('MERCHANT')
+        expect(train.counterPartyUid).toBe('332a9d91-2815-4d21-a03f-62423a1a66d0')
+        expect(train.counterPartyName).toBe('Virgin Trains')
+        expect(train.counterPartySubEntityUid).toBe('26cea656-1e68-48c7-806d-9c2c7e311f45')
+        expect(train.reference).toBe('Virgin Trains          London        GBR')
+        expect(train.country).toBe('GB')
+        expect(train.spendingCategory).toBe('TRANSPORT')
+        expect(train.userNote).toBe('To travel down on the 30th')
+
+        const internalTransfer = data.feedItems[1]
+        expect(internalTransfer.feedItemUid).toBe('220f236e-6a67-4cfe-97b0-cb806f1f612f')
+        expect(internalTransfer.categoryUid).toBe('cc2d03f9-9438-4c7b-a426-ba3199740d73')
+        expect(internalTransfer.amount.currency).toBe('GBP')
+        expect(internalTransfer.amount.minorUnits).toBe(1000)
+        expect(internalTransfer.sourceAmount.currency).toBe('GBP')
+        expect(internalTransfer.sourceAmount.minorUnits).toBe(1000)
+        expect(internalTransfer.direction).toBe('OUT')
+        expect(internalTransfer.updatedAt).toBe('2019-10-25T20:23:02.701Z')
+        expect(internalTransfer.transactionTime).toBe('2019-10-25T20:23:02.623Z')
+        expect(internalTransfer.settlementTime).toBe('2019-10-25T20:23:02.623Z')
+        expect(internalTransfer.source).toBe('INTERNAL_TRANSFER')
+        expect(internalTransfer.status).toBe('SETTLED')
+        expect(internalTransfer.counterPartyType).toBe('CATEGORY')
+        expect(internalTransfer.counterPartyUid).toBe('5031325f-49b2-4c8c-b9cb-3f5cfa7f6d6e')
+        expect(internalTransfer.counterPartyName).toBe('Trip to Paris')
+        expect(internalTransfer.country).toBe('GB')
+        expect(internalTransfer.spendingCategory).toBe('SAVING')
+
         log(JSON.stringify(data))
+
         done()
       })
   })
 
-  test(
-    'should retrieve a specific customer transaction w/o specifying source in path',
-    done => {
-      const transactionId = '32b4d093-f3b3-45da-9f89-d6a1395ab397'
-      const noSource = ''
-
-      nock('http://localhost', expectAuthorizationHeader(accessToken))
-        .get(`/api/v1/transactions/${transactionId}`)
-        .reply(200, getTransactionResponse)
-
-      starlingCli.getTransaction(accessToken, transactionId, noSource)
-        .then(function ({ data }) {
-          expect(data.id).toBe('32b4d093-f3b3-45da-9f89-d6a1395ab397')
-          expect(data.currency).toBe('GBP')
-          expect(data.amount).toBe(-10)
-          expect(data.direction).toBe('OUTBOUND')
-          expect(data.created).toBe('2017-03-06T12:45:23.036Z')
-          expect(data.reference).toBe('Dinner')
-          expect(data.source).toBe('FASTER_PAYMENTS_OUT')
-          log(JSON.stringify(data))
-          done()
-        })
-    }
-  )
-
-  test(
-    'should retrieve a specific customer incoming fps transaction',
-    done => {
-      const transactionId = '3d532dfb-9b2f-4e6b-b004-e94fc86c30fe'
-      const source = 'FASTER_PAYMENTS_IN'
-
-      nock('http://localhost', expectAuthorizationHeader(accessToken))
-        .get(`/api/v1/transactions/fps/in/${transactionId}`)
-        .reply(200, getTransactionFpsInResponse)
-
-      starlingCli.getTransaction(accessToken, transactionId, source)
-        .then(function ({ data }) {
-          expect(data.id).toBe('3d532dfb-9b2f-4e6b-b004-e94fc86c30fe')
-          expect(data.currency).toBe('GBP')
-          expect(data.amount).toBe(954.23)
-          expect(data.direction).toBe('INBOUND')
-          expect(data.created).toBe('2017-03-06T12:39:52.68Z')
-          expect(data.reference).toBe('Rent')
-          expect(data.source).toBe('FASTER_PAYMENTS_IN')
-          log(JSON.stringify(data))
-          done()
-        })
-    }
-  )
-
-  test(
-    'should retrieve a specific customer outbound fps transaction',
-    done => {
-      const transactionId = 'b5c65fd2-1795-4262-93f0-f0490759bf1f'
-      const source = 'FASTER_PAYMENTS_OUT'
-
-      nock('http://localhost', expectAuthorizationHeader(accessToken))
-        .get(`/api/v1/transactions/fps/out/${transactionId}`)
-        .reply(200, getTransactionFpsOutResponse)
-
-      starlingCli.getTransaction(accessToken, transactionId, source)
-        .then(function ({ data }) {
-          expect(data.id).toBe('b5c65fd2-1795-4262-93f0-f0490759bf1f')
-          expect(data.currency).toBe('GBP')
-          expect(data.amount).toBe(-36.01)
-          expect(data.created).toBe('2017-03-02T12:39:54.936Z')
-          expect(data.reference).toBe('Dinner')
-          expect(data.source).toBe('FASTER_PAYMENTS_OUT')
-          expect(data.receivingContactId).toBe('3bba29d4-35e5-4eb3-8aef-060ef526dcda')
-          expect(data.receivingContactAccountId).toBe('3bba29d4-35e5-4eb3-8aef-060ef526dcda')
-          expect(data.receivingContactAccount.href).toBe('api/v1/contacts/3bba29d4-35e5-4eb3-8aef-060ef526dcda/accounts/3bba29d4-35e5-4eb3-8aef-060ef526dcda')
-
-          log(JSON.stringify(data))
-
-          done()
-        })
-    }
-  )
-
-  test('should retrieve a specific customer card transaction', done => {
-    const transactionId = '77b7d507-6546-4301-a841-fbf570de65c6'
-    const source = 'MASTER_CARD'
-
-    nock('http://localhost', expectAuthorizationHeader(accessToken))
-      .get(`/api/v1/transactions/mastercard/${transactionId}`)
-      .reply(200, getTransactionCardResponse)
-
-    starlingCli.getTransaction(accessToken, transactionId, source)
-      .then(function ({ data }) {
-        expect(data.id).toBe('77b7d507-6546-4301-a841-fbf570de65c6')
-        expect(data.currency).toBe('GBP')
-        expect(data.amount).toBe(-15.15)
-        expect(data.direction).toBe('OUTBOUND')
-        expect(data.created).toBe('2017-01-06T12:39:54.246Z')
-        expect(data.reference).toBe('PRET')
+  test('should retrieve an individual feed item', done => {
+    starlingCli
+      .getFeedItem(accessToken, accountUid, categoryUid, feedItemUid)
+      .then(({ data }) => {
+        expect(data.feedItemUid).toBe(feedItemUid)
+        expect(data.categoryUid).toBe(categoryUid)
+        expect(data.amount.currency).toBe('GBP')
+        expect(data.amount.minorUnits).toBe(2375)
+        expect(data.sourceAmount.currency).toBe('GBP')
+        expect(data.sourceAmount.minorUnits).toBe(2375)
+        expect(data.direction).toBe('OUT')
+        expect(data.updatedAt).toBe('2019-10-25T22:37:51.094Z')
+        expect(data.transactionTime).toBe('2019-10-25T22:37:51.016Z')
         expect(data.source).toBe('MASTER_CARD')
-        expect(data.mastercardTransactionMethod).toBe('CHIP_AND_PIN')
-        expect(data.status).toBe('SETTLED')
-        expect(data.sourceAmount).toBe(-17.11)
-        expect(data.sourceCurrency).toBe('EUR')
+        expect(data.sourceSubType).toBe('ONLINE')
+        expect(data.status).toBe('PENDING')
+        expect(data.counterPartyType).toBe('MERCHANT')
+        expect(data.counterPartyUid).toBe('332a9d91-2815-4d21-a03f-62423a1a66d0')
+        expect(data.counterPartyName).toBe('Virgin Trains')
+        expect(data.counterPartySubEntityUid).toBe('26cea656-1e68-48c7-806d-9c2c7e311f45')
+        expect(data.reference).toBe('Virgin Trains          London        GBR')
+        expect(data.country).toBe('GB')
+        expect(data.spendingCategory).toBe('TRANSPORT')
+        expect(data.userNote).toBe('To travel down on the 30th')
+
         log(JSON.stringify(data))
+
         done()
       })
   })

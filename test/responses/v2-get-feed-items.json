@@ -1,0 +1,133 @@
+{
+    "feedItems": [
+        {
+            "feedItemUid": "3303f51a-de75-43ad-b6b5-62c4b7c5b059",
+            "categoryUid": "cc2d03f9-9438-4c7b-a426-ba3199740d73",
+            "amount": {
+                "currency": "GBP",
+                "minorUnits": 2375
+            },
+            "sourceAmount": {
+                "currency": "GBP",
+                "minorUnits": 2375
+            },
+            "direction": "OUT",
+            "updatedAt": "2019-10-25T22:37:51.094Z",
+            "transactionTime": "2019-10-25T22:37:51.016Z",
+            "source": "MASTER_CARD",
+            "sourceSubType": "ONLINE",
+            "status": "PENDING",
+            "counterPartyType": "MERCHANT",
+            "counterPartyUid": "332a9d91-2815-4d21-a03f-62423a1a66d0",
+            "counterPartyName": "Virgin Trains",
+            "counterPartySubEntityUid": "26cea656-1e68-48c7-806d-9c2c7e311f45",
+            "reference": "Virgin Trains          London        GBR",
+            "country": "GB",
+            "spendingCategory": "TRANSPORT",
+            "userNote": "To travel down on the 30th"
+        },
+        {
+            "feedItemUid": "220f236e-6a67-4cfe-97b0-cb806f1f612f",
+            "categoryUid": "cc2d03f9-9438-4c7b-a426-ba3199740d73",
+            "amount": {
+                "currency": "GBP",
+                "minorUnits": 1000
+            },
+            "sourceAmount": {
+                "currency": "GBP",
+                "minorUnits": 1000
+            },
+            "direction": "OUT",
+            "updatedAt": "2019-10-25T20:23:02.701Z",
+            "transactionTime": "2019-10-25T20:23:02.623Z",
+            "settlementTime": "2019-10-25T20:23:02.623Z",
+            "source": "INTERNAL_TRANSFER",
+            "status": "SETTLED",
+            "counterPartyType": "CATEGORY",
+            "counterPartyUid": "5031325f-49b2-4c8c-b9cb-3f5cfa7f6d6e",
+            "counterPartyName": "Trip to Paris",
+            "country": "GB",
+            "spendingCategory": "SAVING"
+        },
+        {
+            "feedItemUid": "0f5bdbfb-10d6-4c03-a00b-0852c1cd4b45",
+            "categoryUid": "cc2d03f9-9438-4c7b-a426-ba3199740d73",
+            "amount": {
+                "currency": "GBP",
+                "minorUnits": 390
+            },
+            "sourceAmount": {
+                "currency": "GBP",
+                "minorUnits": 390
+            },
+            "direction": "OUT",
+            "updatedAt": "2019-10-25T23:08:03.799Z",
+            "transactionTime": "2019-10-25T14:45:39.729Z",
+            "settlementTime": "2019-10-25T21:23:17.196Z",
+            "source": "MASTER_CARD",
+            "sourceSubType": "ANDROID_PAY",
+            "status": "SETTLED",
+            "counterPartyType": "MERCHANT",
+            "counterPartyUid": "27ef0fd6-5fea-458c-96cf-1b95ba1f1691",
+            "counterPartyName": "National Express",
+            "counterPartySubEntityUid": "225f92eb-18a3-4177-b33e-3e850dcee0c4",
+            "reference": "NX Bus Contactless\\51 BORDESLEY GREEN\\WEST MIDLANDS\\B9 4BZ       GBR",
+            "country": "GB",
+            "spendingCategory": "TRANSPORT"
+        },
+        {
+            "feedItemUid": "b4372bc6-50b0-4dd9-8b6d-6b4a50bff9bf",
+            "categoryUid": "cc2d03f9-9438-4c7b-a426-ba3199740d73",
+            "amount": {
+                "currency": "GBP",
+                "minorUnits": 899
+            },
+            "sourceAmount": {
+                "currency": "GBP",
+                "minorUnits": 899
+            },
+            "direction": "OUT",
+            "updatedAt": "2019-10-25T14:34:37.573Z",
+            "transactionTime": "2019-10-25T14:32:20.193Z",
+            "settlementTime": "2019-10-25T14:32:23.571Z",
+            "source": "FASTER_PAYMENTS_OUT",
+            "status": "SETTLED",
+            "counterPartyType": "PAYEE",
+            "counterPartyUid": "ac566df6-dd27-422f-a21f-c2841492fac4",
+            "counterPartyName": "Carol",
+            "counterPartySubEntityUid": "4afcf1c7-1faa-41db-acf6-ce37ef7e6c9c",
+            "counterPartySubEntityName": "Carol's main account",
+            "counterPartySubEntityIdentifier": "121212",
+            "counterPartySubEntitySubIdentifier": "12121212",
+            "reference": "For internet",
+            "country": "GB",
+            "spendingCategory": "BILLS_AND_SERVICES"
+        },
+        {
+            "feedItemUid": "e1a1390e-78d5-434f-a8c6-bef8982a117a",
+            "categoryUid": "cc2d03f9-9438-4c7b-a426-ba3199740d73",
+            "amount": {
+                "currency": "GBP",
+                "minorUnits": 206
+            },
+            "sourceAmount": {
+                "currency": "EUR",
+                "minorUnits": 239
+            },
+            "direction": "OUT",
+            "updatedAt": "2019-10-24T17:03:09.772Z",
+            "transactionTime": "2019-10-23T18:38:32.871Z",
+            "settlementTime": "2019-10-24T15:31:01.690Z",
+            "source": "MASTER_CARD",
+            "sourceSubType": "CONTACTLESS",
+            "status": "SETTLED",
+            "counterPartyType": "MERCHANT",
+            "counterPartyUid": "d8be3294-eb5c-4691-8376-0de143d20038",
+            "counterPartyName": "Carrefour",
+            "counterPartySubEntityUid": "d07885b5-a59a-402e-a0d9-710e88e100d1",
+            "reference": "MONTER DISTRI          LA ROCHELLE   FRA",
+            "country": "FR",
+            "spendingCategory": "GROCERIES"
+        }
+    ]
+}

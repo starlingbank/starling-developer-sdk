@@ -1,0 +1,26 @@
+{
+  "feedItemUid": "3303f51a-de75-43ad-b6b5-62c4b7c5b059",
+  "categoryUid": "cc2d03f9-9438-4c7b-a426-ba3199740d73",
+  "amount": {
+    "currency": "GBP",
+    "minorUnits": 2375
+  },
+  "sourceAmount": {
+    "currency": "GBP",
+    "minorUnits": 2375
+  },
+  "direction": "OUT",
+  "updatedAt": "2019-10-25T22:37:51.094Z",
+  "transactionTime": "2019-10-25T22:37:51.016Z",
+  "source": "MASTER_CARD",
+  "sourceSubType": "ONLINE",
+  "status": "PENDING",
+  "counterPartyType": "MERCHANT",
+  "counterPartyUid": "332a9d91-2815-4d21-a03f-62423a1a66d0",
+  "counterPartyName": "Virgin Trains",
+  "counterPartySubEntityUid": "26cea656-1e68-48c7-806d-9c2c7e311f45",
+  "reference": "Virgin Trains          London        GBR",
+  "country": "GB",
+  "spendingCategory": "TRANSPORT",
+  "userNote": "To travel down on the 30th"
+}

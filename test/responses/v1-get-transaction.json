@@ -1,9 +1,0 @@
-{
-  "id": "32b4d093-f3b3-45da-9f89-d6a1395ab397",
-  "currency": "GBP",
-  "amount": -10,
-  "direction": "OUTBOUND",
-  "created": "2017-03-06T12:45:23.036Z",
-  "reference": "Dinner",
-  "source": "FASTER_PAYMENTS_OUT"
-}
