@@ -147,6 +147,43 @@ class Starling {
   }
 
   /**
+   * Get list of statement periods which are available for an account
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @return {Promise} - the http request promise
+   */
+  getStatementPeriods (accessToken = this.config.accessToken, accountUid) {
+    return this.account.getStatementPeriods(accessToken, accountUid)
+  }
+
+  /**
+   * Download a statement for a given statement period
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @param {string=} yearMonth - the statement period's year month (yyyy-MM), defaults to current
+   * @param {string=} format - one of 'application/pdf' or 'text/csv', defaults to 'text/csv'
+   * @param {string=} responseType - the axios responseType for the request, defaults to 'stream'
+   * @return {Promise} - the http request promise
+   */
+  getStatementForPeriod (accessToken = this.config.accessToken, accountUid, yearMonth = new Date().toISOString().slice(0, 7), format = 'text/csv', responseType = 'stream') {
+    return this.account.getStatementForPeriod(accessToken, accountUid, yearMonth, format, responseType)
+  }
+
+  /**
+   * Download a statement for a given date range
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @param {string} start - the beginning of the statement date range (yyyy-MM-dd)
+   * @param {string=} end - the end of the statement date range (yyyy-MM-dd)
+   * @param {string=} format - one of 'application/pdf' or 'text/csv', defaults to 'text/csv'
+   * @param {string=} responseType - the axios responseType for the request, defaults to 'stream'
+   * @return {Promise} - the http request promise
+   */
+  getStatementForRange (accessToken = this.config.accessToken, accountUid, start, end, format = 'text/csv', responseType = 'stream') {
+    return this.account.getStatementForRange(accessToken, accountUid, start, end, format, responseType)
+  }
+
+  /**
    * Gets the customer's addresses (current and previous)
    * @param {string=} accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise

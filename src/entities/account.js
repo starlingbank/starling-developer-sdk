@@ -91,6 +91,82 @@ class Account {
       }
     })
   }
+
+  /**
+   * Get list of statement periods which are available for an account
+   * @param {string} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @return {Promise} - the http request promise
+   */
+  getStatementPeriods (accessToken, accountUid) {
+    typeValidation(arguments, getStatementPeriodsParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v2/accounts/${accountUid}/statement/available-periods`
+    log(`GET ${url}`)
+
+    return axios({
+      method: 'GET',
+      url,
+      headers: defaultHeaders(accessToken)
+    })
+  }
+
+  /**
+   * Download a statement for a given statement period
+   * @param {string} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @param {string} yearMonth - the statement period's year month (yyyy-MM)
+   * @param {string} format - one of 'application/pdf' or 'text/csv'
+   * @param {string} responseType - the axios responseType for the request
+   * @return {Promise} - the http request promise
+   */
+  getStatementForPeriod (accessToken, accountUid, yearMonth, format, responseType) {
+    typeValidation(arguments, getStatementForPeriodParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v2/accounts/${accountUid}/statement/download`
+    log(`GET ${url}`)
+
+    return axios({
+      method: 'GET',
+      url,
+      headers: {
+        ...defaultHeaders(accessToken),
+        Accept: format
+      },
+      params: {
+        yearMonth
+      },
+      responseType
+    })
+  }
+
+  /**
+   * Download a statement for a given date range
+   * @param {string} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @param {string} start - the beginning of the statement date range (yyyy-MM-dd)
+   * @param {string=} end - the end of the statement date range (yyyy-MM-dd)
+   * @param {string} format - one of 'application/pdf' or 'text/csv'
+   * @param {string} responseType - the axios responseType for the request
+   * @return {Promise} - the http request promise
+   */
+  getStatementForRange (accessToken, accountUid, start, end, format, responseType) {
+    typeValidation(arguments, getStatementForRangeParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v2/accounts/${accountUid}/statement/downloadForDateRange`
+    log(`GET ${url}`)
+
+    return axios({
+      method: 'GET',
+      url,
+      headers: {
+        ...defaultHeaders(accessToken),
+        Accept: format
+      },
+      params: {
+        start,
+        end
+      },
+      responseType
+    })
+  }
 }
 
 const getAccountParameterDefinition = [
@@ -111,6 +187,28 @@ const getConfirmationOfFundsParameterDefinition = [
   { name: 'accessToken', validations: ['required', 'string'] },
   { name: 'accountUid', validations: ['required', 'string'] },
   { name: 'targetAmount', validations: ['required', 'number'] }
+]
+
+const getStatementPeriodsParameterDefinition = [
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'accountUid', validations: ['required', 'string'] }
+]
+
+const getStatementForPeriodParameterDefinition = [
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'accountUid', validations: ['required', 'string'] },
+  { name: 'yearMonth', validations: ['required', 'string'] },
+  { name: 'format', validations: ['required', 'string'] },
+  { name: 'responseType', validations: ['required', 'string'] }
+]
+
+const getStatementForRangeParameterDefinition = [
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'accountUid', validations: ['required', 'string'] },
+  { name: 'start', validations: ['required', 'string'] },
+  { name: 'end', validations: ['optional', 'string'] },
+  { name: 'format', validations: ['required', 'string'] },
+  { name: 'responseType', validations: ['required', 'string'] }
 ]
 
 module.exports = Account

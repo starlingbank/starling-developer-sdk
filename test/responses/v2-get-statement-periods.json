@@ -1,0 +1,13 @@
+{
+  "periods": [
+      {
+          "period": "2019-09",
+          "partial": false
+      },
+      {
+          "period": "2019-10",
+          "partial": true,
+          "endsAt": "2019-10-11T12:34:56.789Z"
+      }
+  ]
+}
