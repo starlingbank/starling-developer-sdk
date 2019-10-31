@@ -1,0 +1,4 @@
+{
+  "requestedAmountAvailableToSpend": true,
+  "accountWouldBeInOverdraftIfRequestedAmountSpent": true
+}

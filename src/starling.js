@@ -107,8 +107,8 @@ class Starling {
   }
 
   /**
-   * Gets the customer's account details
-   * @param {string=} accessToken - the oauth bearer token.
+   * Get an account holder's bank accounts
+   * @param {string=} accessToken - the oauth bearer token
    * @return {Promise} - the http request promise
    */
   getAccounts (accessToken = this.config.accessToken) {
@@ -116,13 +116,34 @@ class Starling {
   }
 
   /**
-   * Gets the customer's balance
-   * @param {string=} accessToken - the oauth bearer token.
+   * Get an account's bank identifiers
+   * @param {string=} accessToken - the oauth bearer token
    * @param {string} accountUid - the account uid
    * @return {Promise} - the http request promise
    */
-  getBalance (accessToken = this.config.accessToken, accountUid) {
-    return this.account.getBalance(accessToken, accountUid)
+  getAccountIdentifiers (accessToken = this.config.accessToken, accountUid) {
+    return this.account.getAccountIdentifiers(accessToken, accountUid)
+  }
+
+  /**
+   * Get an account's balance
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @return {Promise} - the http request promise
+   */
+  getAccountBalance (accessToken = this.config.accessToken, accountUid) {
+    return this.account.getAccountBalance(accessToken, accountUid)
+  }
+
+  /**
+   * Get whether there are available funds for a requested amount
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @param {number} targetAmountInMinorUnits - the target amount in minor units
+   * @return {Promise} - the http request promise
+   */
+  getConfirmationOfFunds (accessToken = this.config.accessToken, accountUid, targetAmountInMinorUnits) {
+    return this.account.getConfirmationOfFunds(accessToken, accountUid, targetAmountInMinorUnits)
   }
 
   /**
