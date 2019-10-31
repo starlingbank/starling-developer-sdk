@@ -59,6 +59,28 @@ class Transaction {
       headers: defaultHeaders(accessToken)
     })
   }
+
+  /**
+   * Get feed items created or updated since a given timestamp
+   * @param {string} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @param {string} categoryUid - the category uid
+   * @param {string} changesSince - timestamp e.g. '2019-10-25T12:34:56.789Z'
+   * @return {Promise} - the http request promise
+   */
+  getFeedItemsChangedSince (accessToken, accountUid, categoryUid, changesSince) {
+    typeValidation(arguments, getFeedItemsChangedSinceParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v2/feed/account/${accountUid}/category/${categoryUid}`
+    log(`GET ${url}`)
+    return axios({
+      method: 'GET',
+      url,
+      params: {
+        changesSince
+      },
+      headers: defaultHeaders(accessToken)
+    })
+  }
 }
 
 const getFeedItemsBetweenParameterDefinition = [
@@ -74,6 +96,13 @@ const getFeedItemParameterDefinition = [
   { name: 'accountUid', validations: ['required', 'string'] },
   { name: 'categoryUid', validations: ['required', 'string'] },
   { name: 'feedItemUid', validations: ['required', 'string'] }
+]
+
+const getFeedItemsChangedSinceParameterDefinition = [
+  { name: 'accessToken', validations: ['required', 'string'] },
+  { name: 'accountUid', validations: ['required', 'string'] },
+  { name: 'categoryUid', validations: ['required', 'string'] },
+  { name: 'changesSince', validations: ['required', 'string'] }
 ]
 
 module.exports = Transaction

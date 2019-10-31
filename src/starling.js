@@ -218,6 +218,18 @@ class Starling {
   }
 
   /**
+   * Get feed items created or updated since a given timestamp
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} accountUid - the account uid
+   * @param {string} categoryUid - the category uid
+   * @param {string} changesSince - timestamp e.g. '2019-10-25T12:34:56.789Z'
+   * @return {Promise} - the http request promise
+   */
+  getFeedItemsChangedSince (accessToken = this.config.accessToken, accountUid, categoryUid, changesSince) {
+    return this.transaction.getFeedItemsChangedSince(accessToken, accountUid, categoryUid, changesSince)
+  }
+
+  /**
    * Retrieves a merchant
    * @param {string=} accessToken - the oauth bearer token
    * @param {string=} merchantUid - unique identifier of the merchant.
