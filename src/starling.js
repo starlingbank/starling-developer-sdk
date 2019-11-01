@@ -483,6 +483,83 @@ class Starling {
   }
 
   /**
+   * Update card lock
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} cardUid - the card uid
+   * @param {boolean} enabled - Whether the card should be locked. Set to false to lock, true to unlock.
+   * @return {Promise} - the http request promise
+   */
+  updateCardLock (accessToken = this.config.accessToken, cardUid, enabled) {
+    return this.card.updateCardLock(accessToken, cardUid, enabled)
+  }
+
+  /**
+   * Update ATM withdrawal control
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} cardUid - the card uid
+   * @param {boolean} enabled - Whether ATM withdrawals should be allowed. Set to false to block, true to allow.
+   * @return {Promise} - the http request promise
+   */
+  updateCardATMControl (accessToken = this.config.accessToken, cardUid, enabled) {
+    return this.card.updateCardATMControl(accessToken, cardUid, enabled)
+  }
+
+  /**
+   * Update online payments control
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} cardUid - the card uid
+   * @param {boolean} enabled - Whether online payments should be allowed. Set to false to block, true to allow.
+   * @return {Promise} - the http request promise
+   */
+  updateCardOnlineControl (accessToken = this.config.accessToken, cardUid, enabled) {
+    return this.card.updateCardOnlineControl(accessToken, cardUid, enabled)
+  }
+
+  /**
+   * Update mobile wallet payments control
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} cardUid - the card uid
+   * @param {boolean} enabled - Whether mobile wallet payments should be allowed. Set to false to block, true to allow.
+   * @return {Promise} - the http request promise
+   */
+  updateCardMobileWalletControl (accessToken = this.config.accessToken, cardUid, enabled) {
+    return this.card.updateCardMobileWalletControl(accessToken, cardUid, enabled)
+  }
+
+  /**
+   * Update gambling payments control
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} cardUid - the card uid
+   * @param {boolean} enabled - Whether gambling payments should be allowed. Set to false to block, true to allow.
+   * @return {Promise} - the http request promise
+   */
+  updateCardGamblingControl (accessToken = this.config.accessToken, cardUid, enabled) {
+    return this.card.updateCardGamblingControl(accessToken, cardUid, enabled)
+  }
+
+  /**
+   * Update card present payments (contactless and chip and pin) control
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} cardUid - the card uid
+   * @param {boolean} enabled - Whether card present payments (contactless and chip and pin) should be allowed. Set to false to block, true to allow.
+   * @return {Promise} - the http request promise
+   */
+  updateCardPresentControl (accessToken = this.config.accessToken, cardUid, enabled) {
+    return this.card.updateCardPresentControl(accessToken, cardUid, enabled)
+  }
+
+  /**
+   * Update magstripe payments control
+   * @param {string=} accessToken - the oauth bearer token
+   * @param {string} cardUid - the card uid
+   * @param {boolean} enabled - Whether magstripe payments should be allowed. Set to false to block, true to allow.
+   * @return {Promise} - the http request promise
+   */
+  updateCardMagstripeControl (accessToken = this.config.accessToken, cardUid, enabled) {
+    return this.card.updateCardMagstripeControl(accessToken, cardUid, enabled)
+  }
+
+  /**
    * Exchanges the authorization code for an access token
    * @param {string} authorizationCode - the authorization code, acquired from the user agent after the
    * user authenticates with starling

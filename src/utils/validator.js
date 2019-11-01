@@ -10,7 +10,7 @@ const runRules = (pos, name, rules, value) => {
   if (rules[0] === 'required') {
     if (value && (valueType !== rules[1])) {
       return `${name} parameter in position ${pos} is a required ${rules[1]} but was ${valueType}`
-    } else if (!value && value !== 0) {
+    } else if (!value && value !== 0 && value !== false) {
       return `${name} parameter in position ${pos} is a required ${rules[1]} but was ${value}`
     }
   }
