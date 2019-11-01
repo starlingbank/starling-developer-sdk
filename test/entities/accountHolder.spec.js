@@ -125,4 +125,38 @@ describe('Account Holder', () => {
         done()
       })
   })
+
+  test('should get a business registered address', done => {
+    starlingCli
+      .getAccountHolderBusinessRegisteredAddress(accessToken)
+      .then(function ({ data }) {
+        expect(data.line1).toBe('1A Admiralty Arch')
+        expect(data.line2).toBe('The Mall')
+        expect(data.line3).toBe('City of Westminster')
+        expect(data.postTown).toBe('London')
+        expect(data.postCode).toBe('SW1A 2WH')
+        expect(data.countryCode).toBe('GB')
+
+        log(JSON.stringify(data))
+
+        done()
+      })
+  })
+
+  test('should get a business correspondence address', done => {
+    starlingCli
+      .getAccountHolderBusinessCorrespondenceAddress(accessToken)
+      .then(function ({ data }) {
+        expect(data.line1).toBe('1B Admiralty Arch')
+        expect(data.line2).toBe('The Mall')
+        expect(data.line3).toBe('City of Westminster')
+        expect(data.postTown).toBe('London')
+        expect(data.postCode).toBe('SW1A 2WH')
+        expect(data.countryCode).toBe('GB')
+
+        log(JSON.stringify(data))
+
+        done()
+      })
+  })
 })

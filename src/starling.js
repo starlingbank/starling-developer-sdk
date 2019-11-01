@@ -107,6 +107,24 @@ class Starling {
   }
 
   /**
+   * Get a business account holder's registered address
+   * @param {string=} accessToken - the oauth bearer token
+   * @return {Promise} - the http request promise
+   */
+  getAccountHolderBusinessRegisteredAddress (accessToken = this.config.accessToken) {
+    return this.accountHolder.getAccountHolderBusinessRegisteredAddress(accessToken)
+  }
+
+  /**
+   * Get a business account holder's correspondence address
+   * @param {string=} accessToken - the oauth bearer token
+   * @return {Promise} - the http request promise
+   */
+  getAccountHolderBusinessCorrespondenceAddress (accessToken = this.config.accessToken) {
+    return this.accountHolder.getAccountHolderBusinessCorrespondenceAddress(accessToken)
+  }
+
+  /**
    * Get an account holder's bank accounts
    * @param {string=} accessToken - the oauth bearer token
    * @return {Promise} - the http request promise

@@ -101,6 +101,40 @@ class AccountHolder {
       headers: defaultHeaders(accessToken)
     })
   }
+
+  /**
+   * Get a business account holder's registered address
+   * @param {string} accessToken - the oauth bearer token
+   * @return {Promise} - the http request promise
+   */
+  getAccountHolderBusinessRegisteredAddress (accessToken) {
+    typeValidation(arguments, getAccountHolderBusinessRegisteredAddressParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v2/account-holder/business/registered-address`
+    log(`GET ${url}`)
+
+    return axios({
+      method: 'GET',
+      url,
+      headers: defaultHeaders(accessToken)
+    })
+  }
+
+  /**
+   * Get a business account holder's correspondence address
+   * @param {string} accessToken - the oauth bearer token
+   * @return {Promise} - the http request promise
+   */
+  getAccountHolderBusinessCorrespondenceAddress (accessToken) {
+    typeValidation(arguments, getAccountHolderBusinessCorrespondenceAddressParameterDefinition)
+    const url = `${this.options.apiUrl}/api/v2/account-holder/business/correspondence-address`
+    log(`GET ${url}`)
+
+    return axios({
+      method: 'GET',
+      url,
+      headers: defaultHeaders(accessToken)
+    })
+  }
 }
 
 const getAccountHolderParameterDefinition = [
@@ -120,6 +154,14 @@ const getAccountHolderJointParameterDefinition = [
 ]
 
 const getAccountHolderBusinessParameterDefinition = [
+  { name: 'accessToken', validations: ['required', 'string'] }
+]
+
+const getAccountHolderBusinessRegisteredAddressParameterDefinition = [
+  { name: 'accessToken', validations: ['required', 'string'] }
+]
+
+const getAccountHolderBusinessCorrespondenceAddressParameterDefinition = [
   { name: 'accessToken', validations: ['required', 'string'] }
 ]
 
