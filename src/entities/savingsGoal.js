@@ -3,12 +3,12 @@ import debug from 'debug'
 import { defaultHeaders, payloadHeaders } from '../utils/http'
 import { typeValidation } from '../utils/validator'
 
-const log = debug('starling:saving-goals-service')
+const log = debug('starling:savings-goal-service')
 
 /**
  * Service to interact with a customer's savings goals
  */
-class SavingsGoals {
+class SavingsGoal {
   /**
    * Create a new savings goal service
    * @param {Object} options - configuration parameters
@@ -201,4 +201,4 @@ const withdrawMoneyFromSavingsGoalParameterDefinition = [
   { name: 'currency', validations: ['required', 'string'] }
 ]
 
-module.exports = SavingsGoals
+module.exports = SavingsGoal

@@ -3,14 +3,14 @@ import debug from 'debug'
 import { defaultHeaders } from '../utils/http'
 import { typeValidation } from '../utils/validator'
 
-const log = debug('starling:transaction-service')
+const log = debug('starling:feed-item-service')
 
 /**
- * Service to interact with a customer's transactions
+ * Service to interact with a customer's feed items
  */
-class Transaction {
+class FeedItem {
   /**
-   * Create a new transaction service
+   * Create a new feed item service
    * @param {Object} options - configuration parameters
    */
   constructor (options) {
@@ -105,4 +105,4 @@ const getFeedItemsChangedSinceParameterDefinition = [
   { name: 'changesSince', validations: ['required', 'string'] }
 ]
 
-module.exports = Transaction
+module.exports = FeedItem

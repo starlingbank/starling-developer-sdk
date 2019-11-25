@@ -1,13 +1,13 @@
 import Account from './entities/account'
 import AccountHolder from './entities/accountHolder'
 import Address from './entities/address'
-import Transaction from './entities/transaction'
+import FeedItem from './entities/feedItem'
 import Card from './entities/card'
 import OAuth from './entities/oauth'
 import Payee from './entities/payee'
 import Payment from './entities/payment'
 import Mandate from './entities/mandate'
-import SavingsGoals from './entities/savingsGoals'
+import SavingsGoal from './entities/savingsGoal'
 import Identity from './entities/identity'
 import Merchant from './entities/merchant'
 
@@ -34,12 +34,12 @@ class Starling {
     this.accountHolder = new AccountHolder(this.config)
     this.account = new Account(this.config)
     this.address = new Address(this.config)
-    this.transaction = new Transaction(this.config)
+    this.feedItem = new FeedItem(this.config)
     this.payment = new Payment(this.config)
     this.mandate = new Mandate(this.config)
     this.payee = new Payee(this.config)
     this.card = new Card(this.config)
-    this.savingsGoals = new SavingsGoals(this.config)
+    this.savingsGoal = new SavingsGoal(this.config)
     this.oAuth = new OAuth(this.config)
   }
 
@@ -220,7 +220,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getFeedItemsBetween (accessToken = this.config.accessToken, accountUid, categoryUid, minTransactionTimestamp, maxTransactionTimestamp) {
-    return this.transaction.getFeedItemsBetween(accessToken, accountUid, categoryUid, minTransactionTimestamp, maxTransactionTimestamp)
+    return this.feedItem.getFeedItemsBetween(accessToken, accountUid, categoryUid, minTransactionTimestamp, maxTransactionTimestamp)
   }
 
   /**
@@ -232,7 +232,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getFeedItem (accessToken = this.config.accessToken, accountUid, categoryUid, feedItemUid) {
-    return this.transaction.getFeedItem(accessToken, accountUid, categoryUid, feedItemUid)
+    return this.feedItem.getFeedItem(accessToken, accountUid, categoryUid, feedItemUid)
   }
 
   /**
@@ -244,7 +244,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getFeedItemsChangedSince (accessToken = this.config.accessToken, accountUid, categoryUid, changesSince) {
-    return this.transaction.getFeedItemsChangedSince(accessToken, accountUid, categoryUid, changesSince)
+    return this.feedItem.getFeedItemsChangedSince(accessToken, accountUid, categoryUid, changesSince)
   }
 
   /**
@@ -391,7 +391,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getSavingsGoals (accessToken = this.config.accessToken, accountUid) {
-    return this.savingsGoals.getSavingsGoals(accessToken, accountUid)
+    return this.savingsGoal.getSavingsGoals(accessToken, accountUid)
   }
 
   /**
@@ -402,7 +402,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   getSavingsGoal (accessToken = this.config.accessToken, accountUid, savingsGoalUid) {
-    return this.savingsGoals.getSavingsGoal(accessToken, accountUid, savingsGoalUid)
+    return this.savingsGoal.getSavingsGoal(accessToken, accountUid, savingsGoalUid)
   }
 
   /**
@@ -416,7 +416,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   addMoneyToSavingsGoal (accessToken = this.config.accessToken, accountUid, savingsGoalUid, transferUid, amount, currency = 'GBP') {
-    return this.savingsGoals.addMoneyToSavingsGoal(
+    return this.savingsGoal.addMoneyToSavingsGoal(
       accessToken,
       accountUid,
       savingsGoalUid,
@@ -437,7 +437,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   withdrawMoneyFromSavingsGoal (accessToken = this.config.accessToken, accountUid, savingsGoalUid, transferUid, amount, currency = 'GBP') {
-    return this.savingsGoals.withdrawMoneyFromSavingsGoal(
+    return this.savingsGoal.withdrawMoneyFromSavingsGoal(
       accessToken,
       accountUid,
       savingsGoalUid,
@@ -459,7 +459,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   createSavingsGoal (accessToken = this.config.accessToken, accountUid, name, currency = 'GBP', targetAmount = 0, targetCurrency = 'GBP', base64EncodedPhoto) {
-    return this.savingsGoals.createSavingsGoal(accessToken, accountUid, name, currency, targetAmount, targetCurrency, base64EncodedPhoto)
+    return this.savingsGoal.createSavingsGoal(accessToken, accountUid, name, currency, targetAmount, targetCurrency, base64EncodedPhoto)
   }
 
   /**
@@ -470,7 +470,7 @@ class Starling {
    * @return {Promise} - the http request promise
    */
   deleteSavingsGoal (accessToken = this.config.accessToken, accountUid, savingsGoalUid) {
-    return this.savingsGoals.deleteSavingsGoal(accessToken, accountUid, savingsGoalUid)
+    return this.savingsGoal.deleteSavingsGoal(accessToken, accountUid, savingsGoalUid)
   }
 
   /**
