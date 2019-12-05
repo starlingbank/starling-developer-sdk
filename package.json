@@ -9,8 +9,8 @@
     "test": "jest test",
     "test:dev": "jest test --watch",
     "test:verbose": "DEBUG=starling* npm test",
-    "lint": "standard",
-    "lint:fix": "standard --fix",
+    "lint": "eslint src test",
+    "lint:fix": "eslint --fix src test",
     "jsdoc": "node_modules/.bin/jsdoc -c .jsdoc.json --verbose"
   },
   "repository": {
@@ -40,11 +40,6 @@
       }
     }
   },
-  "standard": {
-    "env": [
-      "jest"
-    ]
-  },
   "files": [
     "dist/*"
   ],
@@ -63,7 +58,12 @@
     "babelify": "^9.0.0",
     "browserify": "^16.5.0",
     "codecov": "^3.6.1",
-    "eslint": "^6.5.1",
+    "eslint": "^6.7.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-rename": "^1.4.0",
@@ -74,7 +74,6 @@
     "minami": "^1.2.3",
     "nock": "^11.3.5",
     "rimraf": "^3.0.0",
-    "standard": "^14.3.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   },
