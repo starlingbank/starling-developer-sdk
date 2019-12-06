@@ -20,7 +20,8 @@ describe('Address', () => {
     })
 
     starlingCli
-      .getAddresses(accessToken)
+      .address
+      .getAddresses({ accessToken })
       .then(function ({ data }) {
         expect(data.current.line1).toBe('1A Admiralty Arch')
         expect(data.current.line2).toBe('The Mall')

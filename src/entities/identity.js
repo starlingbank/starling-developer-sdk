@@ -1,7 +1,7 @@
 import axios from 'axios'
 import debug from 'debug'
 import { defaultHeaders } from '../utils/http'
-import { typeValidation } from '../utils/validator'
+import { minAPIParameterValidator } from '../utils/validator'
 
 const log = debug('starling:identity-service')
 
@@ -19,12 +19,16 @@ class Identity {
 
   /**
    * Get the current token identity
-   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
-  getTokenIdentity (accessToken) {
-    typeValidation(arguments, getTokenIdentityParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/identity/token`
+  getTokenIdentity (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    minAPIParameterValidator(parameters)
+    const { apiUrl, accessToken } = parameters
+
+    const url = `${apiUrl}/api/v2/identity/token`
     log(`GET ${url}`)
 
     return axios({
@@ -36,12 +40,16 @@ class Identity {
 
   /**
    * Get the authorising individual's identity
-   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
-  getAuthorisingIndividual (accessToken) {
-    typeValidation(arguments, getAuthorisingIndividualParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/identity/individual`
+  getAuthorisingIndividual (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    minAPIParameterValidator(parameters)
+    const { apiUrl, accessToken } = parameters
+
+    const url = `${apiUrl}/api/v2/identity/individual`
     log(`GET ${url}`)
 
     return axios({
@@ -51,13 +59,5 @@ class Identity {
     })
   }
 }
-
-const getTokenIdentityParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] }
-]
-
-const getAuthorisingIndividualParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] }
-]
 
 module.exports = Identity

@@ -24,7 +24,8 @@ describe('Payments', () => {
 
   test('should be able to get a payment order', done => {
     starlingCli
-      .getPaymentOrder(accessToken, paymentOrderUid)
+      .payment
+      .getPaymentOrder({ accessToken, paymentOrderUid })
       .then(function ({ data }) {
         expect(data.paymentOrderUid).toBe(paymentOrderUid)
         expect(data.amount.currency).toBe('GBP')
@@ -45,7 +46,8 @@ describe('Payments', () => {
 
   test('should be able to get a payment order\'s payments', done => {
     starlingCli
-      .getPaymentOrderPayments(accessToken, paymentOrderUid)
+      .payment
+      .getPaymentOrderPayments({ accessToken, paymentOrderUid })
       .then(function ({ data }) {
         expect(data.payments).toHaveLength(1)
         expect(data.payments[0].paymentUid).toBe('d812059f-c15d-49d6-9c1c-76ae4e67f8cb')
@@ -75,7 +77,8 @@ describe('Payments', () => {
 
   test('should be able to list standing orders', done => {
     starlingCli
-      .listStandingOrders(accessToken, accountUid, categoryUid)
+      .payment
+      .listStandingOrders({ accessToken, accountUid, categoryUid })
       .then(function ({ data }) {
         expect(data.standingOrders).toHaveLength(1)
         expect(data.standingOrders[0].paymentOrderUid).toBe(paymentOrderUid)
@@ -104,7 +107,8 @@ describe('Payments', () => {
 
   test('should be able to get a standing order', done => {
     starlingCli
-      .getStandingOrder(accessToken, accountUid, categoryUid, paymentOrderUid)
+      .payment
+      .getStandingOrder({ accessToken, accountUid, categoryUid, paymentOrderUid })
       .then(function ({ data }) {
         expect(data.paymentOrderUid).toBe(paymentOrderUid)
         expect(data.amount.currency).toBe('GBP')

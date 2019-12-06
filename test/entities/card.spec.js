@@ -49,7 +49,8 @@ describe('Card', () => {
 
   test('should retrieve the customer\'s card details', done => {
     starlingCli
-      .getCards(accessToken)
+      .card
+      .getCards({ accessToken })
       .then(function ({ data }) {
         expect(data.cards).toHaveLength(1)
         expect(data.cards[0].cardUid).toBe(cardUid)
@@ -75,7 +76,8 @@ describe('Card', () => {
   test('should update card lock', done => {
     expect(nockLock.isDone()).toBe(false)
     starlingCli
-      .updateCardLock(accessToken, cardUid, true)
+      .card
+      .updateCardLock({ accessToken, cardUid, enabled: true })
       .then(function ({ data, status }) {
         expect(status).toBe(200)
         expect(nockLock.isDone()).toBe(true)
@@ -89,7 +91,8 @@ describe('Card', () => {
   test('should update ATM control', done => {
     expect(nockATM.isDone()).toBe(false)
     starlingCli
-      .updateCardATMControl(accessToken, cardUid, true)
+      .card
+      .updateCardATMControl({ accessToken, cardUid, enabled: true })
       .then(function ({ data, status }) {
         expect(status).toBe(200)
         expect(nockATM.isDone()).toBe(true)
@@ -103,7 +106,8 @@ describe('Card', () => {
   test('should update online payments control', done => {
     expect(nockOnline.isDone()).toBe(false)
     starlingCli
-      .updateCardOnlineControl(accessToken, cardUid, true)
+      .card
+      .updateCardOnlineControl({ accessToken, cardUid, enabled: true })
       .then(function ({ data, status }) {
         expect(status).toBe(200)
         expect(nockOnline.isDone()).toBe(true)
@@ -117,7 +121,8 @@ describe('Card', () => {
   test('should update mobile wallet payments control', done => {
     expect(nockMobileWallet.isDone()).toBe(false)
     starlingCli
-      .updateCardMobileWalletControl(accessToken, cardUid, true)
+      .card
+      .updateCardMobileWalletControl({ accessToken, cardUid, enabled: true })
       .then(function ({ data, status }) {
         expect(status).toBe(200)
         expect(nockMobileWallet.isDone()).toBe(true)
@@ -131,7 +136,8 @@ describe('Card', () => {
   test('should update gambling payments control', done => {
     expect(nockGambling.isDone()).toBe(false)
     starlingCli
-      .updateCardGamblingControl(accessToken, cardUid, true)
+      .card
+      .updateCardGamblingControl({ accessToken, cardUid, enabled: true })
       .then(function ({ data, status }) {
         expect(status).toBe(200)
         expect(nockGambling.isDone()).toBe(true)
@@ -145,7 +151,8 @@ describe('Card', () => {
   test('should update card present payments control', done => {
     expect(nockPos.isDone()).toBe(false)
     starlingCli
-      .updateCardPresentControl(accessToken, cardUid, true)
+      .card
+      .updateCardPresentControl({ accessToken, cardUid, enabled: true })
       .then(function ({ data, status }) {
         expect(status).toBe(200)
         expect(nockPos.isDone()).toBe(true)
@@ -159,7 +166,8 @@ describe('Card', () => {
   test('should update magstripe payments control', done => {
     expect(nockMagstripe.isDone()).toBe(false)
     starlingCli
-      .updateCardMagstripeControl(accessToken, cardUid, true)
+      .card
+      .updateCardMagstripeControl({ accessToken, cardUid, enabled: true })
       .then(function ({ data, status }) {
         expect(status).toBe(200)
         expect(nockMagstripe.isDone()).toBe(true)

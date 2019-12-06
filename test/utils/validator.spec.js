@@ -1,82 +1,170 @@
-import { typeValidation } from '../../src/utils/validator'
+import { struct, minAPIParameterValidator } from '../../src/utils/validator'
 
 describe('Type Validator', () => {
-  let apiCallArgs
-  function setupApiCallArgs () { apiCallArgs = arguments }
-
-  const ruleSet = [
-    { name: 'iAmRequiredObject', validations: ['required', 'object'] },
-    { name: 'iAmRequiredNumber', validations: ['required', 'number'] },
-    { name: 'iAmRequiredString', validations: ['required', 'string'] }]
-
-  const anotherRuleSet = [
-    { name: 'iAmRequiredNumber', validations: ['required', 'number'] },
-    { name: 'iAmRequiredString', validations: ['required', 'string'] },
-    { name: 'iAmOptionalString', validations: ['optional', 'string'] }]
-
-  const wonkyRuleSet = [
-    { name: 'iAmRequiredNumber', validations: ['required', 'number'] },
-    { name: 'iAmOptionalString', validations: ['optional', 'string'] },
-    { name: 'iAmRequiredString', validations: ['required', 'string'] }]
-
-  test('should not throw errors, as types are correct', () => {
+  test('minAPIParameterValidator should not throw when types are correct', () => {
     expect(() => {
-      setupApiCallArgs({ a: 1 }, 42, 'HAI')
-      typeValidation(apiCallArgs, ruleSet)
+      minAPIParameterValidator({
+        accessToken: 'abcd',
+        apiUrl: 'https://api.starlingbank.com'
+      })
     }).not.toThrow()
   })
 
-  test(
-    'should not throw errors, as types are correct, even though we have been given spares',
-    () => {
-      expect(() => {
-        setupApiCallArgs({ a: 1 }, 42, 'HAI', 1, 2, 3, 4)
-        typeValidation(apiCallArgs, ruleSet)
-      }).not.toThrow()
-    }
-  )
-
-  test('should not throw errors as required args are specified', () => {
+  test('minAPIParameterValidator should not throw when properties are a superset', () => {
     expect(() => {
-      setupApiCallArgs(42, 'HAI')
-      typeValidation(apiCallArgs, anotherRuleSet)
+      minAPIParameterValidator({
+        accessToken: 'abcd',
+        apiUrl: 'https://api.starlingbank.com',
+        otherThing: 'shouldntAffectTheValidation'
+      })
     }).not.toThrow()
   })
 
-  test('should not throw errors as required args are specified', () => {
+  test('minAPIParameterValidator should throw when accessToken is missing', () => {
     expect(() => {
-      setupApiCallArgs(42, 'HAI', undefined)
-      typeValidation(apiCallArgs, anotherRuleSet)
+      minAPIParameterValidator({
+        apiUrl: 'https://api.starlingbank.com'
+      })
+    }).toThrow('Expected a value of type `string` for `accessToken` but received `undefined`.')
+  })
+
+  test('minAPIParameterValidator should throw when apiUrl is missing', () => {
+    expect(() => {
+      minAPIParameterValidator({
+        accessToken: 'abcd'
+      })
+    }).toThrow('Expected a value of type `string` for `apiUrl` but received `undefined`.')
+  })
+
+  test('minAPIParameterValidator should throw when accessToken and apiUrl is missing', () => {
+    expect(() => {
+      minAPIParameterValidator({})
+    }).toThrow()
+  })
+
+  test('minAPIParameterValidator should throw when given undefined', () => {
+    expect(() => {
+      minAPIParameterValidator(undefined)
+    }).toThrow('Expected a value of type `interface<{accessToken,apiUrl}>` but received `undefined`.')
+  })
+
+  test('struct with a uuid should throw when given empty object', () => {
+    expect(() => {
+      struct.interface({ accountUid: 'uuid' })({})
+    }).toThrow('Expected a value of type `uuid` for `accountUid` but received `undefined`.')
+  })
+
+  test('struct with a uuid should throw when given an non-uuid like string', () => {
+    expect(() => {
+      struct.interface({ accountUid: 'uuid' })({
+        accountUid: 'abcd'
+      })
+    }).toThrow('Expected a value of type `uuid` for `accountUid` but received `"abcd"`.')
+  })
+
+  test('struct with a uuid should throw when given an invalid uuid', () => {
+    expect(() => {
+      struct.interface({ accountUid: 'uuid' })({
+        accountUid: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
+      })
+    }).toThrow('Expected a value of type `uuid` for `accountUid` but received `"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"`.')
+  })
+
+  test('struct with a uuid should not throw when given a valid uuid', () => {
+    expect(() => {
+      struct.interface({ accountUid: 'uuid' })({
+        accountUid: 'c845736c-6cc9-4dd1-a0c5-4cdc497dcde7'
+      })
     }).not.toThrow()
   })
 
-  test('should throw an error as the undefined input is required', () => {
+  test('struct with a yearMonth should throw when given an non-yearMonth like string', () => {
     expect(() => {
-      setupApiCallArgs()
-      typeValidation(apiCallArgs, ruleSet)
-    }).toThrow([
-      'iAmRequiredObject parameter in position 0 is a required object but was undefined',
-      'iAmRequiredNumber parameter in position 1 is a required number but was undefined',
-      'iAmRequiredString parameter in position 2 is a required string but was undefined'
-    ].toString())
+      struct.interface({ ym: 'yearMonth' })({
+        ym: 'abcd'
+      })
+    }).toThrow('Expected a value of type `yearMonth` for `ym` but received `"abcd"`.')
   })
 
-  test('should cope with less args than defs', () => {
+  test('struct with a yearMonth should throw when given an invalid yearMonth', () => {
     expect(() => {
-      setupApiCallArgs(undefined, undefined, undefined)
-      typeValidation(apiCallArgs, wonkyRuleSet)
-    }).toThrow([
-      'iAmRequiredNumber parameter in position 0 is a required number but was undefined',
-      'iAmRequiredString parameter in position 2 is a required string but was undefined'
-    ].toString())
+      struct.interface({ ym: 'yearMonth' })({
+        ym: '2019-14'
+      })
+    }).toThrow('Expected a value of type `yearMonth` for `ym` but received `"2019-14"`.')
   })
 
-  test('should throw with optional args as wrong type', () => {
+  test('struct with a yearMonth should not throw when given a valid yearMonth', () => {
     expect(() => {
-      setupApiCallArgs(1, 3, 'sd')
-      typeValidation(apiCallArgs, anotherRuleSet)
-    }).toThrow([
-      'iAmRequiredString parameter in position 1 is a required string but was number'
-    ].toString())
+      struct.interface({ ym: 'yearMonth' })({
+        ym: '2019-12'
+      })
+    }).not.toThrow()
+  })
+
+  test('struct with a date should throw when given an non-date like string', () => {
+    expect(() => {
+      struct.interface({ d: 'date' })({
+        d: 'abcd'
+      })
+    }).toThrow('Expected a value of type `date` for `d` but received `"abcd"`.')
+  })
+
+  test('struct with a date should throw when given an invalid date', () => {
+    expect(() => {
+      struct.interface({ d: 'date' })({
+        d: '2019-14-01'
+      })
+    }).toThrow('Expected a value of type `date` for `d` but received `"2019-14-01"`.')
+  })
+
+  test('struct with a date should not throw when given a valid date', () => {
+    expect(() => {
+      struct.interface({ d: 'date' })({
+        d: '2019-12-01'
+      })
+    }).not.toThrow()
+  })
+
+  test('struct with a timestamp should throw when given an non-timestamp like string', () => {
+    expect(() => {
+      struct.interface({ t: 'timestamp' })({
+        t: 'abcd'
+      })
+    }).toThrow('Expected a value of type `timestamp` for `t` but received `"abcd"`.')
+  })
+
+  test('struct with a timestamp should throw when given an invalid timestamp', () => {
+    expect(() => {
+      struct.interface({ t: 'timestamp' })({
+        t: '2019-14-01T23:18:47Z'
+      })
+    }).toThrow('Expected a value of type `timestamp` for `t` but received `"2019-14-01T23:18:47Z"`.')
+  })
+
+  test('struct with a timestamp should not throw when given a valid timestamp', () => {
+    expect(() => {
+      struct.interface({ t: 'timestamp' })({
+        t: '2019-12-01T23:18:47Z'
+      })
+    }).not.toThrow()
+
+    expect(() => {
+      struct.interface({ t: 'timestamp' })({
+        t: '2019-12-01T23:18:47'
+      })
+    }).not.toThrow()
+
+    expect(() => {
+      struct.interface({ t: 'timestamp' })({
+        t: '2019-12-01T23:18:47.1Z'
+      })
+    }).not.toThrow()
+
+    expect(() => {
+      struct.interface({ t: 'timestamp' })({
+        t: '2019-12-01T23:18:47.123Z'
+      })
+    }).not.toThrow()
   })
 })

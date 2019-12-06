@@ -1,46 +1,11 @@
-
-const runRules = (pos, name, rules, value) => {
-  const valueType = typeof value
-
-  if (rules[0] === 'optional') {
-    if (value && (valueType !== rules[1])) {
-      return `${name} parameter in position ${pos} is an optional ${rules[1]} but was ${valueType}`
-    }
+const superstruct = require('superstruct').superstruct
+export const struct = superstruct({
+  types: {
+    uuid: value => /^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value),
+    yearMonth: value => /^[0-9]{4}-(?:1[0-2]|0[1-9])$/.test(value),
+    date: value => /^[0-9]{4}-(?:1[0-2]|0[1-9])-(?:3[01]|[12]\d|0[1-9])$/.test(value),
+    timestamp: value => /^((?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z)?$/.test(value)
   }
-  if (rules[0] === 'required') {
-    if (value && (valueType !== rules[1])) {
-      return `${name} parameter in position ${pos} is a required ${rules[1]} but was ${valueType}`
-    } else if (!value && value !== 0 && value !== false) {
-      return `${name} parameter in position ${pos} is a required ${rules[1]} but was ${value}`
-    }
-  }
-}
-
-export const typeValidation = (args, def) => {
-  const problems = []
-
-  if (Object.prototype.hasOwnProperty.call(args, 'length')) {
-    for (let i = 0; i < def.length; i++) {
-      const pos = i
-      const name = def[i].name
-      const rules = def[i].validations
-      const value = i <= args.length ? args[i] : undefined
-      const problem = runRules(pos, name, rules, value)
-      if (problem) problems.push(problem)
-    }
-  } else if (typeof args === 'object') {
-    for (const check of def) {
-      const name = check.name
-      const rules = check.validations
-      const value = args[name]
-      const problem = runRules(name, name, rules, value)
-      if (problem) problems.push(problem)
-    }
-  } else {
-    throw new Error('Type validation args must be an array or an object')
-  }
-
-  if (problems.length) {
-    throw problems
-  }
-}
+})
+export const minAPIParameterDefintion = { accessToken: 'string', apiUrl: 'string' }
+export const minAPIParameterValidator = struct.interface(minAPIParameterDefintion)

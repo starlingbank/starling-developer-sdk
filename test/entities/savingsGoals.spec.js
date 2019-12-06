@@ -16,7 +16,7 @@ describe('Savings Goals', () => {
   })
   const accountUid = 'b0b20c9d-3b6b-42f1-a7d0-e70d4538e0d9'
   const savingsGoalUid = '5031325f-49b2-4c8c-b9cb-3f5cfa7f6d6e'
-  const transferUid = '88998899-8899-8899-8899-889988998899'
+  const transferUid = 'e67b6e7c-323f-4dfa-919a-5f835b28cfa0'
 
   nock('http://localhost', expectAuthorizationHeader(accessToken))
     .get(`/api/v2/account/${accountUid}/savings-goals`)
@@ -52,7 +52,8 @@ describe('Savings Goals', () => {
 
   test('should retrieve the account\'s savings goals', done => {
     starlingCli
-      .getSavingsGoals(accessToken, accountUid)
+      .savingsGoal
+      .getSavingsGoals({ accessToken, accountUid })
       .then(({ data }) => {
         expect(data.savingsGoalList).toHaveLength(2)
 
@@ -79,7 +80,8 @@ describe('Savings Goals', () => {
 
   test('should retrieve an individual savings goal', done => {
     starlingCli
-      .getSavingsGoal(accessToken, accountUid, savingsGoalUid)
+      .savingsGoal
+      .getSavingsGoal({ accessToken, accountUid, savingsGoalUid })
       .then(({ data }) => {
         expect(data.savingsGoalUid).toBe(savingsGoalUid)
         expect(data.name).toBe('Trip to Paris')
@@ -97,7 +99,8 @@ describe('Savings Goals', () => {
 
   test('should create a savings goal', done => {
     starlingCli
-      .createSavingsGoal(accessToken, accountUid, 'Savings goal name', 'GBP')
+      .savingsGoal
+      .createSavingsGoal({ accessToken, accountUid, name: 'Savings goal name', currency: 'GBP' })
       .then(({ data }) => {
         expect(data.savingsGoalUid).toBe(savingsGoalUid)
         expect(data.success).toBe(true)
@@ -111,7 +114,8 @@ describe('Savings Goals', () => {
 
   test('should delete a savings goal', done => {
     starlingCli
-      .deleteSavingsGoal(accessToken, accountUid, savingsGoalUid)
+      .savingsGoal
+      .deleteSavingsGoal({ accessToken, accountUid, savingsGoalUid })
       .then(({ data, status }) => {
         expect(status).toBe(200)
         done()
@@ -120,7 +124,8 @@ describe('Savings Goals', () => {
 
   test('should add money to a savings goal', done => {
     starlingCli
-      .addMoneyToSavingsGoal(accessToken, accountUid, savingsGoalUid, transferUid, 1000, 'GBP')
+      .savingsGoal
+      .addMoneyToSavingsGoal({ accessToken, accountUid, savingsGoalUid, transferUid, amount: 1000, currency: 'GBP' })
       .then(({ data }) => {
         expect(data.transferUid).toBe(transferUid)
         expect(data.success).toBe(true)
@@ -134,7 +139,8 @@ describe('Savings Goals', () => {
 
   test('should withdraw money from a savings goal', done => {
     starlingCli
-      .withdrawMoneyFromSavingsGoal(accessToken, accountUid, savingsGoalUid, transferUid, 1000, 'GBP')
+      .savingsGoal
+      .withdrawMoneyFromSavingsGoal({ accessToken, accountUid, savingsGoalUid, transferUid, amount: 1000, currency: 'GBP' })
       .then(({ data }) => {
         expect(data.transferUid).toBe(transferUid)
         expect(data.success).toBe(true)

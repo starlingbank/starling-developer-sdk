@@ -48,6 +48,7 @@
     "debug": "^3.2.6",
     "es6-promise": "^4.2.8",
     "js-base64": "^2.5.1",
+    "superstruct": "^0.8.2",
     "utf8": "^3.0.0"
   },
   "devDependencies": {

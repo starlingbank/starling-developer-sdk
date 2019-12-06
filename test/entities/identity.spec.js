@@ -26,7 +26,8 @@ describe('Identity', () => {
   test('should retrieve the token identity',
     done => {
       starlingCli
-        .getTokenIdentity(accessToken)
+        .identity
+        .getTokenIdentity({ accessToken })
         .then(function ({ data }) {
           expect(data.accountHolderUid).toBe('a0be8f4a-faa9-40f8-a0b8-58205e722cd7')
           expect(data.expiresAt).toBe('2017-09-08T12:34:21.000Z')
@@ -45,7 +46,8 @@ describe('Identity', () => {
   test('should retrieve the authorising individual\'s identity',
     done => {
       starlingCli
-        .getAuthorisingIndividual(accessToken)
+        .identity
+        .getAuthorisingIndividual({ accessToken })
         .then(function ({ data }) {
           expect(data.firstName).toBe('Dave')
           expect(data.lastName).toBe('Bowman')

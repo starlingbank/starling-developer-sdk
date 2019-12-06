@@ -59,7 +59,8 @@ describe('Account', () => {
 
   test('should retrieve accounts', done => {
     starlingCli
-      .getAccounts(accessToken)
+      .account
+      .getAccounts({ accessToken })
       .then(function ({ data }) {
         expect(data.accounts).toHaveLength(1)
         expect(data.accounts[0].accountUid).toBe('b0b20c9d-3b6b-42f1-a7d0-e70d4538e0d9')
@@ -75,7 +76,8 @@ describe('Account', () => {
 
   test('should retrieve the account identifiers', done => {
     starlingCli
-      .getAccountIdentifiers(accessToken, accountUid)
+      .account
+      .getAccountIdentifiers({ accessToken, accountUid })
       .then(function ({ data }) {
         expect(data.accountIdentifier).toBe('01234567')
         expect(data.bankIdentifier).toBe('608371')
@@ -90,7 +92,8 @@ describe('Account', () => {
 
   test('should retrieve the account balance', done => {
     starlingCli
-      .getAccountBalance(accessToken, accountUid)
+      .account
+      .getAccountBalance({ accessToken, accountUid })
       .then(function ({ data }) {
         expect(data.clearedBalance.currency).toBe('GBP')
         expect(data.effectiveBalance.currency).toBe('GBP')
@@ -112,7 +115,8 @@ describe('Account', () => {
 
   test('should get a confirmation of funds response', done => {
     starlingCli
-      .getConfirmationOfFunds(accessToken, accountUid, 1000)
+      .account
+      .getConfirmationOfFunds({ accessToken, accountUid, targetAmountInMinorUnits: 1000 })
       .then(function ({ data }) {
         expect(data.requestedAmountAvailableToSpend).toBe(true)
         expect(data.accountWouldBeInOverdraftIfRequestedAmountSpent).toBe(true)
@@ -125,7 +129,8 @@ describe('Account', () => {
 
   test('should get available statement periods', done => {
     starlingCli
-      .getStatementPeriods(accessToken, accountUid)
+      .account
+      .getStatementPeriods({ accessToken, accountUid })
       .then(function ({ data }) {
         expect(data.periods).toHaveLength(2)
         expect(data.periods[0].period).toBe('2019-09')
@@ -142,7 +147,8 @@ describe('Account', () => {
 
   test('should download CSV statement for period', done => {
     starlingCli
-      .getStatementForPeriod(accessToken, accountUid, '2019-10', 'text/csv', 'text')
+      .account
+      .getStatementForPeriod({ accessToken, accountUid, yearMonth: '2019-10', format: 'text/csv', responseType: 'text' })
       .then(function ({ data }) {
         const lines = data.split('\n')
 
@@ -159,7 +165,8 @@ describe('Account', () => {
 
   test('should download CSV statement for period with optional parameters removed', done => {
     starlingCli
-      .getStatementForPeriod(accessToken, accountUid, undefined, undefined, 'text')
+      .account
+      .getStatementForPeriod({ accessToken, accountUid, responseType: 'text' })
       .then(function ({ data }) {
         const lines = data.split('\n')
 
@@ -176,7 +183,8 @@ describe('Account', () => {
 
   test('should download CSV statement for range', done => {
     starlingCli
-      .getStatementForRange(accessToken, accountUid, '2019-10-01', '2019-10-02', 'text/csv', 'text')
+      .account
+      .getStatementForRange({ accessToken, accountUid, start: '2019-10-01', end: '2019-10-02', format: 'text/csv', responseType: 'text' })
       .then(function ({ data }) {
         const lines = data.split('\n')
 
@@ -193,7 +201,8 @@ describe('Account', () => {
 
   test('should download CSV statement for range with optional parameters removed', done => {
     starlingCli
-      .getStatementForRange(accessToken, accountUid, '2019-10-01', undefined, undefined, 'text')
+      .account
+      .getStatementForRange({ accessToken, accountUid, start: '2019-10-01', responseType: 'text' })
       .then(function ({ data }) {
         const lines = data.split('\n')
 

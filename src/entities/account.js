@@ -1,7 +1,7 @@
 import axios from 'axios'
 import debug from 'debug'
 import { defaultHeaders } from '../utils/http'
-import { typeValidation } from '../utils/validator'
+import { struct, minAPIParameterDefintion, minAPIParameterValidator } from '../utils/validator'
 
 const log = debug('starling:account-service')
 
@@ -19,12 +19,16 @@ class Account {
 
   /**
    * Get an account holder's bank accounts
-   * @param {string} accessToken - the oauth bearer token
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
    * @return {Promise} - the http request promise
    */
-  getAccounts (accessToken) {
-    typeValidation(arguments, getAccountParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/accounts`
+  getAccounts (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    minAPIParameterValidator(parameters)
+    const { apiUrl, accessToken } = parameters
+
+    const url = `${apiUrl}/api/v2/accounts`
     log(`GET ${url}`)
 
     return axios({
@@ -36,13 +40,17 @@ class Account {
 
   /**
    * Get an account's bank identifiers
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid
    * @return {Promise} - the http request promise
    */
-  getAccountIdentifiers (accessToken, accountUid) {
-    typeValidation(arguments, getAccountIdentifiersParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/accounts/${accountUid}/identifiers`
+  getAccountIdentifiers (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    getAccountIdentifiersParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid } = parameters
+
+    const url = `${apiUrl}/api/v2/accounts/${accountUid}/identifiers`
     log(`GET ${url}`)
 
     return axios({
@@ -54,13 +62,17 @@ class Account {
 
   /**
    * Get an account's balance
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid
    * @return {Promise} - the http request promise
    */
-  getAccountBalance (accessToken, accountUid) {
-    typeValidation(arguments, getAccountBalanceParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/accounts/${accountUid}/balance`
+  getAccountBalance (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    getAccountBalanceParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid } = parameters
+
+    const url = `${apiUrl}/api/v2/accounts/${accountUid}/balance`
     log(`GET ${url}`)
 
     return axios({
@@ -72,14 +84,18 @@ class Account {
 
   /**
    * Get whether there are available funds for a requested amount
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid
-   * @param {number} targetAmountInMinorUnits - the target amount in minor units
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid
+   * @param {number} parameters.targetAmountInMinorUnits - the target amount in minor units
    * @return {Promise} - the http request promise
    */
-  getConfirmationOfFunds (accessToken, accountUid, targetAmountInMinorUnits) {
-    typeValidation(arguments, getConfirmationOfFundsParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/accounts/${accountUid}/confirmation-of-funds`
+  getConfirmationOfFunds (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    getConfirmationOfFundsParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid, targetAmountInMinorUnits } = parameters
+
+    const url = `${apiUrl}/api/v2/accounts/${accountUid}/confirmation-of-funds`
     log(`GET ${url}`)
 
     return axios({
@@ -94,13 +110,17 @@ class Account {
 
   /**
    * Get list of statement periods which are available for an account
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid
    * @return {Promise} - the http request promise
    */
-  getStatementPeriods (accessToken, accountUid) {
-    typeValidation(arguments, getStatementPeriodsParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/accounts/${accountUid}/statement/available-periods`
+  getStatementPeriods (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    getStatementPeriodsParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid } = parameters
+
+    const url = `${apiUrl}/api/v2/accounts/${accountUid}/statement/available-periods`
     log(`GET ${url}`)
 
     return axios({
@@ -112,16 +132,20 @@ class Account {
 
   /**
    * Download a statement for a given statement period
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid
-   * @param {string} yearMonth - the statement period's year month (yyyy-MM)
-   * @param {string} format - one of 'application/pdf' or 'text/csv'
-   * @param {string} responseType - the axios responseType for the request
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid
+   * @param {string=} parameters.yearMonth - the statement period's year month (yyyy-MM)
+   * @param {string=} parameters.format - one of 'application/pdf' or 'text/csv'
+   * @param {string=} parameters.responseType - the axios responseType for the request
    * @return {Promise} - the http request promise
    */
-  getStatementForPeriod (accessToken, accountUid, yearMonth, format, responseType) {
-    typeValidation(arguments, getStatementForPeriodParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/accounts/${accountUid}/statement/download`
+  getStatementForPeriod (parameters) {
+    parameters = Object.assign({}, { yearMonth: new Date().toISOString().slice(0, 7), format: 'text/csv', responseType: 'stream' }, this.options, parameters)
+    getStatementForPeriodParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid, format, yearMonth, responseType } = parameters
+
+    const url = `${apiUrl}/api/v2/accounts/${accountUid}/statement/download`
     log(`GET ${url}`)
 
     return axios({
@@ -140,17 +164,21 @@ class Account {
 
   /**
    * Download a statement for a given date range
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid
-   * @param {string} start - the beginning of the statement date range (yyyy-MM-dd)
-   * @param {string=} end - the end of the statement date range (yyyy-MM-dd)
-   * @param {string} format - one of 'application/pdf' or 'text/csv'
-   * @param {string} responseType - the axios responseType for the request
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid
+   * @param {string} parameters.start - the beginning of the statement date range (yyyy-MM-dd)
+   * @param {string=} parameters.end - the end of the statement date range (yyyy-MM-dd)
+   * @param {string=} parameters.format - one of 'application/pdf' or 'text/csv'
+   * @param {string=} parameters.responseType - the axios responseType for the request
    * @return {Promise} - the http request promise
    */
-  getStatementForRange (accessToken, accountUid, start, end, format, responseType) {
-    typeValidation(arguments, getStatementForRangeParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/accounts/${accountUid}/statement/downloadForDateRange`
+  getStatementForRange (parameters) {
+    parameters = Object.assign({}, { format: 'text/csv', responseType: 'stream' }, this.options, parameters)
+    getStatementForRangeParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid, start, end, format, responseType } = parameters
+
+    const url = `${apiUrl}/api/v2/accounts/${accountUid}/statement/downloadForDateRange`
     log(`GET ${url}`)
 
     return axios({
@@ -169,46 +197,29 @@ class Account {
   }
 }
 
-const getAccountParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] }
-]
+const getAccountIdentifiersParameterValidator = struct.interface({ ...minAPIParameterDefintion, accountUid: 'uuid' })
 
-const getAccountBalanceParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] }
-]
+const getAccountBalanceParameterValidator = struct.interface({ ...minAPIParameterDefintion, accountUid: 'uuid' })
 
-const getAccountIdentifiersParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] }
-]
+const getConfirmationOfFundsParameterValidator = struct.interface({ ...minAPIParameterDefintion, accountUid: 'uuid', targetAmountInMinorUnits: 'number' })
 
-const getConfirmationOfFundsParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] },
-  { name: 'targetAmount', validations: ['required', 'number'] }
-]
+const getStatementPeriodsParameterValidator = struct.interface({ ...minAPIParameterDefintion, accountUid: 'uuid' })
 
-const getStatementPeriodsParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] }
-]
+const getStatementForPeriodParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  accountUid: 'uuid',
+  yearMonth: 'yearMonth',
+  format: struct.enum(['application/pdf', 'text/csv']),
+  responseType: 'string'
+})
 
-const getStatementForPeriodParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] },
-  { name: 'yearMonth', validations: ['required', 'string'] },
-  { name: 'format', validations: ['required', 'string'] },
-  { name: 'responseType', validations: ['required', 'string'] }
-]
-
-const getStatementForRangeParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] },
-  { name: 'start', validations: ['required', 'string'] },
-  { name: 'end', validations: ['optional', 'string'] },
-  { name: 'format', validations: ['required', 'string'] },
-  { name: 'responseType', validations: ['required', 'string'] }
-]
+const getStatementForRangeParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  accountUid: 'uuid',
+  start: 'date',
+  end: 'date?',
+  format: struct.enum(['application/pdf', 'text/csv']),
+  responseType: 'string'
+})
 
 module.exports = Account

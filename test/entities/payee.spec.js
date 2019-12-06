@@ -20,7 +20,8 @@ describe('Payee', () => {
 
   test('should retrieve the customer\'s payees', done => {
     starlingCli
-      .getPayees(accessToken)
+      .payee
+      .getPayees({ accessToken })
       .then(function ({ data }) {
         expect(data.payees).toHaveLength(2)
 
@@ -71,21 +72,25 @@ describe('Payee', () => {
 
   test('should create a new payee', done => {
     starlingCli
-      .createPayee(accessToken, {
-        payeeName: 'Mickey Mouse',
-        payeeType: 'INDIVIDUAL',
-        firstName: 'Mickey',
-        lastName: 'Mouse',
-        accounts: [
-          {
-            description: 'Mickey\'s main account',
-            defaultAccount: true,
-            countryCode: 'GB',
-            accountIdentifier: '12345678',
-            bankIdentifier: '123456',
-            bankIdentifierType: 'SORT_CODE'
-          }
-        ]
+      .payee
+      .createPayee({
+        accessToken,
+        payeeCreationRequest: {
+          payeeName: 'Mickey Mouse',
+          payeeType: 'INDIVIDUAL',
+          firstName: 'Mickey',
+          lastName: 'Mouse',
+          accounts: [
+            {
+              description: 'Mickey\'s main account',
+              defaultAccount: true,
+              countryCode: 'GB',
+              accountIdentifier: '12345678',
+              bankIdentifier: '123456',
+              bankIdentifierType: 'SORT_CODE'
+            }
+          ]
+        }
       })
       .then(function ({ data, status }) {
         expect(status).toBe(200)
@@ -106,7 +111,8 @@ describe('Payee', () => {
 
   test('should delete the specified payee', done => {
     starlingCli
-      .deletePayee(accessToken, payeeUid)
+      .payee
+      .deletePayee({ accessToken, payeeUid })
       .then(function ({ status }) {
         expect(status).toBe(200)
         done()

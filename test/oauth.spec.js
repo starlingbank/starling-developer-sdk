@@ -25,6 +25,7 @@ describe('OAuth', () => {
       .reply(200, getAccessTokenResponse)
 
     starlingCli
+      .oAuth
       .getAccessToken('code')
       .then(function ({ data }) {
         expect(data.access_token).toBe('moppccLmsNWYBSCdv7ZBgihY0sL2gvDtqXYPDPPEP9dbiSVBCUW74lgXafgb4Mbj')
@@ -47,6 +48,7 @@ describe('OAuth', () => {
       .reply(200, refreshAccessTokenResponse)
 
     starlingCli
+      .oAuth
       .refreshAccessToken('11tyjapK8Vx3mBbCMkCrTmlbxjVRSny16MmbvGSvRlwhKYmFC4dbZetV0nTcXGjT')
       .then(function ({ data }) {
         expect(data.access_token).toBe('syerutdituyfhnofblyfdtrfnskrywfhendkruygrliflucftdgl4754535e')

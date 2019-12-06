@@ -50,7 +50,8 @@ describe('Account Holder', () => {
 
   test('should get the account holder', done => {
     starlingCli
-      .getAccountHolder(accessToken)
+      .accountHolder
+      .getAccountHolder({ accessToken })
       .then(function ({ data }) {
         expect(data.accountHolderUid).toBe('a0be8f6a-faa9-40f8-a0b8-58205e722cd7')
         expect(data.accountHolderType).toBe('INDIVIDUAL')
@@ -63,7 +64,8 @@ describe('Account Holder', () => {
 
   test('should get the account holder\'s name', done => {
     starlingCli
-      .getAccountHolderName(accessToken)
+      .accountHolder
+      .getAccountHolderName({ accessToken })
       .then(function ({ data }) {
         expect(data.accountHolderName).toBe('Dave Bowman')
 
@@ -75,7 +77,8 @@ describe('Account Holder', () => {
 
   test('should get an individual account holder', done => {
     starlingCli
-      .getAccountHolderIndividual(accessToken)
+      .accountHolder
+      .getAccountHolderIndividual({ accessToken })
       .then(function ({ data }) {
         expect(data.firstName).toBe('Dave')
         expect(data.lastName).toBe('Bowman')
@@ -91,7 +94,8 @@ describe('Account Holder', () => {
 
   test('should get a joint account holder', done => {
     starlingCli
-      .getAccountHolderJoint(accessToken)
+      .accountHolder
+      .getAccountHolderJoint({ accessToken })
       .then(function ({ data }) {
         expect(data.accountHolderUid).toBe('a0be8f6a-faa9-40f8-a0b8-58205e722cd7')
         expect(data.personOne.firstName).toBe('Dave')
@@ -113,7 +117,8 @@ describe('Account Holder', () => {
 
   test('should get a business account holder', done => {
     starlingCli
-      .getAccountHolderBusiness(accessToken)
+      .accountHolder
+      .getAccountHolderBusiness({ accessToken })
       .then(function ({ data }) {
         expect(data.companyName).toBe('Starling Bank')
         expect(data.companyRegistrationNumber).toBe('09092149')
@@ -128,7 +133,8 @@ describe('Account Holder', () => {
 
   test('should get a business registered address', done => {
     starlingCli
-      .getAccountHolderBusinessRegisteredAddress(accessToken)
+      .accountHolder
+      .getAccountHolderBusinessRegisteredAddress({ accessToken })
       .then(function ({ data }) {
         expect(data.line1).toBe('1A Admiralty Arch')
         expect(data.line2).toBe('The Mall')
@@ -145,7 +151,8 @@ describe('Account Holder', () => {
 
   test('should get a business correspondence address', done => {
     starlingCli
-      .getAccountHolderBusinessCorrespondenceAddress(accessToken)
+      .accountHolder
+      .getAccountHolderBusinessCorrespondenceAddress({ accessToken })
       .then(function ({ data }) {
         expect(data.line1).toBe('1B Admiralty Arch')
         expect(data.line2).toBe('The Mall')

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import debug from 'debug'
 import { defaultHeaders, payloadHeaders } from '../utils/http'
-import { typeValidation } from '../utils/validator'
+import { struct, minAPIParameterDefintion, minAPIParameterValidator } from '../utils/validator'
 
 const log = debug('starling:payee-service')
 
@@ -19,12 +19,16 @@ class Payee {
 
   /**
    * Get an account holder's payees
-   * @param {string} accessToken - the oauth bearer token.
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token.
    * @return {Promise} - the http request promise
    */
-  getPayees (accessToken) {
-    typeValidation(arguments, getPayeesParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/payees`
+  getPayees (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    minAPIParameterValidator(parameters)
+    const { apiUrl, accessToken } = parameters
+
+    const url = `${apiUrl}/api/v2/payees`
     log(`GET ${url}`)
 
     return axios({
@@ -36,57 +40,39 @@ class Payee {
 
   /**
    * Create a new payee
-   * @param {string} accessToken - the oauth bearer token.
-   * @param {Object} payeeCreationRequest - the payee creation request.
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token.
+   * @param {Object} parameters.payeeCreationRequest - the payee creation request.
    * @return {Promise} - the http request promise
    */
-  createPayee (accessToken, {
-    payeeName,
-    phoneNumber,
-    payeeType,
-    firstName,
-    middleName,
-    lastName,
-    businessName,
-    dateOfBirth,
-    accounts
-  }) {
-    typeValidation(arguments, createPayeeParameterDefinition)
-    typeValidation(arguments[1], payeeCreationRequestDefinition)
-    if (accounts) {
-      accounts.forEach(payeeAccountCreationRequest =>
-        typeValidation(payeeAccountCreationRequest, payeeAccountCreationRequestDefinition))
-    }
+  createPayee (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    createPayeeParameterValidator(parameters)
+    const { apiUrl, accessToken, payeeCreationRequest } = parameters
 
-    const url = `${this.options.apiUrl}/api/v2/payees`
+    const url = `${apiUrl}/api/v2/payees`
     log(`PUT ${url}`)
     return axios({
       method: 'PUT',
       url,
       headers: payloadHeaders(accessToken),
-      data: JSON.stringify({
-        payeeName,
-        phoneNumber,
-        payeeType,
-        firstName,
-        middleName,
-        lastName,
-        businessName,
-        dateOfBirth,
-        accounts
-      })
+      data: JSON.stringify(payeeCreationRequest)
     })
   }
 
   /**
    * Delete an account holder's payee
-   * @param {string} accessToken - the oauth bearer token.
-   * @param {string} payeeUid - the payeeUid of the payee to be deleted.
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token.
+   * @param {string} parameters.payeeUid - the payeeUid of the payee to be deleted.
    * @return {Promise} - the http request promise
    */
-  deletePayee (accessToken, payeeUid) {
-    typeValidation(arguments, deletePayeeParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/payees/${payeeUid}`
+  deletePayee (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    deletePayeeParameterValidator(parameters)
+    const { apiUrl, accessToken, payeeUid } = parameters
+
+    const url = `${apiUrl}/api/v2/payees/${payeeUid}`
     log(`DELETE ${url}`)
     return axios({
       method: 'DELETE',
@@ -96,39 +82,31 @@ class Payee {
   }
 }
 
-const getPayeesParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] }
-]
+const createPayeeParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  payeeCreationRequest: struct.object({
+    payeeName: 'string',
+    phoneNumber: 'string?',
+    payeeType: struct.enum(['INDIVIDUAL', 'BUSINESS']),
+    firstName: 'string?',
+    middleName: 'string?',
+    lastName: 'string?',
+    businessName: 'string?',
+    dateOfBirth: 'date?',
+    accounts: struct.optional([struct.object({
+      description: 'string',
+      defaultAccount: 'boolean',
+      countryCode: 'string',
+      accountIdentifier: 'string',
+      bankIdentifier: 'string',
+      bankIdentifierType: struct.enum(['SORT_CODE', 'SWIFT', 'IBAN', 'ABA', 'ABA_WIRE', 'ABA_ACH'])
+    })])
+  })
+})
 
-const createPayeeParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'payeeCreationRequest', validations: ['required', 'object'] }
-]
-
-const payeeCreationRequestDefinition = [
-  { name: 'payeeName', validations: ['required', 'string'] },
-  { name: 'phoneNumber', validations: ['optional', 'string'] },
-  { name: 'payeeType', validations: ['required', 'string'] },
-  { name: 'firstName', validations: ['optional', 'string'] },
-  { name: 'middleName', validations: ['optional', 'string'] },
-  { name: 'lastName', validations: ['optional', 'string'] },
-  { name: 'businessName', validations: ['optional', 'string'] },
-  { name: 'dateOfBirth', validations: ['optional', 'string'] },
-  { name: 'accounts', validations: ['optional', 'object'] }
-]
-
-const payeeAccountCreationRequestDefinition = [
-  { name: 'description', validations: ['required', 'string'] },
-  { name: 'defaultAccount', validations: ['required', 'boolean'] },
-  { name: 'countryCode', validations: ['required', 'string'] },
-  { name: 'accountIdentifier', validations: ['required', 'string'] },
-  { name: 'bankIdentifier', validations: ['required', 'string'] },
-  { name: 'bankIdentifierType', validations: ['required', 'string'] }
-]
-
-const deletePayeeParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'payeeUid', validations: ['required', 'string'] }
-]
+const deletePayeeParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  payeeUid: 'uuid'
+})
 
 module.exports = Payee

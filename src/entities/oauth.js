@@ -1,6 +1,6 @@
 import axios from 'axios'
 import debug from 'debug'
-import { typeValidation } from '../utils/validator'
+import { struct } from '../utils/validator'
 
 const ACCESS_TOKEN_GRANT_TYPE = 'authorization_code'
 const REFRESH_TOKEN_GRANT_TYPE = 'refresh_token'
@@ -21,53 +21,50 @@ class OAuth {
 
   /**
    * Exchanges the authorization code for an access token
-   * @param {string} authorizationCode - the authorization code, acquired from the user agent after the
-   * user authenticates with starling
+   * @param {string} authorizationCode - the authorization code, acquired from the user agent after the user authenticates with starling
    * @return {Promise} - the http request promise
    */
   getAccessToken (authorizationCode) {
-    typeValidation(arguments, authorizationCodeParameterDefinition)
     return this.getOAuthToken({
-      code: authorizationCode,
-      grant_type: ACCESS_TOKEN_GRANT_TYPE,
-      client_id: this.options.clientId,
-      client_secret: this.options.clientSecret,
-      redirect_uri: this.options.redirectUri
+      queryParams: {
+        code: authorizationCode,
+        grant_type: ACCESS_TOKEN_GRANT_TYPE,
+        client_id: this.options.clientId,
+        client_secret: this.options.clientSecret,
+        redirect_uri: this.options.redirectUri
+      }
     })
   }
 
   /**
    * Exchanges the authorization code for an access token
-   * @param {string} refreshToken - the oauth refresh token, used when the access token
-   * expires to claim a new access token.
+   * @param {string} refreshToken - the oauth refresh token, used when the access token expires to claim a new access token.
    * @return {Promise} - the http request promise
    */
   refreshAccessToken (refreshToken) {
-    typeValidation(arguments, refreshTokenParameterDefinition)
     return this.getOAuthToken({
-      refresh_token: refreshToken,
-      grant_type: REFRESH_TOKEN_GRANT_TYPE,
-      client_id: this.options.clientId,
-      client_secret: this.options.clientSecret
+      queryParams: {
+        refresh_token: refreshToken,
+        grant_type: REFRESH_TOKEN_GRANT_TYPE,
+        client_id: this.options.clientId,
+        client_secret: this.options.clientSecret
+      }
     })
   }
 
   /**
-   * Gets the access token from the starling oauth endpoint
-   * @param {object} params - the query params passed to the oauth endpoint as per the oauth spec
+   * Gets the access token from the starling OAuth endpoint
+   * @param {string} parameters.oauthUrl - the OAuth url
+   * @param {object} parameters.queryParams - the query params passed to the OAuth endpoint as per the OAuth spec
    * @return {Promise} - the http request promise
    */
-  getOAuthToken (params) {
-    if (!this.options.clientId) {
-      throw Error('clientId is not configured')
-    }
+  getOAuthToken (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    getOAuthTokenParameterValidator(parameters)
+    const { oauthUrl, queryParams } = parameters
 
-    if (!this.options.clientSecret) {
-      throw Error('clientSecret is not configured')
-    }
-
-    const url = `${this.options.oauthUrl}/oauth/access-token`
-    log(`POST ${url} queryParams:${JSON.stringify(params)}`)
+    const url = `${oauthUrl}/oauth/access-token`
+    log(`POST ${url} queryParams:${JSON.stringify(queryParams)}`)
 
     return axios({
       url,
@@ -76,17 +73,28 @@ class OAuth {
         'Content-Type': 'application/x-www-form-urlencoded',
         Accept: 'application/json'
       },
-      params: params
+      params: queryParams
     })
   }
 }
 
-const refreshTokenParameterDefinition = [
-  { name: 'refreshToken', validations: ['required', 'string'] }
-]
-
-const authorizationCodeParameterDefinition = [
-  { name: 'authorizationCode', validations: ['required', 'string'] }
-]
+const getOAuthTokenParameterValidator = struct.interface({
+  oauthUrl: 'string',
+  queryParams: struct.union([
+    struct.object({
+      client_id: 'string',
+      client_secret: 'string',
+      grant_type: struct.literal(ACCESS_TOKEN_GRANT_TYPE),
+      code: 'string',
+      redirect_uri: 'string'
+    }),
+    struct.object({
+      client_id: 'string',
+      client_secret: 'string',
+      grant_type: struct.literal(REFRESH_TOKEN_GRANT_TYPE),
+      refresh_token: 'string'
+    })
+  ])
+})
 
 module.exports = OAuth

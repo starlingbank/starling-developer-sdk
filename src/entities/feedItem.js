@@ -1,7 +1,7 @@
 import axios from 'axios'
 import debug from 'debug'
 import { defaultHeaders } from '../utils/http'
-import { typeValidation } from '../utils/validator'
+import { struct, minAPIParameterDefintion } from '../utils/validator'
 
 const log = debug('starling:feed-item-service')
 
@@ -19,17 +19,22 @@ class FeedItem {
 
   /**
    * Get feed items created between two timestamps
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid
-   * @param {string} categoryUid - the category uid
-   * @param {string} minTransactionTimestamp - timestamp e.g. '2019-10-25T12:34:56.789Z'
-   * @param {string} maxTransactionTimestamp - timestamp e.g. '2019-10-26T12:34:56.789Z'
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid
+   * @param {string} parameters.categoryUid - the category uid
+   * @param {string} parameters.minTransactionTimestamp - timestamp e.g. '2019-10-25T12:34:56.789Z'
+   * @param {string} parameters.maxTransactionTimestamp - timestamp e.g. '2019-10-26T12:34:56.789Z'
    * @return {Promise} - the http request promise
    */
-  getFeedItemsBetween (accessToken, accountUid, categoryUid, minTransactionTimestamp, maxTransactionTimestamp) {
-    typeValidation(arguments, getFeedItemsBetweenParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/feed/account/${accountUid}/category/${categoryUid}/transactions-between`
+  getFeedItemsBetween (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    getFeedItemsBetweenParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid, categoryUid, minTransactionTimestamp, maxTransactionTimestamp } = parameters
+
+    const url = `${apiUrl}/api/v2/feed/account/${accountUid}/category/${categoryUid}/transactions-between`
     log(`GET ${url}`)
+
     return axios({
       method: 'GET',
       url,
@@ -43,16 +48,21 @@ class FeedItem {
 
   /**
    * Get a feed item
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid
-   * @param {string} categoryUid - the category uid
-   * @param {string} feedItemUid - the feed item uid
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid
+   * @param {string} parameters.categoryUid - the category uid
+   * @param {string} parameters.feedItemUid - the feed item uid
    * @return {Promise} - the http request promise
    */
-  getFeedItem (accessToken, accountUid, categoryUid, feedItemUid) {
-    typeValidation(arguments, getFeedItemParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/feed/account/${accountUid}/category/${categoryUid}/${feedItemUid}`
+  getFeedItem (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    getFeedItemParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid, categoryUid, feedItemUid } = parameters
+
+    const url = `${apiUrl}/api/v2/feed/account/${accountUid}/category/${categoryUid}/${feedItemUid}`
     log(`GET ${url}`)
+
     return axios({
       method: 'GET',
       url,
@@ -62,16 +72,21 @@ class FeedItem {
 
   /**
    * Get feed items created or updated since a given timestamp
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid
-   * @param {string} categoryUid - the category uid
-   * @param {string} changesSince - timestamp e.g. '2019-10-25T12:34:56.789Z'
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid
+   * @param {string} parameters.categoryUid - the category uid
+   * @param {string} parameters.changesSince - timestamp e.g. '2019-10-25T12:34:56.789Z'
    * @return {Promise} - the http request promise
    */
-  getFeedItemsChangedSince (accessToken, accountUid, categoryUid, changesSince) {
-    typeValidation(arguments, getFeedItemsChangedSinceParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/feed/account/${accountUid}/category/${categoryUid}`
+  getFeedItemsChangedSince (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    getFeedItemsChangedSinceParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid, categoryUid, changesSince } = parameters
+
+    const url = `${apiUrl}/api/v2/feed/account/${accountUid}/category/${categoryUid}`
     log(`GET ${url}`)
+
     return axios({
       method: 'GET',
       url,
@@ -83,26 +98,26 @@ class FeedItem {
   }
 }
 
-const getFeedItemsBetweenParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] },
-  { name: 'categoryUid', validations: ['required', 'string'] },
-  { name: 'minTransactionTimestamp', validations: ['required', 'string'] },
-  { name: 'maxTransactionTimestamp', validations: ['required', 'string'] }
-]
+const getFeedItemsBetweenParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  accountUid: 'uuid',
+  categoryUid: 'uuid',
+  minTransactionTimestamp: 'timestamp',
+  maxTransactionTimestamp: 'timestamp'
+})
 
-const getFeedItemParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] },
-  { name: 'categoryUid', validations: ['required', 'string'] },
-  { name: 'feedItemUid', validations: ['required', 'string'] }
-]
+const getFeedItemParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  accountUid: 'uuid',
+  categoryUid: 'uuid',
+  feedItemUid: 'uuid'
+})
 
-const getFeedItemsChangedSinceParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] },
-  { name: 'categoryUid', validations: ['required', 'string'] },
-  { name: 'changesSince', validations: ['required', 'string'] }
-]
+const getFeedItemsChangedSinceParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  accountUid: 'uuid',
+  categoryUid: 'uuid',
+  changesSince: 'timestamp'
+})
 
 module.exports = FeedItem

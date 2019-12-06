@@ -1,7 +1,7 @@
 import axios from 'axios'
 import debug from 'debug'
 import { defaultHeaders, payloadHeaders } from '../utils/http'
-import { typeValidation } from '../utils/validator'
+import { struct, minAPIParameterDefintion } from '../utils/validator'
 
 const log = debug('starling:savings-goal-service')
 
@@ -19,14 +19,19 @@ class SavingsGoal {
 
   /**
    * Get all savings goals
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid
    * @return {Promise} - the http request promise
    */
-  getSavingsGoals (accessToken, accountUid) {
-    typeValidation(arguments, getSavingsGoalsParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/account/${accountUid}/savings-goals`
+  getSavingsGoals (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    getSavingsGoalsParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid } = parameters
+
+    const url = `${apiUrl}/api/v2/account/${accountUid}/savings-goals`
     log(`GET ${url}`)
+
     return axios({
       method: 'GET',
       url,
@@ -36,15 +41,20 @@ class SavingsGoal {
 
   /**
    * Get a savings goal
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid
-   * @param {string} savingsGoalUid - the savings goal's uid
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid
+   * @param {string} parameters.savingsGoalUid - the savings goal's uid
    * @return {Promise} - the http request promise
    */
-  getSavingsGoal (accessToken, accountUid, savingsGoalUid) {
-    typeValidation(arguments, getSavingsGoalParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/account/${accountUid}/savings-goals/${savingsGoalUid}`
+  getSavingsGoal (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    getSavingsGoalParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid, savingsGoalUid } = parameters
+
+    const url = `${apiUrl}/api/v2/account/${accountUid}/savings-goals/${savingsGoalUid}`
     log(`GET ${url}`)
+
     return axios({
       method: 'GET',
       url,
@@ -54,19 +64,24 @@ class SavingsGoal {
 
   /**
    * Create a savings goal
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid of the account to create the savings goal in
-   * @param {string} name - the name of the new savings goal
-   * @param {string} currency - ISO-4217 3 character currency code
-   * @param {number} targetAmount - the target amount in minor units (e.g. 1234 => £12.34)
-   * @param {string} targetCurrency - ISO-4217 3 character currency code
-   * @param {string=} base64EncodedPhoto - base64 encoded image to associate with the goal
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid of the account to create the savings goal in
+   * @param {string} parameters.name - the name of the new savings goal
+   * @param {string=} parameters.currency - ISO-4217 3 character currency code
+   * @param {number=} parameters.targetAmount - the target amount in minor units (e.g. 1234 => £12.34)
+   * @param {string=} parameters.targetCurrency - ISO-4217 3 character currency code
+   * @param {string=} parameters.base64EncodedPhoto - base64 encoded image to associate with the goal
    * @return {Promise} - the http request promise
    */
-  createSavingsGoal (accessToken, accountUid, name, currency, targetAmount, targetCurrency, base64EncodedPhoto) {
-    typeValidation(arguments, createSavingsGoalParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/account/${accountUid}/savings-goals`
+  createSavingsGoal (parameters) {
+    parameters = Object.assign({}, { currency: 'GBP', targetAmount: 0, targetCurrency: 'GBP' }, this.options, parameters)
+    createSavingsGoalParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid, name, currency, targetAmount, targetCurrency, base64EncodedPhoto } = parameters
+
+    const url = `${apiUrl}/api/v2/account/${accountUid}/savings-goals`
     log(`PUT ${url}`)
+
     return axios({
       method: 'PUT',
       url,
@@ -85,15 +100,20 @@ class SavingsGoal {
 
   /**
    * Delete a savings goal
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid
-   * @param {string} savingsGoalUid - the savings goal's uid
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid
+   * @param {string} parameters.savingsGoalUid - the savings goal's uid
    * @return {Promise} - the http request promise
    */
-  deleteSavingsGoal (accessToken, accountUid, savingsGoalUid) {
-    typeValidation(arguments, deleteSavingsGoalParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/account/${accountUid}/savings-goals/${savingsGoalUid}`
+  deleteSavingsGoal (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    deleteSavingsGoalParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid, savingsGoalUid } = parameters
+
+    const url = `${apiUrl}/api/v2/account/${accountUid}/savings-goals/${savingsGoalUid}`
     log(`DELETE ${url}`)
+
     return axios({
       method: 'DELETE',
       url,
@@ -103,18 +123,23 @@ class SavingsGoal {
 
   /**
    * Add money to a savings goal
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid
-   * @param {string} savingsGoalUid - the savings goal's uid
-   * @param {string} transferUid - a transaction ID for this transaction
-   * @param {number} amount - amount in the minor units of the given currency; eg pence in GBP, cents in EUR
-   * @param {string} currency - ISO-4217 3 character currency code
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid
+   * @param {string} parameters.savingsGoalUid - the savings goal's uid
+   * @param {string} parameters.transferUid - a transaction ID for this transaction
+   * @param {number} parameters.amount - amount in the minor units of the given currency; eg pence in GBP, cents in EUR
+   * @param {string} parameters.currency - ISO-4217 3 character currency code
    * @return {Promise} - the http request promise
    */
-  addMoneyToSavingsGoal (accessToken, accountUid, savingsGoalUid, transferUid, amount, currency) {
-    typeValidation(arguments, addMoneyToSavingsGoalParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/account/${accountUid}/savings-goals/${savingsGoalUid}/add-money/${transferUid}`
+  addMoneyToSavingsGoal (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    addMoneyToSavingsGoalParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid, savingsGoalUid, transferUid, amount, currency } = parameters
+
+    const url = `${apiUrl}/api/v2/account/${accountUid}/savings-goals/${savingsGoalUid}/add-money/${transferUid}`
     log(`PUT ${url}`)
+
     return axios({
       method: 'PUT',
       url,
@@ -130,18 +155,23 @@ class SavingsGoal {
 
   /**
    * Withdraw money from a savings goal
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid
-   * @param {string} savingsGoalUid - the savings goal's uid
-   * @param {string} transferUid - a transaction ID for this transaction
-   * @param {number} amount - amount in the minor units of the given currency; eg pence in GBP, cents in EUR
-   * @param {string} currency - ISO-4217 3 character currency code
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid
+   * @param {string} parameters.savingsGoalUid - the savings goal's uid
+   * @param {string} parameters.transferUid - a transaction ID for this transaction
+   * @param {number} parameters.amount - amount in the minor units of the given currency; eg pence in GBP, cents in EUR
+   * @param {string} parameters.currency - ISO-4217 3 character currency code
    * @return {Promise} - the http request promise
    */
-  withdrawMoneyFromSavingsGoal (accessToken, accountUid, savingsGoalUid, transferUid, amount, currency) {
-    typeValidation(arguments, withdrawMoneyFromSavingsGoalParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/account/${accountUid}/savings-goals/${savingsGoalUid}/withdraw-money/${transferUid}`
+  withdrawMoneyFromSavingsGoal (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    withdrawMoneyFromSavingsGoalParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid, savingsGoalUid, transferUid, amount, currency } = parameters
+
+    const url = `${apiUrl}/api/v2/account/${accountUid}/savings-goals/${savingsGoalUid}/withdraw-money/${transferUid}`
     log(`PUT ${url}`)
+
     return axios({
       method: 'PUT',
       url,
@@ -156,49 +186,49 @@ class SavingsGoal {
   }
 }
 
-const getSavingsGoalsParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] }
-]
+const getSavingsGoalsParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  accountUid: 'uuid'
+})
 
-const getSavingsGoalParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] },
-  { name: 'savingsGoalUid', validations: ['required', 'string'] }
-]
+const getSavingsGoalParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  accountUid: 'uuid',
+  savingsGoalUid: 'uuid'
+})
 
-const deleteSavingsGoalParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] },
-  { name: 'savingsGoalUid', validations: ['required', 'string'] }
-]
+const deleteSavingsGoalParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  accountUid: 'uuid',
+  savingsGoalUid: 'uuid'
+})
 
-const createSavingsGoalParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] },
-  { name: 'name', validations: ['required', 'string'] },
-  { name: 'currency', validations: ['required', 'string'] },
-  { name: 'targetAmount', validations: ['required', 'number'] },
-  { name: 'targetCurrency', validations: ['required', 'string'] },
-  { name: 'base64EncodedPhoto', validations: ['optional', 'string'] }
-]
+const createSavingsGoalParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  accountUid: 'uuid',
+  name: 'string',
+  currency: 'string',
+  targetAmount: 'number',
+  targetCurrency: 'string',
+  base64EncodedPhoto: 'string?'
+})
 
-const addMoneyToSavingsGoalParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] },
-  { name: 'savingsGoalUid', validations: ['required', 'string'] },
-  { name: 'transactionUid', validations: ['required', 'string'] },
-  { name: 'amount', validations: ['required', 'number'] },
-  { name: 'currency', validations: ['required', 'string'] }
-]
+const addMoneyToSavingsGoalParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  accountUid: 'uuid',
+  savingsGoalUid: 'uuid',
+  transferUid: 'uuid',
+  amount: 'number',
+  currency: 'string'
+})
 
-const withdrawMoneyFromSavingsGoalParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] },
-  { name: 'savingsGoalUid', validations: ['required', 'string'] },
-  { name: 'transactionUid', validations: ['required', 'string'] },
-  { name: 'amount', validations: ['required', 'number'] },
-  { name: 'currency', validations: ['required', 'string'] }
-]
+const withdrawMoneyFromSavingsGoalParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  accountUid: 'uuid',
+  savingsGoalUid: 'uuid',
+  transferUid: 'uuid',
+  amount: 'number',
+  currency: 'string'
+})
 
 module.exports = SavingsGoal

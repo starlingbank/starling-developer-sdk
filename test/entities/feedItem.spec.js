@@ -8,7 +8,7 @@ import getFeedItemResponse from '../responses/v2-get-feed-item.json'
 
 const log = debug('starling:transaction-test')
 
-const timestampRegex = /^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z)?$/
+const timestampRegex = /^((?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z)?$/
 
 describe('Transaction feed', () => {
   const accessToken = '0123456789'
@@ -35,7 +35,8 @@ describe('Transaction feed', () => {
 
   test('should retrieve the category\'s feed items between two timestamps', done => {
     starlingCli
-      .getFeedItemsBetween(accessToken, accountUid, categoryUid, '2019-10-23T00:00:00.000Z', '2019-10-26T00:00:00.000Z')
+      .feedItem
+      .getFeedItemsBetween({ accessToken, accountUid, categoryUid, minTransactionTimestamp: '2019-10-23T00:00:00.000Z', maxTransactionTimestamp: '2019-10-26T00:00:00.000Z' })
       .then(({ data }) => {
         expect(data.feedItems).toHaveLength(5)
 
@@ -88,7 +89,8 @@ describe('Transaction feed', () => {
 
   test('should retrieve the category\'s feed items changed since a timestamp', done => {
     starlingCli
-      .getFeedItemsChangedSince(accessToken, accountUid, categoryUid, '2019-10-23T00:00:00.000Z')
+      .feedItem
+      .getFeedItemsChangedSince({ accessToken, accountUid, categoryUid, changesSince: '2019-10-23T00:00:00.000Z' })
       .then(({ data }) => {
         expect(data.feedItems).toHaveLength(5)
 
@@ -141,7 +143,8 @@ describe('Transaction feed', () => {
 
   test('should retrieve an individual feed item', done => {
     starlingCli
-      .getFeedItem(accessToken, accountUid, categoryUid, feedItemUid)
+      .feedItem
+      .getFeedItem({ accessToken, accountUid, categoryUid, feedItemUid })
       .then(({ data }) => {
         expect(data.feedItemUid).toBe(feedItemUid)
         expect(data.categoryUid).toBe(categoryUid)

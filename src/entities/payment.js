@@ -1,7 +1,7 @@
 import axios from 'axios'
 import debug from 'debug'
 import { defaultHeaders } from '../utils/http'
-import { typeValidation } from '../utils/validator'
+import { struct, minAPIParameterDefintion } from '../utils/validator'
 
 const log = debug('starling:payment-service')
 
@@ -19,13 +19,17 @@ class Payment {
 
   /**
    * Get a payment order
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} paymentOrderUid - the payment order uid
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.paymentOrderUid - the payment order uid
    * @return {Promise} - the http request promise
    */
-  getPaymentOrder (accessToken, paymentOrderUid) {
-    typeValidation(arguments, getPaymentOrderParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/payments/local/payment-order/${paymentOrderUid}`
+  getPaymentOrder (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    getPaymentOrderParameterValidator(parameters)
+    const { apiUrl, accessToken, paymentOrderUid } = parameters
+
+    const url = `${apiUrl}/api/v2/payments/local/payment-order/${paymentOrderUid}`
     log(`GET ${url}`)
 
     return axios({
@@ -37,13 +41,17 @@ class Payment {
 
   /**
    * Get a payment order's payments
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} paymentOrderUid - the payment order uid
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.paymentOrderUid - the payment order uid
    * @return {Promise} - the http request promise
    */
-  getPaymentOrderPayments (accessToken, paymentOrderUid) {
-    typeValidation(arguments, getPaymentOrderPaymentsParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/payments/local/payment-order/${paymentOrderUid}/payments`
+  getPaymentOrderPayments (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    getPaymentOrderPaymentsParameterValidator(parameters)
+    const { apiUrl, accessToken, paymentOrderUid } = parameters
+
+    const url = `${apiUrl}/api/v2/payments/local/payment-order/${paymentOrderUid}/payments`
     log(`GET ${url}`)
 
     return axios({
@@ -55,15 +63,20 @@ class Payment {
 
   /**
    * List standing orders
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid of the account to get standing orders of
-   * @param {string} categoryUid - the category uid of the category to get standing orders of
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid of the account to get standing orders of
+   * @param {string} parameters.categoryUid - the category uid of the category to get standing orders of
    * @return {Promise} - the http request promise
    */
-  listStandingOrders (accessToken, accountUid, categoryUid) {
-    typeValidation(arguments, listStandingOrdersParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/payments/local/account/${accountUid}/category/${categoryUid}/standing-orders`
+  listStandingOrders (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    listStandingOrdersParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid, categoryUid } = parameters
+
+    const url = `${apiUrl}/api/v2/payments/local/account/${accountUid}/category/${categoryUid}/standing-orders`
     log(`GET ${url}`)
+
     return axios({
       method: 'GET',
       url,
@@ -73,16 +86,21 @@ class Payment {
 
   /**
    * Get a standing order
-   * @param {string} accessToken - the oauth bearer token
-   * @param {string} accountUid - the account uid of the standing order
-   * @param {string} categoryUid - the category uid of the standing order
-   * @param {string} paymentOrderUid - the payment order uid of the standing order
+   * @param {string} parameters.apiUrl - the API URL
+   * @param {string} parameters.accessToken - the oauth bearer token
+   * @param {string} parameters.accountUid - the account uid of the standing order
+   * @param {string} parameters.categoryUid - the category uid of the standing order
+   * @param {string} parameters.paymentOrderUid - the payment order uid of the standing order
    * @return {Promise} - the http request promise
    */
-  getStandingOrder (accessToken, accountUid, categoryUid, paymentOrderUid) {
-    typeValidation(arguments, getStandingOrderParameterDefinition)
-    const url = `${this.options.apiUrl}/api/v2/payments/local/account/${accountUid}/category/${categoryUid}/standing-orders/${paymentOrderUid}`
+  getStandingOrder (parameters) {
+    parameters = Object.assign({}, this.options, parameters)
+    getStandingOrderParameterValidator(parameters)
+    const { apiUrl, accessToken, accountUid, categoryUid, paymentOrderUid } = parameters
+
+    const url = `${apiUrl}/api/v2/payments/local/account/${accountUid}/category/${categoryUid}/standing-orders/${paymentOrderUid}`
     log(`GET ${url}`)
+
     return axios({
       method: 'GET',
       url,
@@ -91,27 +109,27 @@ class Payment {
   }
 }
 
-const getPaymentOrderParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] }
-]
+const getPaymentOrderParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  paymentOrderUid: 'uuid'
+})
 
-const getPaymentOrderPaymentsParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] }
-]
+const getPaymentOrderPaymentsParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  paymentOrderUid: 'uuid'
+})
 
-const listStandingOrdersParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] },
-  { name: 'categoryUid', validations: ['required', 'string'] }
-]
+const listStandingOrdersParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  accountUid: 'uuid',
+  categoryUid: 'uuid'
+})
 
-const getStandingOrderParameterDefinition = [
-  { name: 'accessToken', validations: ['required', 'string'] },
-  { name: 'accountUid', validations: ['required', 'string'] },
-  { name: 'categoryUid', validations: ['required', 'string'] },
-  { name: 'paymentOrderUid', validations: ['required', 'string'] }
-]
+const getStandingOrderParameterValidator = struct.interface({
+  ...minAPIParameterDefintion,
+  accountUid: 'uuid',
+  categoryUid: 'uuid',
+  paymentOrderUid: 'uuid'
+})
 
 module.exports = Payment

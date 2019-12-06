@@ -23,7 +23,8 @@ describe('List Mandates', () => {
       .reply(200, getMandatesResponse)
 
     starlingCli
-      .listMandates(accessToken)
+      .mandate
+      .listMandates({ accessToken })
       .then(function ({ data }) {
         expect(data.mandates).toHaveLength(1)
         expect(data.mandates[0].uid).toBe(mandateUid)
@@ -48,7 +49,8 @@ describe('List Mandates', () => {
       .reply(200, getMandateResponse)
 
     starlingCli
-      .getMandate(accessToken, mandateUid)
+      .mandate
+      .getMandate({ accessToken, mandateUid })
       .then(function ({ data }) {
         expect(data.uid).toBe(mandateUid)
         expect(data.reference).toBe('Volcano Insurance')
@@ -72,7 +74,8 @@ describe('List Mandates', () => {
       .reply(204)
 
     starlingCli
-      .deleteMandate(accessToken, mandateUid)
+      .mandate
+      .deleteMandate({ accessToken, mandateUid })
       .then(function ({ status }) {
         expect(status).toBe(204)
         done()

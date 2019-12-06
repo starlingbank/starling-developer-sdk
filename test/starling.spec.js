@@ -23,6 +23,7 @@ describe('Starling Client', () => {
     'should support a static access token provided in the client instance',
     done => {
       starlingCli
+        .account
         .getAccounts()
         .then(function ({ data }) {
           expect(data.accounts).toHaveLength(1)
