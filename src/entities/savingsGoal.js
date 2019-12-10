@@ -129,11 +129,11 @@ class SavingsGoal {
    * @param {string} parameters.savingsGoalUid - the savings goal's uid
    * @param {string} parameters.transferUid - a transaction ID for this transaction
    * @param {number} parameters.amount - amount in the minor units of the given currency; eg pence in GBP, cents in EUR
-   * @param {string} parameters.currency - ISO-4217 3 character currency code
+   * @param {string=} parameters.currency - ISO-4217 3 character currency code
    * @return {Promise} - the http request promise
    */
   addMoneyToSavingsGoal (parameters) {
-    parameters = Object.assign({}, this.options, parameters)
+    parameters = Object.assign({}, { currency: 'GBP' }, this.options, parameters)
     addMoneyToSavingsGoalParameterValidator(parameters)
     const { apiUrl, accessToken, accountUid, savingsGoalUid, transferUid, amount, currency } = parameters
 
@@ -161,11 +161,11 @@ class SavingsGoal {
    * @param {string} parameters.savingsGoalUid - the savings goal's uid
    * @param {string} parameters.transferUid - a transaction ID for this transaction
    * @param {number} parameters.amount - amount in the minor units of the given currency; eg pence in GBP, cents in EUR
-   * @param {string} parameters.currency - ISO-4217 3 character currency code
+   * @param {string=} parameters.currency - ISO-4217 3 character currency code
    * @return {Promise} - the http request promise
    */
   withdrawMoneyFromSavingsGoal (parameters) {
-    parameters = Object.assign({}, this.options, parameters)
+    parameters = Object.assign({}, { currency: 'GBP' }, this.options, parameters)
     withdrawMoneyFromSavingsGoalParameterValidator(parameters)
     const { apiUrl, accessToken, accountUid, savingsGoalUid, transferUid, amount, currency } = parameters
 

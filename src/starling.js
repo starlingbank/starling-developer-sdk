@@ -11,7 +11,17 @@ import SavingsGoal from './entities/savingsGoal'
 import Identity from './entities/identity'
 
 /**
- * Facade to dispatch operations to services
+ * @property {Identity} identity
+ * @property {AccountHolder} accountHolder
+ * @property {Account} account
+ * @property {Address} address
+ * @property {FeedItem} feedItem
+ * @property {Payment} payment
+ * @property {Mandate} mandate
+ * @property {Payee} payee
+ * @property {Card} card
+ * @property {SavingsGoal} savingsGoal
+ * @property {OAuth} oAuth
  */
 class Starling {
   /**
