@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/starlingbank/starling-developer-js-sdk.git"
+    "url": "git+https://github.com/starlingbank/starling-developer-sdk.git"
   },
   "keywords": [
     "starlingbank, starling, bank, open, API, SDK"
@@ -80,7 +80,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/starlingbank/starling-developer-js-sdk/issues"
+    "url": "https://github.com/starlingbank/starling-developer-sdk/issues"
   },
-  "homepage": "https://github.com/starlingbank/starling-developer-js-sdk#readme"
+  "homepage": "https://github.com/starlingbank/starling-developer-sdk#readme"
 }
