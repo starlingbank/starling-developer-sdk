@@ -8,7 +8,7 @@ const log = debug('starling:oauth-test')
 
 describe('OAuth', () => {
   const starlingCli = new Starling({
-    oauthUrl: 'http://localhost',
+    apiUrl: 'http://localhost',
     clientId: 'myclientid',
     clientSecret: 'myclientsecret',
     redirectUri: 'redirect'

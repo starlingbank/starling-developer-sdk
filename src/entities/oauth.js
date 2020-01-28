@@ -54,16 +54,16 @@ class OAuth {
 
   /**
    * Gets the access token from the starling OAuth endpoint
-   * @param {string} parameters.oauthUrl - the OAuth url
+   * @param {string} parameters.apiUrl - the OAuth url
    * @param {object} parameters.queryParams - the query params passed to the OAuth endpoint as per the OAuth spec
    * @return {Promise} - the http request promise
    */
   getOAuthToken (parameters) {
     parameters = Object.assign({}, this.options, parameters)
     getOAuthTokenParameterValidator(parameters)
-    const { oauthUrl, queryParams } = parameters
+    const { apiUrl, queryParams } = parameters
 
-    const url = `${oauthUrl}/oauth/access-token`
+    const url = `${apiUrl}/oauth/access-token`
     log(`POST ${url} queryParams:${JSON.stringify(queryParams)}`)
 
     return axios({
@@ -79,7 +79,7 @@ class OAuth {
 }
 
 const getOAuthTokenParameterValidator = struct.interface({
-  oauthUrl: 'string',
+  apiUrl: 'string',
   queryParams: struct.union([
     struct.object({
       client_id: 'string',

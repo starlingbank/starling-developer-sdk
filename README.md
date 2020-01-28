@@ -22,6 +22,7 @@ const Starling = require('starling-developer-sdk')
 import Starling from 'starling-developer-sdk'
 
 const client = new Starling({
+  // apiUrl: 'https://api-sandbox.starlingbank.com',
   accessToken: '<oauth access token>'
 })
 
