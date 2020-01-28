@@ -31,7 +31,6 @@ class Starling {
   constructor (options) {
     const defaults = {
       apiUrl: 'https://api.starlingbank.com',
-      oauthUrl: 'https://oauth.starlingbank.com',
       clientId: '',
       clientSecret: ''
     }
