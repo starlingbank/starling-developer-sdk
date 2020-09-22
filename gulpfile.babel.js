@@ -45,8 +45,7 @@ const externalConfig = {
     'axios',
     'js-base64',
     'es6-promise',
-    'debug',
-    'utf8'
+    'debug'
   ],
   bundleExternal: false
 }
