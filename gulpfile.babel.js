@@ -6,7 +6,7 @@ import browserify from 'browserify'
 import buffer from 'vinyl-buffer'
 import source from 'vinyl-source-stream'
 import sourcemaps from 'gulp-sourcemaps'
-import uglify from 'gulp-uglify'
+import terser from 'gulp-terser'
 
 gulp.task('build:bundled:min', function bundledMin () {
   return buildBundle(bundledConfig, '.bundle.min.js', true)
@@ -59,7 +59,7 @@ function buildBundle (options, extname, minify) {
     .pipe(sourcemaps.init({ loadMaps: true }))
 
   if (minify) {
-    stream = stream.pipe(uglify())
+    stream = stream.pipe(terser())
   }
 
   return stream.pipe(rename({ extname }))
