@@ -13,7 +13,7 @@ fi
 rm -rf docs/ out/ dist/
 
 # install dependencies and run build
-npm install
+npm ci
 npm run build
 
 # bump the version
