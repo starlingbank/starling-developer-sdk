@@ -15,6 +15,7 @@ const log = debug('starling:account-test')
 const dateRegex = /^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])$/
 
 describe('Account', () => {
+  const newlineRegexp = RegExp(/\r?\n|\r/)
   const accessToken = '0123456789'
   const accountUid = 'b0b20c9d-3b6b-42f1-a7d0-e70d4538e0d9'
 
@@ -150,7 +151,7 @@ describe('Account', () => {
       .account
       .getStatementForPeriod({ accessToken, accountUid, yearMonth: '2019-10', format: 'text/csv', responseType: 'text' })
       .then(function ({ data }) {
-        const lines = data.split('\n')
+        const lines = data.split(newlineRegexp)
 
         expect(lines).toHaveLength(4)
         expect(lines[0]).toBe('Date,Counter Party,Reference,Type,Amount (GBP),Balance (GBP),Spending Category')
@@ -168,7 +169,7 @@ describe('Account', () => {
       .account
       .getStatementForPeriod({ accessToken, accountUid, responseType: 'text' })
       .then(function ({ data }) {
-        const lines = data.split('\n')
+        const lines = data.split(newlineRegexp)
 
         expect(lines).toHaveLength(4)
         expect(lines[0]).toBe('Date,Counter Party,Reference,Type,Amount (GBP),Balance (GBP),Spending Category')
@@ -186,7 +187,7 @@ describe('Account', () => {
       .account
       .getStatementForRange({ accessToken, accountUid, start: '2019-10-01', end: '2019-10-02', format: 'text/csv', responseType: 'text' })
       .then(function ({ data }) {
-        const lines = data.split('\n')
+        const lines = data.split(newlineRegexp)
 
         expect(lines).toHaveLength(4)
         expect(lines[0]).toBe('Date,Counter Party,Reference,Type,Amount (GBP),Balance (GBP),Spending Category')
@@ -204,7 +205,7 @@ describe('Account', () => {
       .account
       .getStatementForRange({ accessToken, accountUid, start: '2019-10-01', responseType: 'text' })
       .then(function ({ data }) {
-        const lines = data.split('\n')
+        const lines = data.split(newlineRegexp)
 
         expect(lines).toHaveLength(4)
         expect(lines[0]).toBe('Date,Counter Party,Reference,Type,Amount (GBP),Balance (GBP),Spending Category')
