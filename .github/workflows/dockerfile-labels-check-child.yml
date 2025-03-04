@@ -1,0 +1,28 @@
+name: Dockerfile Labels Check
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+      - labeled
+      - unlabeled
+
+# Cancel other in progress runs of this workflow
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Access scopes for the GITHUB_TOKEN created as part of the workflow
+permissions:
+  contents: read
+  pull-requests: write
+  repository-projects: read
+
+jobs:
+  dockerfile-labels-check:
+    uses: starlingbank/.github/.github/workflows/dockerfile-labels-check.yml@master
+    secrets: inherit
+
